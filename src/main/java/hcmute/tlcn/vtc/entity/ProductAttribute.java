@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,13 +31,13 @@ public class ProductAttribute {
 
     private OffsetDateTime atUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_variant_id")
-    private ProductVariant productVariant;
-
-
-
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_variant_attribute",
+            joinColumns = @JoinColumn(name = "product_attribute_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_variant_id")
+    )
+    private List<ProductVariant> productVariants;
 
 
 }
