@@ -39,14 +39,17 @@ public class ProductVariant {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "product_variant_attribute",
-//            joinColumns = @JoinColumn(name = "product_variant_id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_attribute_id")
-//    )
+//
+//    @OneToMany(mappedBy = "productVariants")
 //    private List<ProductAttribute> productAttributes;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_variant_attribute",
+            joinColumns = @JoinColumn(name = "product_variant_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_attribute_id")
+    )
+    private List<ProductAttribute> productAttributes;
 
 
 
