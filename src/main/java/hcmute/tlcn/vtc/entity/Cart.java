@@ -22,7 +22,25 @@ public class Cart {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private Long quantity;
+
+
     private OffsetDateTime atCreate;
 
     private OffsetDateTime atUpdate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_variant_id")
+    private ProductVariant productVariant;
+
+
+
 }
