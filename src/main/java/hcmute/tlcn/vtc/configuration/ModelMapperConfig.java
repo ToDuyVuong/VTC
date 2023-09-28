@@ -12,10 +12,12 @@ public class ModelMapperConfig {
         // Tạo object và cấu hình
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT);
+                .setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
     }
-
+//Chiến lược map chuẩn: MatchingStrategies.STANDARD
+//Chiến lược map lỏng lẻo: MatchingStrategies.LOOSE
+//Chiến lược map chặt chẽ: MatchingStrategies.STRICT
 
 //    // Lấy User entity ra từ DB
 //    User user = userRepository.findByUsername(username);

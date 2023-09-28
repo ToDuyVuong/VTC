@@ -11,15 +11,11 @@ public class VtcApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(VtcApplication.class, args);
-        System.out.println("\n\n" );
-
 
         try {
             InetAddress ip = InetAddress.getLocalHost();
-            System.out.println("IP Address: " + ip.getHostAddress());
-            System.out.println("Localhost:  http://localhost:8181/swagger-ui/index.html");
-            System.out.println("\n\n" );
-
+            System.out.println("\n\n" +"IP Address: " + ip.getHostAddress());
+            System.out.println("Localhost:  http://localhost:8181/swagger-ui/index.html" + "\n\n");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
