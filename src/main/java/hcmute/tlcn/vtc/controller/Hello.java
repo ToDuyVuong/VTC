@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hcmute.tlcn.vtc.dto.AdminDTO;
 import hcmute.tlcn.vtc.entity.Admin;
 import hcmute.tlcn.vtc.entity.extra.Role;
+import hcmute.tlcn.vtc.service.IAdminService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.OffsetDateTime;
@@ -28,13 +30,16 @@ public class Hello {
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private IAdminService adminService;
+
     @GetMapping
     public ResponseEntity<?> hello() {
         return new ResponseEntity<>("Hello Server", HttpStatus.OK);
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<?> testMapper() throws JsonProcessingException {
+    public ResponseEntity<Admin> testMapper(@RequestParam String us) throws JsonProcessingException {
         // Create an Admin object with the provided values
         Admin admin = new Admin(
                 1L,                 // adminId
@@ -59,10 +64,13 @@ public class Hello {
         // Print the JSON string (optional)
         System.out.println("Admin JSON: " + adminJson);
 
+        String a = adminService.getAdmin(us);
+
 
         Admin ad2 = mapper.map(dto, Admin.class);
+        ad2.setPassword(a);
         System.out.println("ad2"+ ad2);
-        return new ResponseEntity<>(admin, HttpStatus.OK);
+        return ResponseEntity.ok(ad2);
     }
 
 }
