@@ -16,6 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements ICustomerService {
@@ -29,12 +31,12 @@ public class CustomerServiceImpl implements ICustomerService {
     public RegisterSuccessResponse registerCustomer(RegisterCustomerRequest customerRequest) {
         customerRequest.validate();
 
-        Customer existingCustomer = customerRepository.findByUsername(customerRequest.getUsername());
-        if (existingCustomer != null) {
+        Optional<Customer> existingCustomer = customerRepository.findByUsername(customerRequest.getUsername());
+        if (existingCustomer.isPresent() ) {
             throw new DuplicateEntryException("Tài khoản đã tồn tại.");
         }
         existingCustomer = customerRepository.findByEmail(customerRequest.getEmail());
-        if (existingCustomer != null) {
+        if (existingCustomer.isPresent()) {
             throw new DuplicateEntryException("Email đã được đăng ký.");
         }
 
@@ -52,13 +54,13 @@ public class CustomerServiceImpl implements ICustomerService {
     public LoginSuccessResponse loginCustomer(LoginRequest loginRequest) {
         loginRequest.validate();
 
-        Customer customer = customerRepository.findByUsername(loginRequest.getUsername());
-        if (customer == null) {
+        Optional<Customer> customer = customerRepository.findByUsername(loginRequest.getUsername());
+        if (customer.isPresent()) {
             throw new NotFoundException("Tài khoản không tồn tại.");
-        } else if (!customer.getPassword().equals(loginRequest.getPassword())) {
-            System.out.println("Customer password: " + customer.getPassword());
+        } else if (!customer.get().getPassword().equals(loginRequest.getPassword())) {
+            System.out.println("Customer password: " + customer.get().getPassword());
             System.out.println("Login request password: " + loginRequest.getPassword());
-            System.out.println("password: " + customer.getPassword().equals(loginRequest.getPassword()));
+            System.out.println("password: " + customer.get().getPassword().equals(loginRequest.getPassword()));
             throw new InvalidPasswordException("Sai mật khẩu");
         }
 
