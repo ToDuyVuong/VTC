@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.impl;
 
 import hcmute.tlcn.vtc.service.IAdminService;
-import hcmute.tlcn.vtc.util.NotFoundException;
+import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
