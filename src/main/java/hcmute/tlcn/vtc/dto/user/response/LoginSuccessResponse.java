@@ -15,5 +15,8 @@ public class LoginSuccessResponse {
     private String email;
     private String phone;
 
+    private String status;
+    private String message;
+
 
 }
