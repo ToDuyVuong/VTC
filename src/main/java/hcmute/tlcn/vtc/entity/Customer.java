@@ -45,13 +45,17 @@ public class Customer implements UserDetails {
 
     private OffsetDateTime atUpdate;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<Token> tokens;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Token> tokens;
 
-//    @OneToOne(cascade = CascadeType.ALL) // khi thêm 1 customer thì sẻ thêm 1 address
-//    @JoinColumn(name = "address_id")
-//    @JsonManagedReference
-//    private Address address;
+//
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "customer_id")
+//    private List<Token> tokens;
+
 
 
 

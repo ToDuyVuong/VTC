@@ -2,29 +2,21 @@ package hcmute.tlcn.vtc.entity;
 
 
 import hcmute.tlcn.vtc.entity.extra.TokenType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 public class Token {
 
     @Id
-    @GeneratedValue
-    public Integer id;
+    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long tokenId;
 
     @Column(unique = true)
     public String token;
@@ -36,7 +28,7 @@ public class Token {
 
     public boolean expired;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Customer_id")
     public Customer customer;
 }

@@ -1,6 +1,10 @@
 package hcmute.tlcn.vtc.service.impl;
 
-import hcmute.tlcn.vtc.configuration.security.JwtService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hcmute.tlcn.vtc.entity.Token;
+import hcmute.tlcn.vtc.entity.extra.TokenType;
+import hcmute.tlcn.vtc.repository.TokenRepository;
+import hcmute.tlcn.vtc.service.JwtService;
 import hcmute.tlcn.vtc.dto.user.request.LoginRequest;
 import hcmute.tlcn.vtc.dto.user.request.RegisterCustomerRequest;
 import hcmute.tlcn.vtc.dto.user.response.LoginSuccessResponse;
@@ -12,14 +16,18 @@ import hcmute.tlcn.vtc.service.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.DuplicateEntryException;
 import hcmute.tlcn.vtc.util.exception.InvalidPasswordException;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -35,6 +43,8 @@ public class CustomerServiceImpl implements ICustomerService {
     private final JwtService jwtService;
     @Autowired
     private final AuthenticationManager authenticationManager;
+    @Autowired
+    private final TokenRepository tokenRepository;
 
     @Override
     public RegisterSuccessResponse registerCustomer(RegisterCustomerRequest customerRequest) {
@@ -53,8 +63,14 @@ public class CustomerServiceImpl implements ICustomerService {
         customer.setRole(Role.CUSTOMER);
         customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
 
-        customerRepository.save(customer);
-        RegisterSuccessResponse registerSuccessResponse = modelMapper.map(customer, RegisterSuccessResponse.class);
+
+
+      Customer saveCustomer =   customerRepository.save(customer);
+
+        var jwtToken = jwtService.generateToken(saveCustomer);
+        var refreshToken = jwtService.generateRefreshToken(saveCustomer);
+
+        RegisterSuccessResponse registerSuccessResponse = modelMapper.map(saveCustomer, RegisterSuccessResponse.class);
         registerSuccessResponse.setStatus("ok");
         registerSuccessResponse.setMessage("Đăng ký thành công");
 
@@ -70,18 +86,96 @@ public class CustomerServiceImpl implements ICustomerService {
         );
 
         Optional<Customer> customer = customerRepository.findByUsername(loginRequest.getUsername());
-        if (!customer.isPresent()) {
+
+        System.out.println("Customer: " + customer);
+        System.out.println("Customer password: " + customer.get().getPassword().equals(loginRequest.getPassword()));
+
+        if (customer.isPresent()) {
             throw new NotFoundException("Tài khoản không tồn tại.");
-        } else if (!customer.get().getPassword().equals(loginRequest.getPassword())) {
+        }
+
+        String password = passwordEncoder.encode(loginRequest.getPassword());
+
+        Customer existingCustomer = customer.get();
+
+
+
+        if (!existingCustomer.getPassword().equals(password)) {
             throw new InvalidPasswordException("Sai mật khẩu");
         }
+
+
+        var jwtToken = jwtService.generateToken(customer.get());
+        var refreshToken = jwtService.generateRefreshToken(customer.get());
+        revokeAllCustomerTokens(customer.get());
+        saveCustomerToken(customer.get(), jwtToken);
+
+
 
         LoginSuccessResponse loginSuccessResponse = modelMapper.map(customer, LoginSuccessResponse.class);
         loginSuccessResponse.setStatus("ok");
         loginSuccessResponse.setMessage("Đăng nhập thành công");
-        loginSuccessResponse.setToken(jwtService.generateToken(customer.get()));
+        loginSuccessResponse.setAccessToken(jwtToken);
+        loginSuccessResponse.setRefreshToken(refreshToken);
+
 
         return loginSuccessResponse;
+    }
+
+
+
+
+    @Override
+    public void saveCustomerToken(Customer customer, String jwtToken) {
+        var token = Token.builder()
+                .customer(customer)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepository.save(token);
+    }
+
+    @Override
+    public void revokeAllCustomerTokens(Customer customer) {
+        var validUserTokens = tokenRepository.findAllValidTokenByCustomer(customer.getCustomerId());
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
+    }
+
+    @Override
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String username;
+        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            return;
+        }
+        refreshToken = authHeader.substring(7);
+        username = jwtService.extractUsername(refreshToken);
+        if (username != null) {
+            var user = this.customerRepository.findByUsername(username)
+                    .orElseThrow();
+            if (jwtService.isTokenValid(refreshToken, user)) {
+                var accessToken = jwtService.generateToken(user);
+                revokeAllCustomerTokens(user);
+                saveCustomerToken(user, accessToken);
+                var authResponse = LoginSuccessResponse.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .build();
+                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+            }
+        }
     }
 
 }
