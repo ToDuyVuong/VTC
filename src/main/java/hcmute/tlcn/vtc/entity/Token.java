@@ -30,5 +30,6 @@ public class Token {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
+    @ToString.Exclude
     public Customer customer;
 }

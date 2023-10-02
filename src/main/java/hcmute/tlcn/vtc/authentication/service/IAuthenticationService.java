@@ -21,4 +21,7 @@ public interface IAuthenticationService {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException;
+
+//    LogoutResponse logout(HttpServletRequest request, HttpServletResponse response);
+
 }

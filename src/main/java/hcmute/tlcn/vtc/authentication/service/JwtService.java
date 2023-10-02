@@ -64,6 +64,9 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+        System.out.println("buildToken " +  extraClaims + " " + userDetails + " " + expiration);
+
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

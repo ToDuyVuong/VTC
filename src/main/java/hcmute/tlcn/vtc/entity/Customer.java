@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hcmute.tlcn.vtc.entity.extra.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,7 +47,9 @@ public class Customer implements UserDetails {
     private OffsetDateTime atUpdate;
 
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<Token> tokens;
 
 

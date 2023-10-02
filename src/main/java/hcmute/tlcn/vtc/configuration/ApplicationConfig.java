@@ -64,7 +64,7 @@ public class ApplicationConfig {
                     .birthday(currentDate)
                     .gender(true)
                     .phone("0123456789")
-                    .role(Role.CUSTOMER)
+//                    .role(Role.CUSTOMER)
                     .build();
             System.out.println("user1 token: " + service.register(us1));
 

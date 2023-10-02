@@ -1,0 +1,14 @@
+### Register User
+POST http://localhost:8181/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "string",
+  "password": "string",
+  "email": "comc5288@gmail.com",
+  "gender": true,
+  "fullName": "string",
+  "birthday": "2023-10-02T15:52:02.965Z",
+  "phone": "string"
+}
+

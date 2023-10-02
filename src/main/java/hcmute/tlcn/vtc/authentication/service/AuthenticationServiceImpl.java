@@ -76,8 +76,20 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         var jwtToken = jwtService.generateToken(saveCustomer);
         var refreshToken = jwtService.generateRefreshToken(saveCustomer);
-        saveCustomerToken(saveCustomer, jwtToken);
 
+        System.out.println("jwtToken: " + jwtToken);
+        System.out.println("jwtToken: " + jwtService.extractExpiration(jwtToken));
+        System.out.println("refreshToken: " + refreshToken);
+        System.out.println("refreshToken: " + jwtService.extractExpiration(refreshToken));
+
+
+//        saveCustomerToken(saveCustomer, refreshToken);
+
+//        revokeAllCustomerTokens(saveCustomer);
+
+
+
+//        System.out.println("tokenRepository: " + tokenRepository.findAllValidTokenByCustomer(saveCustomer.getCustomerId()));
 
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);
         registerResponse.setStatus("ok");
@@ -94,24 +106,16 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         );
         Optional<Customer> customer = customerRepository.findByUsername(loginRequest.getUsername());
 
-//        if (!customer.isPresent()) {
-//            throw new NotFoundException("Tài khoản không tồn tại.");
-//        }
-//        String password = passwordEncoder.encode(loginRequest.getPassword());
-//        Customer existingCustomer = customer.get();
-//        if (existingCustomer.getPassword().equals(password)) {
-//            throw new InvalidPasswordException("Sai mật khẩu.");
-//        }
-
         var jwtToken = jwtService.generateToken(customer.get());
         var refreshToken = jwtService.generateRefreshToken(customer.get());
-        revokeAllCustomerTokens(customer.get());
+//        revokeAllCustomerTokens(customer.get());
         saveCustomerToken(customer.get(), refreshToken);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
         loginResponse.setStatus("ok");
         loginResponse.setMessage("Đăng nhập thành công");
+        loginResponse.setCode(200);
         loginResponse.setAccessToken(jwtToken);
         loginResponse.setRefreshToken(refreshToken);
 
@@ -124,6 +128,25 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         return loginResponse;
     }
+
+    //    @Override
+//    public LogoutResponse logout(HttpServletRequest request, HttpServletResponse response) {
+//        final String authHeader = request.getHeader("Authorization");
+//        final String jwt;
+//        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+//            return new LogoutResponse("error", "Đăng xuất thất bại", 400);
+//        }
+//        jwt = authHeader.substring(7);
+//        var storedToken = tokenRepository.findByToken(jwt)
+//                .orElse(null);
+//        if (storedToken != null) {
+//            storedToken.setExpired(true);
+//            storedToken.setRevoked(true);
+//            tokenRepository.save(storedToken);
+//            SecurityContextHolder.clearContext();
+//        }
+//        return new LogoutResponse("ok", "Đăng xuất thành công", 200);
+//    }
 
 
     public void saveCustomerToken(Customer customer, String jwtToken) {
@@ -149,43 +172,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-//    @Override
-//    public void refreshToken(
-//            HttpServletRequest request,
-//            HttpServletResponse response
-//    ) throws IOException {
-//        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        final String refreshToken;
-//        final String username;
-//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            return;
-//        }
-//        refreshToken = authHeader.substring(7);
-//        username = jwtService.extractUsername(refreshToken);
-//        if (username != null) {
-//            var customer = this.customerRepository.findByUsername(username)
-//                    .orElseThrow(() -> new NotFoundException("Tài khoản không tồn tại."));
-//            if (jwtService.isTokenValid(refreshToken, customer)) {
-//                var accessToken = jwtService.generateToken(customer);
-//                revokeAllCustomerTokens(customer);
-//                saveCustomerToken(customer, accessToken);
-//                var authResponse = LoginResponse.builder()
-//                        .accessToken(accessToken)
-//                        .refreshToken(refreshToken)
-//                        .build();
-//                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-//            }
-//        }
-//    }
-
-    private String extractRefreshTokenFromRequest(HttpServletRequest request) {
-        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        System.out.println("authHeader: " + authHeader);
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7);
-        }
-        return null;
-    }
 
     @Override
     public RefreshTokenResponse refreshToken(String refreshToken, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -228,6 +214,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         }
         return null;
     }
+
 
 
 }

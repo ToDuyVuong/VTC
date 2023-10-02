@@ -26,8 +26,8 @@ public class RegisterRequest {
     private Date birthday;
 
     private String phone;
-
-    private Role role;
+//
+//    private Role role;
 
     public void validate() {
         if (username == null || username.isEmpty()) {

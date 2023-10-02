@@ -1,0 +1,3 @@
+POST http://localhost:8181/api/auth/refresh-token
+Content-Type: application/json
+Cookie: refreshToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY5NjI2NTIyMSwiZXhwIjoxNjk2ODcwMDIxfQ.qYRN-2-tccAXZGwFueOyQVXd31ttKkSNb57z3AWEic8; Expires=Mon, 01-Dec-2042 16:47:01

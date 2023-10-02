@@ -1,0 +1,8 @@
+### Login Customer
+POST http://localhost:8181/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "password": "password"
+}
