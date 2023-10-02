@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterSuccessResponse {
+public class RegisterResponse {
 
         private String username;
         private String email;

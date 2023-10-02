@@ -1,18 +1,18 @@
-package hcmute.tlcn.vtc.dto.user.request;
+package hcmute.tlcn.vtc.authentication;
 
 import hcmute.tlcn.vtc.dto.user.request.extra.EmailValidator;
 import hcmute.tlcn.vtc.entity.extra.Role;
 import lombok.*;
 
 import java.util.Date;
+
 @Builder
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterCustomerRequest {
-
+public class RegisterRequest {
     private String username;
 
     private String password;
@@ -55,10 +55,5 @@ public class RegisterCustomerRequest {
         if (phone == null || phone.isEmpty()) {
             throw new IllegalArgumentException("Số điện thoại không được để trống.");
         }
-
-
     }
-
-
-
 }

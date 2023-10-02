@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.configuration;
 
-import hcmute.tlcn.vtc.auth.AuthenticationService;
-import hcmute.tlcn.vtc.auth.RegisterRequest;
+import hcmute.tlcn.vtc.authentication.AuthenticationService;
+import hcmute.tlcn.vtc.authentication.RegisterRequest;
 import hcmute.tlcn.vtc.entity.extra.Role;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.util.exception.InvalidPasswordException;

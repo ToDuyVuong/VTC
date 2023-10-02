@@ -6,9 +6,9 @@ import hcmute.tlcn.vtc.entity.extra.TokenType;
 import hcmute.tlcn.vtc.repository.TokenRepository;
 import hcmute.tlcn.vtc.service.JwtService;
 import hcmute.tlcn.vtc.dto.user.request.LoginRequest;
-import hcmute.tlcn.vtc.dto.user.request.RegisterCustomerRequest;
-import hcmute.tlcn.vtc.dto.user.response.LoginSuccessResponse;
-import hcmute.tlcn.vtc.dto.user.response.RegisterSuccessResponse;
+import hcmute.tlcn.vtc.dto.user.request.RegisterRequest;
+import hcmute.tlcn.vtc.dto.user.response.LoginResponse;
+import hcmute.tlcn.vtc.dto.user.response.RegisterResponse;
 import hcmute.tlcn.vtc.entity.Customer;
 import hcmute.tlcn.vtc.entity.extra.Role;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
@@ -47,7 +47,9 @@ public class CustomerServiceImpl implements ICustomerService {
     private final TokenRepository tokenRepository;
 
     @Override
-    public RegisterSuccessResponse registerCustomer(RegisterCustomerRequest customerRequest) {
+    public RegisterResponse register(RegisterRequest customerRequest) {
+
+
         customerRequest.validate();
 
         Optional<Customer> existingCustomer = customerRepository.findByUsername(customerRequest.getUsername());
@@ -64,22 +66,23 @@ public class CustomerServiceImpl implements ICustomerService {
         customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
 
 
-
-      Customer saveCustomer =   customerRepository.save(customer);
+        customerRepository.save(customer);
+        var saveCustomer = customerRepository.save(customer);
 
         var jwtToken = jwtService.generateToken(saveCustomer);
         var refreshToken = jwtService.generateRefreshToken(saveCustomer);
+        saveCustomerToken(saveCustomer, jwtToken);
+        RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);
+        registerResponse.setStatus("ok");
+        registerResponse.setMessage("Đăng ký thành công");
 
-        RegisterSuccessResponse registerSuccessResponse = modelMapper.map(saveCustomer, RegisterSuccessResponse.class);
-        registerSuccessResponse.setStatus("ok");
-        registerSuccessResponse.setMessage("Đăng ký thành công");
-
-        return registerSuccessResponse;
+        return registerResponse;
     }
 
     @Override
-    public LoginSuccessResponse loginCustomer(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         loginRequest.validate();
+
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
@@ -87,22 +90,14 @@ public class CustomerServiceImpl implements ICustomerService {
 
         Optional<Customer> customer = customerRepository.findByUsername(loginRequest.getUsername());
 
-        System.out.println("Customer: " + customer);
-        System.out.println("Customer password: " + customer.get().getPassword().equals(loginRequest.getPassword()));
-
-        if (customer.isPresent()) {
-            throw new NotFoundException("Tài khoản không tồn tại.");
-        }
-
-        String password = passwordEncoder.encode(loginRequest.getPassword());
-
-        Customer existingCustomer = customer.get();
-
-
-
-        if (!existingCustomer.getPassword().equals(password)) {
-            throw new InvalidPasswordException("Sai mật khẩu");
-        }
+//        if (!customer.isPresent()) {
+//            throw new NotFoundException("Tài khoản không tồn tại.");
+//        }
+//        String password = passwordEncoder.encode(loginRequest.getPassword());
+//        Customer existingCustomer = customer.get();
+//        if (existingCustomer.getPassword().equals(password)) {
+//            throw new InvalidPasswordException("Sai mật khẩu.");
+//        }
 
 
         var jwtToken = jwtService.generateToken(customer.get());
@@ -111,18 +106,15 @@ public class CustomerServiceImpl implements ICustomerService {
         saveCustomerToken(customer.get(), jwtToken);
 
 
+        LoginResponse loginResponse = modelMapper.map(customer, LoginResponse.class);
+        loginResponse.setStatus("ok");
+        loginResponse.setMessage("Đăng nhập thành công");
+        loginResponse.setAccessToken(jwtToken);
+        loginResponse.setRefreshToken(refreshToken);
 
-        LoginSuccessResponse loginSuccessResponse = modelMapper.map(customer, LoginSuccessResponse.class);
-        loginSuccessResponse.setStatus("ok");
-        loginSuccessResponse.setMessage("Đăng nhập thành công");
-        loginSuccessResponse.setAccessToken(jwtToken);
-        loginSuccessResponse.setRefreshToken(refreshToken);
 
-
-        return loginSuccessResponse;
+        return loginResponse;
     }
-
-
 
 
     @Override
@@ -157,7 +149,7 @@ public class CustomerServiceImpl implements ICustomerService {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String username;
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return;
         }
         refreshToken = authHeader.substring(7);
@@ -169,7 +161,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllCustomerTokens(user);
                 saveCustomerToken(user, accessToken);
-                var authResponse = LoginSuccessResponse.builder()
+                var authResponse = LoginResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();

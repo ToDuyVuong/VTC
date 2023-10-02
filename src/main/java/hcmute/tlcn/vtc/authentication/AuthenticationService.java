@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.auth;
+package hcmute.tlcn.vtc.authentication;
 
 
 import hcmute.tlcn.vtc.entity.Token;
