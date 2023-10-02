@@ -45,11 +45,11 @@ public class Customer implements UserDetails {
 
     private OffsetDateTime atUpdate;
 
-//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-//    private List<Token> tokens;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Token> tokens;
+
+
 
 //
 //    @OneToMany(fetch = FetchType.EAGER)

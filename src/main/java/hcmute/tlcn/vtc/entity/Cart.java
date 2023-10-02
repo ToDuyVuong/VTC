@@ -25,6 +25,8 @@ public class Cart {
     private Long quantity;
 
 
+
+
     private OffsetDateTime atCreate;
 
     private OffsetDateTime atUpdate;
@@ -33,9 +35,9 @@ public class Cart {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_id")
+//    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_variant_id")
