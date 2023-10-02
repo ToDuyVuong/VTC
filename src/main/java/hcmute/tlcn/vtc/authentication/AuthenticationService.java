@@ -14,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,8 @@ public class AuthenticationService {
         request.validate();
         Customer customer = modelMapper.map(request, Customer.class);
         customer.setPassword(passwordEncoder.encode(request.getPassword()));
+        customer.setAtCreate(OffsetDateTime.now());
+        customer.setAtUpdate(OffsetDateTime.now());
         customerRepository.save(customer);
         var savedUser = customerRepository.save(customer);
         var jwtToken = jwtService.generateToken(customer);

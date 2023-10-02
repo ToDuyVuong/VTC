@@ -70,7 +70,7 @@ public class ApplicationConfig {
                     .email("example@example.com")
                     .password("password")
                     .birthday(currentDate)
-                    .gender(true)
+//                    .gender(true)
                     .phone("0123456789")
                     .role(Role.CUSTOMER)
                     .build();
