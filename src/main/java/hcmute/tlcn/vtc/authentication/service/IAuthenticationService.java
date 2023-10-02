@@ -3,6 +3,7 @@ package hcmute.tlcn.vtc.authentication.service;
 import hcmute.tlcn.vtc.authentication.request.LoginRequest;
 import hcmute.tlcn.vtc.authentication.request.RegisterRequest;
 import hcmute.tlcn.vtc.authentication.response.LoginResponse;
+import hcmute.tlcn.vtc.authentication.response.LogoutResponse;
 import hcmute.tlcn.vtc.authentication.response.RefreshTokenResponse;
 import hcmute.tlcn.vtc.authentication.response.RegisterResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ public interface IAuthenticationService {
 
     LoginResponse login(LoginRequest loginRequest, HttpServletResponse response);
 
+
+    LogoutResponse logout(String refreshToken);
 
     RefreshTokenResponse refreshToken(
             String refreshToken,

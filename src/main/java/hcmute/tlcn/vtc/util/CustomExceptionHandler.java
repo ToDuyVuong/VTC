@@ -1,13 +1,12 @@
 package hcmute.tlcn.vtc.util;
 
-import hcmute.tlcn.vtc.util.exception.DuplicateEntryException;
-import hcmute.tlcn.vtc.util.exception.InvalidPasswordException;
-import hcmute.tlcn.vtc.util.exception.JwtException;
-import hcmute.tlcn.vtc.util.exception.NotFoundException;
+import hcmute.tlcn.vtc.util.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.lang.IllegalArgumentException;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
@@ -40,5 +39,11 @@ public class CustomExceptionHandler {
     public ResponseEntity<ErrorResponse> handleRefreshTokenException(JwtException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST,400, "Thông báo", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ErrorResponse> handleTokenExpiredException(TokenExpiredException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED,401, "Thông báo", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 }
