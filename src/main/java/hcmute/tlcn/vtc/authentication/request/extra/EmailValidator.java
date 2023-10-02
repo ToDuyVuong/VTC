@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.dto.user.request.extra;
+package hcmute.tlcn.vtc.authentication.request.extra;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.configuration;
 
-import hcmute.tlcn.vtc.authentication.AuthenticationService;
-import hcmute.tlcn.vtc.authentication.RegisterRequest;
+import hcmute.tlcn.vtc.authentication.request.RegisterRequest;
 import hcmute.tlcn.vtc.entity.extra.Role;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
+import hcmute.tlcn.vtc.authentication.service.IAuthenticationService;
 import hcmute.tlcn.vtc.util.exception.InvalidPasswordException;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -35,14 +35,6 @@ public class ApplicationConfig {
                 .orElseThrow(() -> new NotFoundException("Tài khoản không tồn tại."));
     }
 
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService());
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
-
     @Bean
     public AuthenticationProvider authenticationProvider() {
         return new CustomAuthenticationProvider(userDetailsService());
@@ -60,7 +52,7 @@ public class ApplicationConfig {
 
     @Bean
     public CommandLineRunner commandLineRunner(
-            AuthenticationService service
+            IAuthenticationService service
     ) {
         Date currentDate = new Date();
         return args -> {
@@ -70,7 +62,7 @@ public class ApplicationConfig {
                     .email("example@example.com")
                     .password("password")
                     .birthday(currentDate)
-//                    .gender(true)
+                    .gender(true)
                     .phone("0123456789")
                     .role(Role.CUSTOMER)
                     .build();

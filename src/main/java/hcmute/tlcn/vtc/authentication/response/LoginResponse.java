@@ -1,6 +1,7 @@
-package hcmute.tlcn.vtc.dto.user.response;
+package hcmute.tlcn.vtc.authentication.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import hcmute.tlcn.vtc.dto.CustomerDTO;
 import lombok.*;
 
 @Getter
@@ -16,10 +17,7 @@ public class LoginResponse {
     @JsonProperty("refresh_token")
     private String refreshToken;
 
-    private String username;
-    private String fullName;
-    private String email;
-    private String phone;
+    private CustomerDTO customerDTO;
 
     private String status;
     private String message;

@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.dto.user.response;
+package hcmute.tlcn.vtc.authentication.response;
 
 import lombok.*;
 

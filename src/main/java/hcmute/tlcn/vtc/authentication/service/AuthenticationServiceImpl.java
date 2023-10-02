@@ -1,18 +1,17 @@
-package hcmute.tlcn.vtc.service.impl;
+package hcmute.tlcn.vtc.authentication.service;
 
-import hcmute.tlcn.vtc.dto.user.response.RefreshTokenResponse;
+import hcmute.tlcn.vtc.authentication.response.RefreshTokenResponse;
+import hcmute.tlcn.vtc.dto.CustomerDTO;
 import hcmute.tlcn.vtc.entity.Token;
 import hcmute.tlcn.vtc.entity.extra.TokenType;
 import hcmute.tlcn.vtc.repository.TokenRepository;
-import hcmute.tlcn.vtc.service.JwtService;
-import hcmute.tlcn.vtc.dto.user.request.LoginRequest;
-import hcmute.tlcn.vtc.dto.user.request.RegisterRequest;
-import hcmute.tlcn.vtc.dto.user.response.LoginResponse;
-import hcmute.tlcn.vtc.dto.user.response.RegisterResponse;
+import hcmute.tlcn.vtc.authentication.request.LoginRequest;
+import hcmute.tlcn.vtc.authentication.request.RegisterRequest;
+import hcmute.tlcn.vtc.authentication.response.LoginResponse;
+import hcmute.tlcn.vtc.authentication.response.RegisterResponse;
 import hcmute.tlcn.vtc.entity.Customer;
 import hcmute.tlcn.vtc.entity.extra.Role;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
-import hcmute.tlcn.vtc.service.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.DuplicateEntryException;
 import hcmute.tlcn.vtc.util.exception.JwtException;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
@@ -31,12 +30,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerServiceImpl implements ICustomerService {
+public class AuthenticationServiceImpl implements IAuthenticationService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -79,6 +77,8 @@ public class CustomerServiceImpl implements ICustomerService {
         var jwtToken = jwtService.generateToken(saveCustomer);
         var refreshToken = jwtService.generateRefreshToken(saveCustomer);
         saveCustomerToken(saveCustomer, jwtToken);
+
+
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);
         registerResponse.setStatus("ok");
         registerResponse.setMessage("Đăng ký thành công");
@@ -108,7 +108,8 @@ public class CustomerServiceImpl implements ICustomerService {
         revokeAllCustomerTokens(customer.get());
         saveCustomerToken(customer.get(), refreshToken);
 
-        LoginResponse loginResponse = modelMapper.map(customer, LoginResponse.class);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
         loginResponse.setStatus("ok");
         loginResponse.setMessage("Đăng nhập thành công");
         loginResponse.setAccessToken(jwtToken);
@@ -123,7 +124,6 @@ public class CustomerServiceImpl implements ICustomerService {
 
         return loginResponse;
     }
-
 
 
     public void saveCustomerToken(Customer customer, String jwtToken) {

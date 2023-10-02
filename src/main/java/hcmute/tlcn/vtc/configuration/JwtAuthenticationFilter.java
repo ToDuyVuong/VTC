@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.configuration;
 
 import hcmute.tlcn.vtc.repository.TokenRepository;
-import hcmute.tlcn.vtc.service.JwtService;
+import hcmute.tlcn.vtc.authentication.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

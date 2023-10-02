@@ -1,6 +1,5 @@
-package hcmute.tlcn.vtc.dto.user.request;
+package hcmute.tlcn.vtc.authentication.request;
 
-import hcmute.tlcn.vtc.dto.user.request.extra.EmailValidator;
 import lombok.*;
 
 @Getter

@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.service;
+package hcmute.tlcn.vtc.authentication.service;
 
 import hcmute.tlcn.vtc.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
