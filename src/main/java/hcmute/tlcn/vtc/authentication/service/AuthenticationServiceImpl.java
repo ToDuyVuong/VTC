@@ -44,7 +44,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
     @Autowired
-    private final JwtService jwtService;
+    private final IJwtService jwtService;
     @Autowired
     private final AuthenticationManager authenticationManager;
     @Autowired

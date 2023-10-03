@@ -1,8 +1,31 @@
+### Register User
+POST http://localhost:8181/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "string",
+  "password": "string",
+  "email": "comc5288@gmail.com",
+  "gender": true,
+  "fullName": "string",
+  "birthday": "2023-10-02T15:52:02.965Z",
+  "phone": "string"
+}
+
 ### Login Customer
 POST http://localhost:8181/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "user1",
-  "password": "password"
+  "username": "string",
+  "password": "string"
 }
+
+> {% client.global.set("auth-token", response.body.accessToken);  %}
+
+### Query the Demo endpoint
+# @no-cookie-jar
+GET http://localhost:8181/api/customer/profile
+Authorization: Bearer {{accessToken}}
+
+

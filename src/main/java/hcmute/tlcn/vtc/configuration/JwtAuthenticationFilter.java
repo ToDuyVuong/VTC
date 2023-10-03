@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.configuration;
 
 import hcmute.tlcn.vtc.repository.TokenRepository;
-import hcmute.tlcn.vtc.authentication.service.JwtService;
+import hcmute.tlcn.vtc.authentication.service.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+    private final JwtServiceImpl jwtServiceImpl;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
 
@@ -51,13 +51,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
         jwt = authHeader.substring(7);
-        username = jwtService.extractUsername(jwt);
+        username = jwtServiceImpl.extractUsername(jwt);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             var isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
-            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+            if (jwtServiceImpl.isTokenValid(jwt, userDetails) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
