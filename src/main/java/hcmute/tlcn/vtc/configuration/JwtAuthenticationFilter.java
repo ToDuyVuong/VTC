@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.configuration;
 
+import hcmute.tlcn.vtc.authentication.service.IJwtService;
 import hcmute.tlcn.vtc.repository.TokenRepository;
 import hcmute.tlcn.vtc.authentication.service.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
@@ -17,14 +18,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtServiceImpl jwtServiceImpl;
+    private final IJwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
+
+    public boolean isTokenValid(String token) {
+        final Date expirationDate = jwtService.extractExpiration(token);
+        return expirationDate != null && !expirationDate.before(new Date());
+    }
 
     @Override
     protected void doFilterInternal(
@@ -42,19 +49,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String username;
 
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+        System.out.println("authHeader: " + authHeader);
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         jwt = authHeader.substring(7);
-        username = jwtServiceImpl.extractUsername(jwt);
+        username = jwtService.extractUsername(jwt);
+
+        System.out.println("jwt: " + jwt);
+        System.out.println("username: " + username);
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            var isTokenValid = tokenRepository.findByToken(jwt)
-                    .map(t -> !t.isExpired() && !t.isRevoked())
-                    .orElse(false);
-            if (jwtServiceImpl.isTokenValid(jwt, userDetails) && isTokenValid) {
+
+            System.out.println("userDetails: " + userDetails);
+
+//            var isTokenValid = tokenRepository.findByToken(jwt)
+//                    .map(t -> !t.isExpired() && !t.isRevoked())
+//                    .orElse(false);
+
+//            var isTokenValid = isTokenValid(jwt);
+            var isTokenValid = jwtService.isTokenValid(jwt, userDetails);
+            System.out.println("isTokenValid: " + isTokenValid);
+
+            if (isTokenValid) {
+                // Token còn hạn, xử lý xác thực
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -64,9 +86,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                 .buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-
             }
             filterChain.doFilter(request, response);
+
+
+//            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+//                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+//                        userDetails,
+//                        null,
+//                        userDetails.getAuthorities());
+//                authToken.setDetails(
+//                        new WebAuthenticationDetailsSource()
+//                                .buildDetails(request)
+//                );
+//                SecurityContextHolder.getContext().setAuthentication(authToken);
+//
+//            }
+//            filterChain.doFilter(request, response);
         }
     }
 }
