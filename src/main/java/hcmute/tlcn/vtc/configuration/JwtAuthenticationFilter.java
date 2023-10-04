@@ -3,6 +3,7 @@ package hcmute.tlcn.vtc.configuration;
 import hcmute.tlcn.vtc.authentication.service.IJwtService;
 import hcmute.tlcn.vtc.repository.TokenRepository;
 import hcmute.tlcn.vtc.authentication.service.JwtServiceImpl;
+import hcmute.tlcn.vtc.util.exception.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,11 +53,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println("authHeader: " + authHeader);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+
+//            throw new TokenExpiredException("Token không hợp lệ.");
+
             filterChain.doFilter(request, response);
             return;
         }
 
         jwt = authHeader.substring(7);
+//        if(jwt.isEmpty()){
+//            throw new TokenExpiredException("Token không hợp lệ.");
+//        }
         username = jwtService.extractUsername(jwt);
 
         System.out.println("jwt: " + jwt);
@@ -75,18 +82,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             var isTokenValid = jwtService.isTokenValid(jwt, userDetails);
             System.out.println("isTokenValid: " + isTokenValid);
 
-            if (isTokenValid) {
-                // Token còn hạn, xử lý xác thực
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities());
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource()
-                                .buildDetails(request)
-                );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+            if (!isTokenValid) {
+                throw new TokenExpiredException("Token đã hết hạn.");
             }
+            // Token còn hạn, xử lý xác thực
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.getAuthorities());
+            authToken.setDetails(
+                    new WebAuthenticationDetailsSource()
+                            .buildDetails(request)
+            );
+            SecurityContextHolder.getContext().setAuthentication(authToken);
             filterChain.doFilter(request, response);
 
 

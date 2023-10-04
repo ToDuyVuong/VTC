@@ -31,14 +31,14 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public ProfileCustomerResponse getProfileCustomer(String token) {
+    public ProfileCustomerResponse getProfileCustomer(String username) {
 
-        String username;
-        try {
-            username = jwtService.extractUsername(token);
-        } catch (NotFoundException e) {
-            throw new NotFoundException("Không tìm thấy thông tin tài khoản từ token.");
-        }
+//        String username;
+//        try {
+//            username = jwtService.extractUsername(token);
+//        } catch (NotFoundException e) {
+//            throw new NotFoundException("Không tìm thấy thông tin tài khoản từ token.");
+//        }
 
         Customer customer = getCustomerByUsername(username);
         CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
