@@ -67,13 +67,13 @@ public class ApplicationConfig {
         Date currentDate = new Date();
         return args -> {
             var us1 = RegisterRequest.builder()
-                    .username("user1")
+                    .username("string")
                     .fullName("Nguyen")
                     .email("example@example.com")
-                    .password("password")
+                    .password("string")
                     .birthday(currentDate)
                     .gender(true)
-                    .phone("0123456789")
+//                    .phone("0123456789")
 //                    .role(Role.CUSTOMER)
                     .build();
             System.out.println("user1 token: " + service.register(us1));

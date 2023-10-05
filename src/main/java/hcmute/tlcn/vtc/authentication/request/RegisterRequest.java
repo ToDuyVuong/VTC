@@ -1,7 +1,6 @@
 package hcmute.tlcn.vtc.authentication.request;
 
-import hcmute.tlcn.vtc.authentication.request.extra.EmailValidator;
-import hcmute.tlcn.vtc.entity.extra.Role;
+import hcmute.tlcn.vtc.dto.extra.EmailValidator;
 import lombok.*;
 
 import java.util.Date;
@@ -25,7 +24,7 @@ public class RegisterRequest {
 
     private Date birthday;
 
-    private String phone;
+//    private String phone;
 //
 //    private Role role;
 
@@ -52,9 +51,9 @@ public class RegisterRequest {
             throw new IllegalArgumentException("Ngày sinh không được để trống.");
         }
 
-        if (phone == null || phone.isEmpty()) {
-            throw new IllegalArgumentException("Số điện thoại không được để trống.");
-        }
+//        if (phone == null || phone.isEmpty()) {
+//            throw new IllegalArgumentException("Số điện thoại không được để trống.");
+//        }
 
 
     }
