@@ -14,7 +14,15 @@ import static hcmute.tlcn.vtc.entity.extra.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
-    CUSTOMER(Collections.emptySet()),
+        CUSTOMER(
+                Set.of(
+                        CUSTOMER_READ,
+                        CUSTOMER_UPDATE,
+                        CUSTOMER_DELETE,
+                        CUSTOMER_CREATE
+                )
+        ),
+//    CUSTOMER(Collections.emptySet()),
     VENDOR(
             Set.of(
                     VENDOR_READ,
