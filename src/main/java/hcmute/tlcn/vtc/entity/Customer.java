@@ -58,6 +58,11 @@ public class Customer implements UserDetails {
     @ToString.Exclude
     private List<Token> tokens;
 
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)  // Fetch EAGERLY
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private List<Token> tokens;
+
 
 //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {

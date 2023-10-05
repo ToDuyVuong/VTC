@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.controller.user;
+package hcmute.tlcn.vtc.controller.demo;
 
 import hcmute.tlcn.vtc.authentication.service.IJwtService;
 import hcmute.tlcn.vtc.dto.CustomerDTO;

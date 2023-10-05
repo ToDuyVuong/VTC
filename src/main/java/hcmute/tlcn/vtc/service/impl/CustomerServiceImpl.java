@@ -60,10 +60,6 @@ public class CustomerServiceImpl implements ICustomerService {
         request.validate();
 
         Customer customerUpdate = getCustomerByUsername(request.getUsername());
-//        if (customerUpdate == null) {
-//            throw new NotFoundException("Tài khoản không tồn tại.");
-//        }
-
         customerUpdate.setBirthday(request.getBirthday());
         customerUpdate.setEmail(request.getEmail());
         customerUpdate.setFullName(request.getFullName());
