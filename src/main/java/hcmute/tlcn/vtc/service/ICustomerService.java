@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.service;
 
 import hcmute.tlcn.vtc.dto.CustomerDTO;
+import hcmute.tlcn.vtc.dto.user.request.ChangePasswordRequest;
 import hcmute.tlcn.vtc.dto.user.request.ProfileCustomerRequest;
 import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.entity.Customer;
@@ -12,4 +13,6 @@ public interface ICustomerService {
 
 
     ProfileCustomerResponse updateProfileCustomer(ProfileCustomerRequest profileCustomerRequest);
+
+    ProfileCustomerResponse changePassword(ChangePasswordRequest request);
 }

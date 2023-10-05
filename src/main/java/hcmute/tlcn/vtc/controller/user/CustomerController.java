@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/customer")
 @RequiredArgsConstructor
-//@PreAuthorize("hasRole('CUSTOMER')")
-
 public class CustomerController {
 
     @Autowired
@@ -30,7 +28,6 @@ public class CustomerController {
     @Autowired
     private final ModelMapper modelMapper;
 
-    //    @PreAuthorize("hasAuthority('customer:read')")
     @GetMapping("/profile")
     public ResponseEntity<ProfileCustomerResponse> getProfileCustomer(@RequestBody String username) {
         ProfileCustomerResponse profileCustomerResponse = customerService.getProfileCustomer(username);
@@ -39,11 +36,15 @@ public class CustomerController {
 
 
     @PutMapping("/profile")
-    public ResponseEntity<ProfileCustomerResponse> updateProfileCustomer02(@RequestBody ProfileCustomerRequest profileCustomerRequest) {
+    public ResponseEntity<ProfileCustomerResponse> updateProfileCustomer02(@RequestBody ProfileCustomerRequest request) {
+        ProfileCustomerResponse profileCustomerResponse = customerService.updateProfileCustomer(request);
+        return ResponseEntity.ok(profileCustomerResponse);
+    }
 
-        System.out.println("customerDTO 202: " + profileCustomerRequest);
-        ProfileCustomerResponse profileCustomerResponse = customerService.updateProfileCustomer(profileCustomerRequest);
 
+    @PatchMapping("/change-password")
+    public ResponseEntity<ProfileCustomerResponse> changePassword(@RequestBody ChangePasswordRequest request) {
+        ProfileCustomerResponse profileCustomerResponse = customerService.changePassword(request);
         return ResponseEntity.ok(profileCustomerResponse);
     }
 
