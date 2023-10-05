@@ -32,7 +32,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -66,7 +68,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         }
 
         Customer customer = modelMapper.map(customerRequest, Customer.class);
-        customer.setRole(Role.CUSTOMER);
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.CUSTOMER);  // Every customer has a CUSTOMER role
+        customer.setRoles(roles);
         customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
         customer.setAtCreate(OffsetDateTime.now());
         customer.setAtUpdate(OffsetDateTime.now());

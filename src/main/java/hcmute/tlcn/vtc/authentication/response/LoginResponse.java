@@ -2,6 +2,7 @@ package hcmute.tlcn.vtc.authentication.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import hcmute.tlcn.vtc.dto.CustomerDTO;
+import hcmute.tlcn.vtc.dto.ResponseAbstract;
 import lombok.*;
 
 @Getter
@@ -10,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse {
+public class LoginResponse extends ResponseAbstract {
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -19,9 +20,6 @@ public class LoginResponse {
 
     private CustomerDTO customerDTO;
 
-    private String status;
-    private String message;
-    private int code;
 
 
 }

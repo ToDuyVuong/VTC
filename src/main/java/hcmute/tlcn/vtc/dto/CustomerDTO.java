@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,6 +27,6 @@ public class CustomerDTO {
     private Date birthday;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Set<Role> roles;
 
 }

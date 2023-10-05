@@ -10,9 +10,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -39,8 +38,15 @@ public class Customer implements UserDetails {
 
     private Date birthday;
 
+//    @Enumerated(EnumType.STRING)
+//    private Role role;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id"))
+    @Column(name = "role", nullable = false)
+    private Set<Role> roles = new HashSet<>();
+
 
     private OffsetDateTime atCreate;
 
@@ -53,9 +59,17 @@ public class Customer implements UserDetails {
     private List<Token> tokens;
 
 
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of(new SimpleGrantedAuthority(role.name()));
+//    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles.stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toList());
     }
 
     @Override
