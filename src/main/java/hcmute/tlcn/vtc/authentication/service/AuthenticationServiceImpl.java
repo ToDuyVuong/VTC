@@ -54,6 +54,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     @Value("${application.security.jwt.refresh-token.expiration}")
     private int refreshExpiration;
 
+
     @Override
     public RegisterResponse register(RegisterRequest customerRequest) {
         customerRequest.validate();
@@ -82,6 +83,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         return registerResponse;
     }
+
 
     @Override
     public LoginResponse login(LoginRequest loginRequest, HttpServletResponse response) {

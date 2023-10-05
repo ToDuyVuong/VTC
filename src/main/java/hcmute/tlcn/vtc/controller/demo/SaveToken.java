@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.controller.demo;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/demo")
+@Hidden
 public class SaveToken {
 
     @Autowired

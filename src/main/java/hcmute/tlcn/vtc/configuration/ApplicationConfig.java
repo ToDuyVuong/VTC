@@ -40,25 +40,18 @@ public class ApplicationConfig {
         return new CustomAuthenticationProvider(userDetailsService());
     }
 
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService());
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
-
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public CommandLineRunner commandLineRunner(
@@ -73,8 +66,6 @@ public class ApplicationConfig {
                     .password("string")
                     .birthday(currentDate)
                     .gender(true)
-//                    .phone("0123456789")
-//                    .role(Role.CUSTOMER)
                     .build();
             System.out.println("user1 token: " + service.register(us1));
 
@@ -83,12 +74,17 @@ public class ApplicationConfig {
         };
     }
 
+
+
+
     public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
+
 
         public CustomAuthenticationProvider(UserDetailsService userDetailsService) {
             setUserDetailsService(userDetailsService);
             setPasswordEncoder(passwordEncoder());
         }
+
 
         @Override
         protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) {

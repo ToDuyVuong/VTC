@@ -8,6 +8,7 @@ import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.entity.Customer;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.service.ICustomerService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/customer")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('CUSTOMER')")
+@Hidden
 public class V1Controller {
 
     @Autowired
