@@ -4,7 +4,7 @@ import hcmute.tlcn.vtc.entity.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -46,9 +46,9 @@ public class Voucher {
 
     private Long quantityUsed;
 
-    private OffsetDateTime atCreate;
+    private LocalDateTime atCreate;
 
-    private OffsetDateTime atUpdate;
+    private LocalDateTime atUpdate;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

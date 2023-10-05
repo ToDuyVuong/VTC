@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,9 +48,9 @@ public class Customer implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
 
-    private OffsetDateTime atCreate;
+    private LocalDateTime atCreate;
 
-    private OffsetDateTime atUpdate;
+    private LocalDateTime atUpdate;
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

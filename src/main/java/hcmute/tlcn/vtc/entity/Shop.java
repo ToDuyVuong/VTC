@@ -7,7 +7,7 @@ import hcmute.tlcn.vtc.entity.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -42,9 +42,9 @@ public class Shop {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private OffsetDateTime atCreate;
+    private LocalDateTime atCreate;
 
-    private OffsetDateTime atUpdate;
+    private LocalDateTime atUpdate;
 
     @OneToOne(fetch = FetchType.LAZY) // chỉ lấy dữ liệu khi gọi đến
     //    @JoinColumn(name = "customer_id", nullable = false, unique = true, cascade = CascadeType.ALL)

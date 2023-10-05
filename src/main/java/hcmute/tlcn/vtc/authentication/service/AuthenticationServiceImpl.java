@@ -31,7 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -72,8 +72,8 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         roles.add(Role.CUSTOMER);  // Every customer has a CUSTOMER role
         customer.setRoles(roles);
         customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
-        customer.setAtCreate(OffsetDateTime.now());
-        customer.setAtUpdate(OffsetDateTime.now());
+        customer.setAtCreate(LocalDateTime.now());
+        customer.setAtUpdate(LocalDateTime.now());
 
         var saveCustomer = customerRepository.save(customer);
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);

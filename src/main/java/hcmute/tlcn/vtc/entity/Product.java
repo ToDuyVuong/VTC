@@ -4,7 +4,7 @@ import hcmute.tlcn.vtc.entity.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -33,9 +33,9 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private OffsetDateTime atCreate;
+    private LocalDateTime atCreate;
 
-    private OffsetDateTime atUpdate;
+    private LocalDateTime atUpdate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
