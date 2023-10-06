@@ -9,10 +9,13 @@ import hcmute.tlcn.vtc.entity.Customer;
 public interface ICustomerService {
     Customer getCustomerByUsername(String username);
 
+
     ProfileCustomerResponse getProfileCustomer(String token);
 
 
     ProfileCustomerResponse updateProfileCustomer(ProfileCustomerRequest profileCustomerRequest);
 
     ProfileCustomerResponse changePassword(ChangePasswordRequest request);
+
+
 }

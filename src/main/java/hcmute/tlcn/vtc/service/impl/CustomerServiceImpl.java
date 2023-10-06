@@ -1,13 +1,14 @@
 package hcmute.tlcn.vtc.service.impl;
 
-import hcmute.tlcn.vtc.authentication.service.IJwtService;
 import hcmute.tlcn.vtc.dto.CustomerDTO;
+import hcmute.tlcn.vtc.dto.MailDTO;
 import hcmute.tlcn.vtc.dto.user.request.ChangePasswordRequest;
 import hcmute.tlcn.vtc.dto.user.request.ProfileCustomerRequest;
 import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.entity.Customer;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.service.ICustomerService;
+import hcmute.tlcn.vtc.service.IMailService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -16,7 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class CustomerServiceImpl implements ICustomerService {
     private ModelMapper modelMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
 
     @Override
@@ -102,5 +105,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
         return response;
     }
+
+
+
+
+
+
 
 }

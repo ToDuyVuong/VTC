@@ -62,7 +62,7 @@ public class ApplicationConfig {
             var us1 = RegisterRequest.builder()
                     .username("string")
                     .fullName("Nguyen")
-                    .email("example@example.com")
+                    .email("conc5288@gmail.com")
                     .password("string")
                     .birthday(currentDate)
                     .gender(true)
