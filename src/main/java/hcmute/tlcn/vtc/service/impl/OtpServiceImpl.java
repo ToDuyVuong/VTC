@@ -36,7 +36,7 @@ public class OtpServiceImpl implements IOtpService {
     }
 
     @Override
-    public boolean verifyOtp(String username, String otp) {
+    public void verifyOtp(String username, String otp) {
 
         OtpDetails otpDetails = otpMap.get(username);
         if (otpDetails != null && !otpDetails.isExpired()) {
@@ -44,8 +44,6 @@ public class OtpServiceImpl implements IOtpService {
                 throw new InvalidOtpException("OTP đã hết hạn");
             } else if (!otpDetails.getOtp().equals(otp)) {
                 throw new InvalidOtpException("OTP không hợp lệ");
-            } else {
-                return true;  // OTP hợp lệ
             }
         } else {
             throw new InvalidOtpException("OTP không tồn tại");

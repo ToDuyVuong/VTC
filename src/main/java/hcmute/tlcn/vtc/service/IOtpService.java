@@ -5,7 +5,7 @@ public interface IOtpService {
 
     String generateOtp(String username);
 
-    boolean verifyOtp(String username, String otp);
+    void verifyOtp(String username, String otp);
 
     long getTimeValid(String username);
 }

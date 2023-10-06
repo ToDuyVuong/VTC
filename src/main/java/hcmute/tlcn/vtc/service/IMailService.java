@@ -1,9 +1,11 @@
 package hcmute.tlcn.vtc.service;
 
-import hcmute.tlcn.vtc.dto.user.response.SendEmailForgotPasswordResponse;
+import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
 
 public interface IMailService {
 
 
-    SendEmailForgotPasswordResponse sendMailForgotPassword(String username);
+    ForgotPasswordResponse sendMailForgotPassword(String username);
+
+    boolean sendNewPasswordToEmail(String newPassword, String email, String username);
 }

@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class SendEmailForgotPasswordResponse extends ResponseAbstract {
+public class ForgotPasswordResponse extends ResponseAbstract {
 
     private String username;
 

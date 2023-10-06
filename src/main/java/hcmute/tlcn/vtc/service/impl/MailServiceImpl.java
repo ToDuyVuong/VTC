@@ -1,10 +1,8 @@
 package hcmute.tlcn.vtc.service.impl;
 
-import hcmute.tlcn.vtc.dto.CustomerDTO;
 import hcmute.tlcn.vtc.dto.MailDTO;
-import hcmute.tlcn.vtc.dto.user.response.SendEmailForgotPasswordResponse;
+import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.entity.Customer;
-import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.service.ICustomerService;
 import hcmute.tlcn.vtc.service.IMailService;
 import hcmute.tlcn.vtc.service.IOtpService;
@@ -12,7 +10,6 @@ import hcmute.tlcn.vtc.util.exception.EmailSendingException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -43,7 +40,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Override
-    public SendEmailForgotPasswordResponse sendMailForgotPassword(String username) {
+    public ForgotPasswordResponse sendMailForgotPassword(String username) {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("Tài khoản không được để trống.");
         }
@@ -65,11 +62,11 @@ public class MailServiceImpl implements IMailService {
             throw new RuntimeException("Có lỗi xảy ra khi gửi email: " + e.getMessage());
         }
 
-        SendEmailForgotPasswordResponse response = new SendEmailForgotPasswordResponse();
+        ForgotPasswordResponse response = new ForgotPasswordResponse();
         response.setEmail(customer.getEmail());
         response.setUsername(customer.getUsername());
         response.setTimeValid(otpService.getTimeValid(username));
-        response.setMessage("Gửi mã OTP lấy lại mật khẩu về email: "
+        response.setMessage("Thông báo: Gửi mã OTP lấy lại mật khẩu về email: "
                 + customer.getEmail()
                 + " của tài khoản "
                 + customer.getUsername()
@@ -78,6 +75,25 @@ public class MailServiceImpl implements IMailService {
         response.setCode(200);
 
         return response;
+    }
+
+
+    @Override
+    public boolean sendNewPasswordToEmail(String newPassword, String email, String username) {
+        MailDTO mail = new MailDTO();
+        mail.setMailFrom("conc5288@gmail.com");
+        mail.setMailTo(email);
+        mail.setMailSubject("Thông báo mật khẩu mới của tài khoản "
+                + username
+                + " trên hệ thống sàn bách hóa VTC.");
+        mail.setMailContent("Mật khẩu mới của bạn là: " + newPassword);
+
+        try {
+            sendEmail(mail);
+        } catch (EmailSendingException e) {
+            throw new RuntimeException("Có lỗi xảy ra khi gửi email: " + e.getMessage());
+        }
+        return true;
     }
 
 

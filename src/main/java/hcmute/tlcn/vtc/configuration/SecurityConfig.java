@@ -28,6 +28,8 @@ public class SecurityConfig {
     private static final String[] NO_AUTH = {
             "/api/auth/**",
             "/api/customer/forgot-password",
+            "/api/customer/reset-password",
+
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
