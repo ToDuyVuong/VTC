@@ -1,8 +1,13 @@
 package hcmute.tlcn.vtc.dto;
 
+import hcmute.tlcn.vtc.entity.Address;
 import hcmute.tlcn.vtc.entity.extra.Status;
 import lombok.*;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -28,6 +33,8 @@ public class AddressDTO {
 //    private String note;
 
     private Status status;
+
+
 
     public void validate () {
         if (province == null || province.isEmpty()) {
@@ -61,6 +68,23 @@ public class AddressDTO {
         if (status == null) {
             throw new IllegalArgumentException("Trạng thái không được để trống.");
         }
+    }
+
+
+//    public static Address convertToEntity(AddressDTO addressDTO) {
+//        ModelMapper modelMapper = new ModelMapper();
+//        return modelMapper.map(addressDTO, Address.class);
+//    }
+
+
+    public static List<AddressDTO> convertToListDTO(List<Address> addresses) {
+        List<AddressDTO> addressDTOs = new ArrayList<>();
+        for (Address address : addresses) {
+            ModelMapper modelMapper = new ModelMapper();
+            AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
+            addressDTOs.add(addressDTO);
+        }
+        return addressDTOs;
     }
 
 

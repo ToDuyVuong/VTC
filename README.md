@@ -26,11 +26,15 @@
     - Xem thông tin tài khoản.
     - Cập nhật thông tin tài khoản.
     - Đổi mật khẩu.
+    - 
+    **- Lấy lại mật khẩu.**
     
 - Quản lý địa chỉ:
     - Thêm địa chỉ.
     - Xem chi tiết địa chỉ.
     - Cập nhật địa chỉ.
     - Xóa địa chỉ.
+    - 
+    **- Xem danh sách địa chỉ.**
 
 

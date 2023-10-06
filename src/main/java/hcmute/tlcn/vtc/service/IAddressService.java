@@ -3,6 +3,7 @@ package hcmute.tlcn.vtc.service;
 import hcmute.tlcn.vtc.dto.user.request.AddressRequest;
 import hcmute.tlcn.vtc.dto.user.request.AddressStatusRequest;
 import hcmute.tlcn.vtc.dto.user.response.AddressResponse;
+import hcmute.tlcn.vtc.dto.user.response.ListAddressResponse;
 
 public interface IAddressService {
     AddressResponse addNewAddress(AddressRequest request);
@@ -13,4 +14,6 @@ public interface IAddressService {
 
 
     AddressResponse updateStatusAddress(AddressStatusRequest request);
+
+    ListAddressResponse getAllAddress(String username);
 }

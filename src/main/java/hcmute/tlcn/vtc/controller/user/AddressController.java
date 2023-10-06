@@ -3,6 +3,7 @@ package hcmute.tlcn.vtc.controller.user;
 import hcmute.tlcn.vtc.dto.user.request.AddressRequest;
 import hcmute.tlcn.vtc.dto.user.request.AddressStatusRequest;
 import hcmute.tlcn.vtc.dto.user.response.AddressResponse;
+import hcmute.tlcn.vtc.dto.user.response.ListAddressResponse;
 import hcmute.tlcn.vtc.service.IAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,13 @@ public class AddressController {
         AddressResponse response = addressService.updateStatusAddress(request);
         return ResponseEntity.ok(response);
     }
+
+
+    @GetMapping("/all")
+    public ResponseEntity<ListAddressResponse> getAllAddress(@RequestParam("username") String username) {
+        ListAddressResponse response = addressService.getAllAddress(username);
+        return ResponseEntity.ok(response);
+    }
+
 
 }

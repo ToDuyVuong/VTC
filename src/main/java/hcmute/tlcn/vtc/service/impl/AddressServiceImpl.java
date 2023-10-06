@@ -5,11 +5,11 @@ import hcmute.tlcn.vtc.dto.CustomerDTO;
 import hcmute.tlcn.vtc.dto.user.request.AddressRequest;
 import hcmute.tlcn.vtc.dto.user.request.AddressStatusRequest;
 import hcmute.tlcn.vtc.dto.user.response.AddressResponse;
+import hcmute.tlcn.vtc.dto.user.response.ListAddressResponse;
 import hcmute.tlcn.vtc.entity.Address;
 import hcmute.tlcn.vtc.entity.Customer;
 import hcmute.tlcn.vtc.entity.extra.Status;
 import hcmute.tlcn.vtc.repository.AddressRepository;
-import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.service.IAddressService;
 import hcmute.tlcn.vtc.service.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +27,6 @@ public class AddressServiceImpl implements IAddressService {
 
     @Autowired
     private final AddressRepository addressRepository;
-    @Autowired
-    private final CustomerRepository customerRepository;
     @Autowired
     private final ICustomerService customerService;
     @Autowired
@@ -88,7 +87,6 @@ public class AddressServiceImpl implements IAddressService {
     }
 
 
-
     @Override
     public AddressResponse updateAddress(AddressRequest request) {
         request.validate();
@@ -147,6 +145,33 @@ public class AddressServiceImpl implements IAddressService {
     }
 
 
+    @Override
+    public ListAddressResponse getAllAddress(String username) {
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("Tài khoản không được để trống.");
+        }
+
+        Customer customer = customerService.getCustomerByUsername(username);
+        List<Address> addresses = addressRepository.findAllByCustomerAndStatusNot(customer, Status.DELETED)
+                .orElseThrow(() -> new NotFoundException("Khách hàng chưa có địa chỉ nào."));
+
+        List<AddressDTO> addressDTOs = AddressDTO.convertToListDTO(addresses);
+        CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+
+        ListAddressResponse response = new ListAddressResponse();
+        response.setAddressDTOs(addressDTOs);
+        response.setCustomerDTO(customerDTO);
+        response.setStatus("ok");
+        response.setCode(200);
+        response.setMessage("Lấy danh sách địa chỉ của khách hàng: " + customer.getFullName() + " thành công.");
+
+        return response;
+    }
+
+
+
+
+
     private Address checkAddress(Long addressId, String username) {
 
         Address address = addressRepository.findById(addressId)
@@ -162,6 +187,7 @@ public class AddressServiceImpl implements IAddressService {
 
         return address;
     }
+
 
     private String setMessageUpdateStatus(Status status, String fullName) {
         if (status.equals(Status.DELETED)) {
