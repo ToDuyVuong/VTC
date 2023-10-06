@@ -1,15 +1,13 @@
 package hcmute.tlcn.vtc.controller.user;
 
 import hcmute.tlcn.vtc.dto.user.request.AddressRequest;
+import hcmute.tlcn.vtc.dto.user.request.AddressStatusRequest;
 import hcmute.tlcn.vtc.dto.user.response.AddressResponse;
 import hcmute.tlcn.vtc.service.IAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/customer/address")
@@ -19,15 +17,31 @@ public class AddressController {
     @Autowired
     private final IAddressService addressService;
 
+
     @PostMapping("/add")
     public ResponseEntity<AddressResponse> addNewAddress(@RequestBody AddressRequest request) {
         AddressResponse response = addressService.addNewAddress(request);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/update")
+
+    @GetMapping("/{addressId}")
+    public ResponseEntity<AddressResponse> getAddressById(@PathVariable("addressId") String addressId, @RequestParam("username") String username) {
+        AddressResponse response = addressService.getAddressById(addressId, username);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PutMapping("/update")
     public ResponseEntity<AddressResponse> updateAddress(@RequestBody AddressRequest request) {
         AddressResponse response = addressService.updateAddress(request);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PutMapping("/update/status")
+    public ResponseEntity<AddressResponse> updateStatusAddress(@RequestBody AddressStatusRequest request) {
+        AddressResponse response = addressService.updateStatusAddress(request);
         return ResponseEntity.ok(response);
     }
 

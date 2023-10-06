@@ -41,7 +41,7 @@ public class Address {
 
     private LocalDateTime atUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private Customer customer;
