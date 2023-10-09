@@ -7,7 +7,9 @@ import hcmute.tlcn.vtc.dto.user.response.ListAddressResponse;
 import hcmute.tlcn.vtc.service.IAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +23,7 @@ public class AddressController {
 
     @PostMapping("/add")
     public ResponseEntity<AddressResponse> addNewAddress(@RequestBody AddressRequest request) {
+        request.validate();
         AddressResponse response = addressService.addNewAddress(request);
         return ResponseEntity.ok(response);
     }

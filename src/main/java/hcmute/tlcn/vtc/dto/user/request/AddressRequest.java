@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.dto.user.request;
 
 import hcmute.tlcn.vtc.dto.AddressDTO;
+import hcmute.tlcn.vtc.entity.extra.Status;
 import lombok.*;
 
 import java.util.regex.Pattern;
@@ -51,8 +52,8 @@ public class AddressRequest {
             throw new IllegalArgumentException("Số điện thoại không hợp lệ.");
         }
 
-        if (addressDTO.getStatus() == null) {
-            throw new IllegalArgumentException("Trạng thái không được để trống.");
+        if (addressDTO.getStatus() == null || !Status.isValidStatus(String.valueOf(addressDTO.getStatus()))) {
+            throw new IllegalArgumentException("Trạng thái không hợp lệ.");
         }
     }
 }

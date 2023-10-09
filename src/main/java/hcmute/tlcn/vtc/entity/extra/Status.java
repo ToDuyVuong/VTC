@@ -1,8 +1,10 @@
 package hcmute.tlcn.vtc.entity.extra;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 
 @Getter
+@JsonDeserialize(using = StatusDeserializer.class)
 public enum Status {
 
     ACTIVE("Active"),
@@ -29,5 +31,23 @@ public enum Status {
 
     public String getValue() {
         return value;
+    }
+
+    public static boolean isValidStatus(String status) {
+        for (Status validStatus : Status.values()) {
+            if (validStatus.name().equalsIgnoreCase(status)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Status fromValue(String value) {
+        for (Status status : values()) {
+            if (status.getValue().equalsIgnoreCase(value)) {
+                return status;
+            }
+        }
+        return null;
     }
 }
