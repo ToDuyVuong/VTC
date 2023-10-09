@@ -25,16 +25,15 @@
 - Quản lý thông tài khoản:
     - Xem thông tin tài khoản.
     - Cập nhật thông tin tài khoản.
-    - Đổi mật khẩu.
-    - 
-    **- Lấy lại mật khẩu.**
+    - Đổi mật khẩu. 
+    - Lấy lại mật khẩu.
     
 - Quản lý địa chỉ:
     - Thêm địa chỉ.
     - Xem chi tiết địa chỉ.
-    - Cập nhật địa chỉ.
+    - Cập nhật thông tin chi tiết địa chỉ.
+    - Chọn trạng thái địa chỉ.
     - Xóa địa chỉ.
-    - 
-    **- Xem danh sách địa chỉ.**
+    - Xem danh sách địa chỉ.
 
 

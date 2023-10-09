@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -37,7 +38,7 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     public AddressResponse addNewAddress(AddressRequest request) {
-        request.validate();
+//        request.validate();
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
 
         AddressDTO addressDTO = request.getAddressDTO();
@@ -156,9 +157,15 @@ public class AddressServiceImpl implements IAddressService {
         Customer customer = customerService.getCustomerByUsername(username);
         List<Address> addresses = addressRepository.findAllByCustomerAndStatusNot(customer, Status.DELETED)
                 .orElseThrow(() -> new NotFoundException("Khách hàng chưa có địa chỉ nào."));
+        CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+
+
+        addresses.sort(Comparator.comparing(Address::getStatus,
+                Comparator.comparingInt(s -> s == Status.ACTIVE ? 0 : (s == Status.INACTIVE ? 1 : 2))));
+
 
         List<AddressDTO> addressDTOs = AddressDTO.convertToListDTO(addresses);
-        CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+
 
         ListAddressResponse response = new ListAddressResponse();
         response.setAddressDTOs(addressDTOs);
@@ -169,11 +176,6 @@ public class AddressServiceImpl implements IAddressService {
 
         return response;
     }
-
-
-
-
-
 
 
     private Address checkAddress(Long addressId, String username) {
