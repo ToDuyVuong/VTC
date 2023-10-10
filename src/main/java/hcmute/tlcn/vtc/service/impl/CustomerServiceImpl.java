@@ -70,16 +70,22 @@ public class CustomerServiceImpl implements ICustomerService {
         customerUpdate.setFullName(request.getFullName());
         customerUpdate.setGender(request.isGender());
         customerUpdate.setAtUpdate(LocalDateTime.now());
-        customerRepository.save(customerUpdate);
 
-        CustomerDTO customerDTO = modelMapper.map(customerUpdate, CustomerDTO.class);
-        ProfileCustomerResponse response = new ProfileCustomerResponse();
-        response.setCustomerDTO(customerDTO);
-        response.setMessage("Cập nhật thông tin khách hàng thành công.");
-        response.setStatus("ok");
-        response.setCode(200);
+        try {
+            customerRepository.save(customerUpdate);
 
-        return response;
+            CustomerDTO customerDTO = modelMapper.map(customerUpdate, CustomerDTO.class);
+            ProfileCustomerResponse response = new ProfileCustomerResponse();
+            response.setCustomerDTO(customerDTO);
+            response.setMessage("Cập nhật thông tin khách hàng thành công.");
+            response.setStatus("ok");
+            response.setCode(200);
+
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật thông tin khách hàng thất bại!");
+        }
+
 
     }
 
@@ -96,16 +102,23 @@ public class CustomerServiceImpl implements ICustomerService {
 
         customerUpdate.setPassword(passwordEncoder.encode(request.getNewPassword()));
         customerUpdate.setAtUpdate(LocalDateTime.now());
-        customerRepository.save(customerUpdate);
 
-        CustomerDTO customerDTO = modelMapper.map(customerUpdate, CustomerDTO.class);
-        ProfileCustomerResponse response = new ProfileCustomerResponse();
-        response.setCustomerDTO(customerDTO);
-        response.setMessage("Cập nhật mật khẩu của khách hàng thành công.");
-        response.setStatus("ok");
-        response.setCode(200);
+        try {
+            customerRepository.save(customerUpdate);
 
-        return response;
+            CustomerDTO customerDTO = modelMapper.map(customerUpdate, CustomerDTO.class);
+            ProfileCustomerResponse response = new ProfileCustomerResponse();
+            response.setCustomerDTO(customerDTO);
+            response.setMessage("Cập nhật mật khẩu của khách hàng thành công.");
+            response.setStatus("ok");
+            response.setCode(200);
+
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật mật khẩu của khách hàng thất bại!");
+        }
+
+
     }
 
     @Override
@@ -116,17 +129,22 @@ public class CustomerServiceImpl implements ICustomerService {
         Customer customerUpdate = getCustomerByUsername(request.getUsername());
         customerUpdate.setPassword(passwordEncoder.encode(request.getNewPassword()));
         customerUpdate.setAtUpdate(LocalDateTime.now());
-        customerRepository.save(customerUpdate);
+        try {
+            customerRepository.save(customerUpdate);
 
-        CustomerDTO customerDTO = modelMapper.map(customerUpdate, CustomerDTO.class);
-        ForgotPasswordResponse response = new ForgotPasswordResponse();
-        response.setUsername(customerDTO.getUsername());
-        response.setEmail(customerDTO.getEmail());
-        response.setMessage("Mật khẩu của tài khoản" + request.getUsername() + " đã được cài lại thành công.");
-        response.setStatus("ok");
-        response.setCode(200);
+            CustomerDTO customerDTO = modelMapper.map(customerUpdate, CustomerDTO.class);
+            ForgotPasswordResponse response = new ForgotPasswordResponse();
+            response.setUsername(customerDTO.getUsername());
+            response.setEmail(customerDTO.getEmail());
+            response.setMessage("Mật khẩu của tài khoản" + request.getUsername() + " đã được cài lại thành công.");
+            response.setStatus("ok");
+            response.setCode(200);
 
-        return response;
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cài lại mật khẩu của tài khoản thất bại!");
+        }
+
 
     }
 

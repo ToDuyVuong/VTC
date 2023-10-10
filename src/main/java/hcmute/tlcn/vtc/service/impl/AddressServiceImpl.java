@@ -47,19 +47,25 @@ public class AddressServiceImpl implements IAddressService {
         address.setAtCreate(LocalDateTime.now());
         address.setAtUpdate(LocalDateTime.now());
         address.setStatus(request.getAddressDTO().getStatus());
-        Address addressSave = addressRepository.save(address);
 
-        AddressDTO addressDTOSave = modelMapper.map(addressSave, AddressDTO.class);
-        CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+        try {
+            Address addressSave = addressRepository.save(address);
 
-        AddressResponse response = new AddressResponse();
-        response.setAddressDTO(addressDTOSave);
-        response.setCustomerDTO(customerDTO);
-        response.setStatus("ok");
-        response.setCode(200);
-        response.setMessage("Thêm địa chỉ mới của khách hàng: " + customer.getFullName() + " thành công.");
+            AddressDTO addressDTOSave = modelMapper.map(addressSave, AddressDTO.class);
+            CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
 
-        return response;
+            AddressResponse response = new AddressResponse();
+            response.setAddressDTO(addressDTOSave);
+            response.setCustomerDTO(customerDTO);
+            response.setStatus("ok");
+            response.setCode(200);
+            response.setMessage("Thêm địa chỉ mới của khách hàng: " + customer.getFullName() + " thành công.");
+
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Thêm địa chỉ mới thất bại.");
+        }
+
     }
 
 
@@ -105,16 +111,22 @@ public class AddressServiceImpl implements IAddressService {
         address.setPhone(addressDTO.getPhone());
         address.setStatus(addressDTO.getStatus());
         address.setAtUpdate(LocalDateTime.now());
-        addressRepository.save(address);
 
-        CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
-        AddressResponse response = new AddressResponse();
-        response.setAddressDTO(addressDTO);
-        response.setCustomerDTO(customerDTO);
-        response.setStatus("ok");
-        response.setCode(200);
-        response.setMessage("Cập nhật địa chỉ của khách hàng: " + customer.getFullName() + " thành công.");
-        return response;
+        try {
+            addressRepository.save(address);
+
+            CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+            AddressResponse response = new AddressResponse();
+            response.setAddressDTO(addressDTO);
+            response.setCustomerDTO(customerDTO);
+            response.setStatus("ok");
+            response.setCode(200);
+            response.setMessage("Cập nhật địa chỉ của khách hàng: " + customer.getFullName() + " thành công.");
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật địa chỉ mới thất bại.");
+        }
+
     }
 
 
@@ -129,19 +141,25 @@ public class AddressServiceImpl implements IAddressService {
         if (address.getCustomer().getCustomerId().equals(customer.getCustomerId())) {
             address.setAtUpdate(LocalDateTime.now());
             address.setStatus(request.getStatus());
-            addressRepository.save(address);
 
-            String message = setMessageUpdateStatus(request.getStatus(), customer.getFullName());
-            AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
-            CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
-            AddressResponse response = new AddressResponse();
-            response.setCustomerDTO(customerDTO);
-            response.setAddressDTO(addressDTO);
-            response.setStatus("ok");
-            response.setCode(200);
-            response.setMessage(message);
+            try {
+                addressRepository.save(address);
 
-            return response;
+                String message = setMessageUpdateStatus(request.getStatus(), customer.getFullName());
+                AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
+                CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+                AddressResponse response = new AddressResponse();
+                response.setCustomerDTO(customerDTO);
+                response.setAddressDTO(addressDTO);
+                response.setStatus("ok");
+                response.setCode(200);
+                response.setMessage(message);
+
+                return response;
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Cập nhật trạng thái địa chỉ mới thất bại.");
+            }
+
         } else {
             throw new IllegalArgumentException("Địa chỉ không thuộc về khách hàng này.");
         }

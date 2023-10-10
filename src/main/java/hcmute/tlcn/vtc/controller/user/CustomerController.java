@@ -28,7 +28,7 @@ public class CustomerController {
 
 
     @GetMapping("/profile")
-    public ResponseEntity<ProfileCustomerResponse> getProfileCustomer(@RequestBody String username) {
+    public ResponseEntity<ProfileCustomerResponse> getProfileCustomer(@RequestParam String username) {
         ProfileCustomerResponse profileCustomerResponse = customerService.getProfileCustomer(username);
         return ResponseEntity.ok(profileCustomerResponse);
     }

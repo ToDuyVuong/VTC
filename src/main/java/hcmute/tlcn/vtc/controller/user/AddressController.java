@@ -22,7 +22,7 @@ public class AddressController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<AddressResponse> addNewAddress(@RequestBody AddressRequest request) {
+    public ResponseEntity<AddressResponse> addNewAddressByUsername(@RequestBody AddressRequest request) {
         request.validate();
         AddressResponse response = addressService.addNewAddress(request);
         return ResponseEntity.ok(response);
@@ -37,21 +37,21 @@ public class AddressController {
 
 
     @PutMapping("/update")
-    public ResponseEntity<AddressResponse> updateAddress(@RequestBody AddressRequest request) {
+    public ResponseEntity<AddressResponse> updateAddressByUsername(@RequestBody AddressRequest request) {
         AddressResponse response = addressService.updateAddress(request);
         return ResponseEntity.ok(response);
     }
 
 
     @PutMapping("/update/status")
-    public ResponseEntity<AddressResponse> updateStatusAddress(@RequestBody AddressStatusRequest request) {
+    public ResponseEntity<AddressResponse> updateStatusAddressByUsername(@RequestBody AddressStatusRequest request) {
         AddressResponse response = addressService.updateStatusAddress(request);
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/all")
-    public ResponseEntity<ListAddressResponse> getAllAddress(@RequestParam("username") String username) {
+    public ResponseEntity<ListAddressResponse> getAllAddressByUsername(@RequestParam("username") String username) {
         ListAddressResponse response = addressService.getAllAddress(username);
         return ResponseEntity.ok(response);
     }
