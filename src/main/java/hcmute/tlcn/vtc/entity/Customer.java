@@ -47,6 +47,9 @@ public class Customer implements UserDetails {
     @Column(name = "role", nullable = false)
     private Set<Role> roles = new HashSet<>();
 
+    public void addRole(Role role) {// Convert the string to the Role enum
+        roles.add(role);
+    }
 
     private LocalDateTime atCreate;
 

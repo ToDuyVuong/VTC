@@ -7,7 +7,9 @@ import hcmute.tlcn.vtc.dto.vendor.request.RegisterShopRequest;
 import hcmute.tlcn.vtc.dto.vendor.response.ShopResponse;
 import hcmute.tlcn.vtc.entity.Customer;
 import hcmute.tlcn.vtc.entity.Shop;
+import hcmute.tlcn.vtc.entity.extra.Role;
 import hcmute.tlcn.vtc.entity.extra.Status;
+import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.repository.ShopRepository;
 import hcmute.tlcn.vtc.service.IShopService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class ShopServiceImpl implements IShopService {
 
     @Autowired
     private ShopRepository shopRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
     @Autowired
     private CustomerServiceImpl customerService;
     @Autowired
@@ -45,6 +49,9 @@ public class ShopServiceImpl implements IShopService {
             Shop save = shopRepository.save(shop);
 
             ShopDTO shopDTO = modelMapper.map(save, ShopDTO.class);
+
+            customer = addRoleVendor(customer);
+
             shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
 
             ShopResponse shopResponse = new ShopResponse();
@@ -60,6 +67,16 @@ public class ShopServiceImpl implements IShopService {
 
     }
 
+
+    private Customer addRoleVendor(Customer customer) {
+        customer.addRole(Role.VENDOR);
+        try {
+           return customerRepository.save(customer);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật quyền cho tài khoản thất bại.");
+        }
+
+    }
 
     private void checkEmailAndPhoneAndUsername(String email, String phone, String username) {
         // Check if the email is already used by a shop
