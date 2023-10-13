@@ -1,7 +1,6 @@
 package hcmute.tlcn.vtc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import hcmute.tlcn.vtc.entity.extra.Role;
 import hcmute.tlcn.vtc.entity.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,8 +23,14 @@ public class Category {
 
     private String image;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private boolean adminOnly;
+
+//    public void setAdminOnly(boolean isAdminOnly) {
+//        this.adminOnly = isAdminOnly;
+//    }
+
+//    @Enumerated(EnumType.STRING)
+//    private Role role;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -35,12 +40,12 @@ public class Category {
     private LocalDateTime atUpdate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id")
+    @JoinColumn(name = "shop_id", nullable = true)
     @JsonIgnore
     private Shop shop;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "parent_id", nullable = true)
     @JsonIgnore
     private Category parent;
 

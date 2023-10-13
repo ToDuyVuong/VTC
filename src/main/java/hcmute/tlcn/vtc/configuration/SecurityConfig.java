@@ -51,6 +51,10 @@ public class SecurityConfig {
             "/api/vendor/shop/*",
     };
 
+    private static final String[] ADMIN_ROLE = {
+            "/api/admin/category/**",
+    };
+
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -71,6 +75,9 @@ public class SecurityConfig {
 
                                 .requestMatchers(VENDOR_ROLE)
                                 .hasRole(Role.VENDOR.name())
+
+                                .requestMatchers(ADMIN_ROLE)
+                                .hasRole(Role.ADMIN.name())
 
                                 .anyRequest()
                                 .authenticated()
