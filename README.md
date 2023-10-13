@@ -37,3 +37,12 @@
     - Xem danh sách địa chỉ.
 
 
+- Quản lý cửa hàng:
+    - Thêm cửa hàng.
+    - Xem chi tiết cửa hàng.
+    - Cập nhật thông tin chi tiết cửa hàng.
+    - Chọn trạng thái cửa hàng.
+
+- Quản lý danh mục:
+    - Thêm danh mục bằng quyền admin.
+  
