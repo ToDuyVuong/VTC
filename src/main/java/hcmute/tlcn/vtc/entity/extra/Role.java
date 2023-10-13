@@ -11,10 +11,11 @@ import java.util.stream.Collectors;
 
 import static hcmute.tlcn.vtc.entity.extra.Permission.*;
 
+@Getter
 @RequiredArgsConstructor
 public enum Role {
 
-//        CUSTOMER(
+    //        CUSTOMER(
 //                Set.of(
 //                        CUSTOMER_READ,
 //                        CUSTOMER_UPDATE,
@@ -22,38 +23,16 @@ public enum Role {
 //                        CUSTOMER_CREATE
 //                )
 //        ),
+
     CUSTOMER(Collections.emptySet()),
-    VENDOR(
-            Set.of(
-                    VENDOR_READ,
-                    VENDOR_UPDATE,
-                    VENDOR_DELETE,
-                    VENDOR_CREATE
-            )
-    ),
 
-    ADMIN(
-            Set.of(
-                    ADMIN_READ,
-                    ADMIN_UPDATE,
-                    ADMIN_DELETE,
-                    ADMIN_CREATE,
-                    MANAGER_READ,
-                    MANAGER_UPDATE,
-                    MANAGER_DELETE,
-                    MANAGER_CREATE
-            )
-    ),
-    MANAGER(
-            Set.of(
-                    MANAGER_READ,
-                    MANAGER_UPDATE,
-                    MANAGER_DELETE,
-                    MANAGER_CREATE
-            )
-    );
+    VENDOR(Collections.emptySet()),
 
-    @Getter
+    ADMIN(Collections.emptySet()),
+
+    MANAGER(Collections.emptySet());
+
+
     private final Set<Permission> permissions;
 
 

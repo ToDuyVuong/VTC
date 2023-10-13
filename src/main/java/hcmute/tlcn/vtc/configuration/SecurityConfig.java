@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.configuration;
 
+import hcmute.tlcn.vtc.entity.extra.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,8 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -29,7 +28,6 @@ public class SecurityConfig {
             "/api/auth/**",
             "/api/customer/forgot-password",
             "/api/customer/reset-password",
-            "/api/vendor/shop/register",
 
             "/v2/api-docs",
             "/v3/api-docs",
@@ -44,8 +42,15 @@ public class SecurityConfig {
     };
 
     private static final String[] CUSTOMER_ROLE = {
-            "/api/customer/**"
+            "/api/customer/**",
+            "/api/vendor/register",
+
     };
+
+    private static final String[] VENDOR_ROLE = {
+            "/api/vendor/shop/*",
+    };
+
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -57,19 +62,25 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(NO_AUTH)
+                        req
+                                .requestMatchers(NO_AUTH)
                                 .permitAll()
-                                .requestMatchers(CUSTOMER_ROLE).authenticated().anyRequest()
+
+                                .requestMatchers(CUSTOMER_ROLE)
                                 .authenticated()
+
+                                .requestMatchers(VENDOR_ROLE)
+                                .hasRole(Role.VENDOR.name())
+
+                                .anyRequest()
+                                .authenticated()
+
+
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//                .logout(logout -> logout
-//                        .logoutUrl("/api/auth/logout")
-//                        .addLogoutHandler(logoutHandler)
-//                        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-//                )
+
 
         ;
 

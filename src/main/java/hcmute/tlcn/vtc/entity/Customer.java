@@ -38,8 +38,9 @@ public class Customer implements UserDetails {
 
     private Date birthday;
 
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
+    private LocalDateTime atCreate;
+
+    private LocalDateTime atUpdate;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -51,9 +52,6 @@ public class Customer implements UserDetails {
         roles.add(role);
     }
 
-    private LocalDateTime atCreate;
-
-    private LocalDateTime atUpdate;
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -61,24 +59,29 @@ public class Customer implements UserDetails {
     @ToString.Exclude
     private List<Token> tokens;
 
-//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)  // Fetch EAGERLY
-//    @JsonIgnore
-//    @ToString.Exclude
-//    private List<Token> tokens;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<? extends GrantedAuthority> authorities = roles.stream()
+                .flatMap(role -> role.getAuthorities().stream())
+                .collect(Collectors.toList());
+
+        System.out.println("Authorities: " + authorities);
+
+        return authorities;
+    }
 
 
 //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(role.name()));
+//        return roles.stream()
+//                .flatMap(role -> role.getPermissions().stream())
+//                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+//                .collect(Collectors.toList());
 //    }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .flatMap(role -> role.getPermissions().stream())
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
-                .collect(Collectors.toList());
-    }
+
+
+
 
     @Override
     public String getPassword() {
