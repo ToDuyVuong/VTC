@@ -43,6 +43,10 @@
     - Cập nhật thông tin chi tiết cửa hàng.
     - Chọn trạng thái cửa hàng.
 
-- Quản lý danh mục:
+- Quản lý danh mục sản phẩm từ quyền admin:
     - Thêm danh mục bằng quyền admin.
+    - Xem danh sách danh mục.
+    - Xem chi tiết danh mục.
+    - Cập nhật thông tin danh mục.
+    - Chọn trạng thái danh mục.
   

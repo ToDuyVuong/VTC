@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findAllByAdminOnly(boolean adminOnly);
+
+    List<Category> findAllByParent(Category parent);
+
+
 }
