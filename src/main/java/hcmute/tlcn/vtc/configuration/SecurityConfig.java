@@ -48,7 +48,8 @@ public class SecurityConfig {
     };
 
     private static final String[] VENDOR_ROLE = {
-            "/api/vendor/shop/*",
+            "/api/vendor/shop/**",
+            "/api/vendor/category/**"
     };
 
     private static final String[] ADMIN_ROLE = {

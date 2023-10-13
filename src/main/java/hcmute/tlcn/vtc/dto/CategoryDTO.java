@@ -22,6 +22,8 @@ public class CategoryDTO {
 
     private String image;
 
+    private String description;
+
     private boolean adminOnly;
 
     private Status status;
