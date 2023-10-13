@@ -23,8 +23,6 @@ public class CustomerController {
     private final ICustomerService customerService;
     @Autowired
     private final IMailService mailService;
-    @Autowired
-    private final IOtpService otpService;
 
 
     @GetMapping("/profile")

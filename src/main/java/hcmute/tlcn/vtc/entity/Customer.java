@@ -53,7 +53,6 @@ public class Customer implements UserDetails {
     }
 
 
-
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
@@ -61,13 +60,9 @@ public class Customer implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<? extends GrantedAuthority> authorities = roles.stream()
+        return roles.stream()
                 .flatMap(role -> role.getAuthorities().stream())
                 .collect(Collectors.toList());
-
-        System.out.println("Authorities: " + authorities);
-
-        return authorities;
     }
 
 
@@ -78,9 +73,6 @@ public class Customer implements UserDetails {
 //                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
 //                .collect(Collectors.toList());
 //    }
-
-
-
 
 
     @Override
