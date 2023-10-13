@@ -50,15 +50,13 @@ public class ShopServiceImpl implements IShopService {
             Shop save = shopRepository.save(shop);
 
             ShopDTO shopDTO = modelMapper.map(save, ShopDTO.class);
-
             customer = addRoleVendor(customer);
-
             shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
 
             ShopResponse shopResponse = new ShopResponse();
             shopResponse.setShopDTO(shopDTO);
             shopResponse.setCode(200);
-            shopResponse.setMessage("Đăng ký cửa hàng thành công!");
+            shopResponse.setMessage("Đăng ký cửa hàng thành công.");
             shopResponse.setStatus("ok");
             return shopResponse;
 
@@ -74,18 +72,23 @@ public class ShopServiceImpl implements IShopService {
         Customer customer = customerService.getCustomerByUsername(username);
         Shop shop = shopRepository.findByCustomer_Username(username);
 
+        if (shop == null) {
+            throw new IllegalArgumentException("Tài khoản chưa đăng ký cửa hàng!");
+        }
+
         ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
         shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
 
         ShopResponse shopResponse = new ShopResponse();
         shopResponse.setShopDTO(shopDTO);
         shopResponse.setCode(200);
-        shopResponse.setMessage("Lấy thông tin cửa hàng thành công!");
+        shopResponse.setMessage("Lấy thông tin cửa hàng thành công.");
         shopResponse.setStatus("ok");
 
         return shopResponse;
 
     }
+
 
     @Override
     public ShopResponse updateShop(UpdateShopRequest request){
@@ -112,7 +115,7 @@ public class ShopServiceImpl implements IShopService {
             ShopResponse shopResponse = new ShopResponse();
             shopResponse.setShopDTO(shopDTO);
             shopResponse.setCode(200);
-            shopResponse.setMessage("Cập nhật cửa hàng thành công!");
+            shopResponse.setMessage("Cập nhật cửa hàng thành công.");
             shopResponse.setStatus("ok");
             return shopResponse;
         }
@@ -121,6 +124,35 @@ public class ShopServiceImpl implements IShopService {
         }
 
 
+    }
+
+
+    @Override
+    public ShopResponse updateStatusShop(String username, Status status){
+        Shop shop = shopRepository.findByCustomer_Username(username);
+        if (shop == null) {
+            throw new IllegalArgumentException("Tài khoản chưa đăng ký cửa hàng!");
+        }
+        shop.setStatus(status);
+        shop.setAtUpdate(LocalDateTime.now());
+
+        try {
+            shopRepository.save(shop);
+
+            Customer customer = customerService.getCustomerByUsername(username);
+            ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
+            shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+
+            ShopResponse shopResponse = new ShopResponse();
+            shopResponse.setShopDTO(shopDTO);
+            shopResponse.setCode(200);
+            shopResponse.setMessage("Cập nhật trạng thái cửa hàng thành công.");
+            shopResponse.setStatus("ok");
+            return shopResponse;
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật trạng thái cửa hàng thất bại!");
+        }
     }
 
 
@@ -145,37 +177,6 @@ public class ShopServiceImpl implements IShopService {
     }
 
 
-
-
-
-//    private void checkEmailAndPhoneAndUsername(String email, String phone, String username) {
-//        checkEmailInShops(email);
-//        checkPhoneInShops(phone);
-//        checkUsernameInShops(username);
-//    }
-//
-//    private void checkEmailInShops(String email) {
-//        Shop shopByEmail = shopRepository.findByEmail(email);
-//        if (shopByEmail != null) {
-//            throw new IllegalArgumentException("Email đã được sử dụng ở một cửa hàng khác!");
-//        }
-//    }
-//
-//    private void checkPhoneInShops(String phone) {
-//        Shop shopByPhone = shopRepository.findByPhone(phone);
-//        if (shopByPhone != null) {
-//            throw new IllegalArgumentException("Số điện thoại đã được sử dụng ở một cửa hàng khác!");
-//        }
-//    }
-//
-//    private void checkUsernameInShops(String username) {
-//        Shop shopByUsername =  shopRepository.findByCustomer_Username(username);
-//        if (shopByUsername != null) {
-//            throw new IllegalArgumentException("Tài khoản đã được sử dụng ở một cửa hàng khác!");
-//        }
-//    }
-
-
     private Customer addRoleVendor(Customer customer) {
         customer.addRole(Role.VENDOR);
         try {
@@ -185,6 +186,7 @@ public class ShopServiceImpl implements IShopService {
         }
 
     }
+
 
     private void checkEmailAndPhoneAndUsername(String email, String phone, String username) {
         // Check if the email is already used by a shop
