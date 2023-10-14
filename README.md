@@ -49,4 +49,12 @@
     - Xem chi tiết danh mục.
     - Cập nhật thông tin danh mục.
     - Chọn trạng thái danh mục.
+
+
+- Quản lý thương hiệu sản phẩm từ quyền admin:
+    - Thêm thương hiệu bằng quyền admin.
+    - Xem danh sách thương hiệu.
+    - Xem chi tiết thương hiệu.
+    - Cập nhật thông tin thương hiệu.
+    - Cập nhật trạng thái thương hiệu.
   

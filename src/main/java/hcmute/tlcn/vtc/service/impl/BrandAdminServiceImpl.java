@@ -86,6 +86,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         return response;
     }
 
+
     @Override
     public AllBrandAdminResponse getAllBrandAdmin() {
 
@@ -142,6 +143,38 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         } catch (Exception e) {
             throw new IllegalArgumentException("Cập nhật thương hiệu thất bại!");
         }
+    }
+
+
+    @Override
+    public BrandAdminResponse updateStatusBrandAdmin(Long brandId, String username, Status status) {
+
+            Brand brand = brandRepository.findById(brandId)
+                    .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thương hiệu!"));
+            if (!brand.getCustomer().getUsername().equals(username)) {
+                throw new UnauthorizedAccessException("Bạn không có quyền sửa thương hiệu này!");
+            }
+            if (brand.getStatus() == Status.DELETED){
+                throw new IllegalArgumentException("Thương hiệu đã bị xóa!");
+            }
+
+            brand.setStatus(status);
+            brand.setAtUpdate(LocalDateTime.now());
+
+            try {
+                brandRepository.save(brand);
+
+                BrandDTO brandDTO = modelMapper.map(brand, BrandDTO.class);
+                BrandAdminResponse response = new BrandAdminResponse();
+                response.setBrandDTO(brandDTO);
+                response.setCode(200);
+                response.setStatus("success");
+                response.setMessage("Cập nhật trạng thái thương hiệu thành công.");
+
+                return response;
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Cập nhật trạng thái thương hiệu thất bại!");
+            }
     }
 
 }
