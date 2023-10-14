@@ -23,6 +23,8 @@ public class Category {
 
     private String image;
 
+    private String description;
+
     private boolean adminOnly;
 
 //    public void setAdminOnly(boolean isAdminOnly) {

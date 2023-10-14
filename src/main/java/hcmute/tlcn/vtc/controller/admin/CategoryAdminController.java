@@ -2,15 +2,12 @@ package hcmute.tlcn.vtc.controller.admin;
 
 
 import hcmute.tlcn.vtc.dto.admin.request.CategoryAdminRequest;
-import hcmute.tlcn.vtc.dto.vendor.response.CategoryResponse;
-import hcmute.tlcn.vtc.service.ICategoryService;
+import hcmute.tlcn.vtc.dto.admin.response.CategoryAdminResponse;
+import hcmute.tlcn.vtc.service.ICategoryAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/category")
@@ -18,13 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryAdminController {
 
     @Autowired
-    private ICategoryService categoryService;
+    private ICategoryAdminService categoryService;
 
-    @PutMapping("/add")
-    public ResponseEntity<CategoryResponse> addNewCategoryByAdmin(@RequestBody CategoryAdminRequest request) {
+    @PostMapping("/add")
+    public ResponseEntity<CategoryAdminResponse> addNewCategoryByAdmin(@RequestBody CategoryAdminRequest request) {
         request.validate();
         return ResponseEntity.ok(categoryService.addNewCategory(request));
     }
+
+
 
 
 }
