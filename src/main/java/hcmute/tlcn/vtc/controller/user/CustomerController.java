@@ -1,6 +1,5 @@
 package hcmute.tlcn.vtc.controller.user;
 
-import hcmute.tlcn.vtc.dto.ResponseAbstract;
 import hcmute.tlcn.vtc.dto.user.request.ChangePasswordRequest;
 import hcmute.tlcn.vtc.dto.user.request.ForgotPasswordRequest;
 import hcmute.tlcn.vtc.dto.user.request.ProfileCustomerRequest;
@@ -8,7 +7,6 @@ import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.service.ICustomerService;
 import hcmute.tlcn.vtc.service.IMailService;
-import hcmute.tlcn.vtc.service.IOtpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

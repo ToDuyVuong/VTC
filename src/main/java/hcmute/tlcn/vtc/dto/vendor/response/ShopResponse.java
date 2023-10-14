@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.dto.vendor.response;
 
-import hcmute.tlcn.vtc.dto.ResponseAbstract;
+import hcmute.tlcn.vtc.dto.extra.ResponseAbstract;
 import hcmute.tlcn.vtc.dto.ShopDTO;
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.dto.user.response;
 
-import hcmute.tlcn.vtc.dto.ResponseAbstract;
+import hcmute.tlcn.vtc.dto.extra.ResponseAbstract;
 import lombok.*;
 
 @Getter

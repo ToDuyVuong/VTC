@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.dto.admin.response;
 
+import hcmute.tlcn.vtc.dto.BrandDTO;
 import hcmute.tlcn.vtc.dto.extra.ResponseAbstract;
-import hcmute.tlcn.vtc.dto.admin.CategoryAdminDTO;
 import lombok.*;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AllCategoryAdminResponse extends ResponseAbstract {
+public class AllBrandAdminResponse extends ResponseAbstract {
 
-    private List<CategoryAdminDTO> categoryAdminDTOS;
+    private List<BrandDTO> brandDTOS;
 }

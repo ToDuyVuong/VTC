@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.authentication.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import hcmute.tlcn.vtc.dto.CustomerDTO;
-import hcmute.tlcn.vtc.dto.ResponseAbstract;
+import hcmute.tlcn.vtc.dto.extra.ResponseAbstract;
 import lombok.*;
 
 @Getter

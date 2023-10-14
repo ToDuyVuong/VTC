@@ -1,9 +1,7 @@
 package hcmute.tlcn.vtc.configuration;
 
 import hcmute.tlcn.vtc.authentication.service.IJwtService;
-import hcmute.tlcn.vtc.repository.TokenRepository;
-import hcmute.tlcn.vtc.authentication.service.JwtServiceImpl;
-import hcmute.tlcn.vtc.util.exception.TokenExpiredException;
+import hcmute.tlcn.vtc.util.exception.UnauthorizedAccessException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -59,7 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             System.out.println("isTokenValid: " + isTokenValid);
 
             if (!isTokenValid) {
-                throw new TokenExpiredException("Token đã hết hạn.");
+                throw new UnauthorizedAccessException("Token đã hết hạn.");
             }
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userDetails,

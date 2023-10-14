@@ -24,9 +24,6 @@ public class Cart {
 
     private Long quantity;
 
-
-
-
     private LocalDateTime atCreate;
 
     private LocalDateTime atUpdate;

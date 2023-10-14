@@ -16,7 +16,7 @@ import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.util.exception.DuplicateEntryException;
 import hcmute.tlcn.vtc.util.exception.JwtException;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
-import hcmute.tlcn.vtc.util.exception.TokenExpiredException;
+import hcmute.tlcn.vtc.util.exception.UnauthorizedAccessException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -130,7 +130,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         var token = storedToken.get();
         if (token.isExpired() || token.isRevoked()) {
-            throw new TokenExpiredException("Token đã hết hạn. Đăng xuất thất bại.");
+            throw new UnauthorizedAccessException("Token đã hết hạn. Đăng xuất thất bại.");
         }
 
         token.setExpired(true);

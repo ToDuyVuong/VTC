@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.dto.admin.response;
 
+import hcmute.tlcn.vtc.dto.BrandDTO;
 import hcmute.tlcn.vtc.dto.extra.ResponseAbstract;
-import hcmute.tlcn.vtc.dto.admin.CategoryAdminDTO;
 import lombok.*;
 
 @Getter
@@ -9,8 +9,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryAdminResponse extends ResponseAbstract {
+public class BrandAdminResponse extends ResponseAbstract {
 
-    private CategoryAdminDTO categoryAdminDTO;
-
+    private BrandDTO brandDTO;
 }

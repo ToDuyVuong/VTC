@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.dto;
+package hcmute.tlcn.vtc.dto.extra;
 
 import lombok.*;
 

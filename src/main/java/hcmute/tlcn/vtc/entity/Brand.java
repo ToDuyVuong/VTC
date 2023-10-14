@@ -1,9 +1,11 @@
 package hcmute.tlcn.vtc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hcmute.tlcn.vtc.entity.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -27,6 +29,18 @@ public class Brand {
     private String information;
 
     private String origin;
+
+    private Status status;
+
+    private LocalDateTime atCreate;
+
+    private LocalDateTime atUpdate;
+
+    private boolean adminOnly;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @OneToMany(mappedBy = "brand")
     @JsonIgnore
