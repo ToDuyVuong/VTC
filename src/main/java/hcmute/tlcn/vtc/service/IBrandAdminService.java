@@ -7,7 +7,10 @@ import hcmute.tlcn.vtc.dto.admin.response.BrandAdminResponse;
 public interface IBrandAdminService {
     BrandAdminResponse addNewBrand(BrandAdminRequest request);
 
-    AllBrandAdminResponse getAllBrandByAdmin();
+    BrandAdminResponse getBrandById(Long brandId);
+
+    AllBrandAdminResponse getAllBrandAdmin();
 
 
+    BrandAdminResponse updateBrandAdmin(BrandAdminRequest request);
 }

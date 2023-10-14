@@ -36,7 +36,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
     public BrandAdminResponse addNewBrand(BrandAdminRequest request) {
 
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
-        if(!customer.getRoles().contains(Role.ADMIN)){
+        if (!customer.getRoles().contains(Role.ADMIN)) {
             throw new UnauthorizedAccessException("Bạn không có quyền thêm thương hiệu!");
         }
 
@@ -53,7 +53,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         brand.setCustomer(customer);
 
         try {
-        Brand saveBrand =    brandRepository.save(brand);
+            Brand saveBrand = brandRepository.save(brand);
 
             BrandDTO brandDTO = modelMapper.map(saveBrand, BrandDTO.class);
             BrandAdminResponse response = new BrandAdminResponse();
@@ -70,14 +70,31 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
 
 
     @Override
-    public AllBrandAdminResponse getAllBrandByAdmin(){
+    public BrandAdminResponse getBrandById(Long brandId) {
+
+        Brand brand = brandRepository.findById(brandId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thương hiệu!"));
+
+        BrandDTO brandDTO = modelMapper.map(brand, BrandDTO.class);
+
+        BrandAdminResponse response = new BrandAdminResponse();
+        response.setBrandDTO(brandDTO);
+        response.setCode(200);
+        response.setStatus("success");
+        response.setMessage("Lấy thông tin thương hiệu thành công.");
+
+        return response;
+    }
+
+    @Override
+    public AllBrandAdminResponse getAllBrandAdmin() {
 
         List<Brand> brands = brandRepository.findAllByAdminOnly(true);
         if (brands == null || brands.isEmpty()) {
             throw new IllegalArgumentException("Không có thương hiệu nào!");
         }
 
-        List<BrandDTO> brandDTOS =  BrandDTO.convertToListDTO(brands);
+        List<BrandDTO> brandDTOS = BrandDTO.convertToListDTO(brands);
 
         AllBrandAdminResponse response = new AllBrandAdminResponse();
         response.setBrandDTOS(brandDTOS);
@@ -87,5 +104,44 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         return response;
     }
 
+
+    @Override
+    public BrandAdminResponse updateBrandAdmin(BrandAdminRequest request) {
+
+        Brand brand = brandRepository.findById(request.getBrandId())
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thương hiệu!"));
+        if (!brand.getCustomer().getUsername().equals(request.getUsername())) {
+            throw new UnauthorizedAccessException("Bạn không có quyền sửa thương hiệu này!");
+        }
+
+        if (!request.getName().equals(brand.getName())) {
+            Brand brandCheck = brandRepository.findByName(request.getName());
+            if (brandCheck != null) {
+                throw new IllegalArgumentException("Tên thương hiệu đã tồn tại!");
+            }
+        }
+
+        brand.setName(request.getName());
+        brand.setDescription(request.getDescription());
+        brand.setInformation(request.getInformation());
+        brand.setOrigin(request.getOrigin());
+        brand.setImage(request.getImage());
+        brand.setAtUpdate(LocalDateTime.now());
+
+        try {
+            brandRepository.save(brand);
+
+            BrandDTO brandDTO = modelMapper.map(brand, BrandDTO.class);
+            BrandAdminResponse response = new BrandAdminResponse();
+            response.setBrandDTO(brandDTO);
+            response.setCode(200);
+            response.setStatus("success");
+            response.setMessage("Cập nhật thương hiệu thành công.");
+
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật thương hiệu thất bại!");
+        }
+    }
 
 }

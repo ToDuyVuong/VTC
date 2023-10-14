@@ -24,9 +24,24 @@ public class BrandAdminController {
         return ResponseEntity.ok(response);
     }
 
+
+    @GetMapping("/{brandId}")
+    public ResponseEntity<BrandAdminResponse> getBrandById(@PathVariable Long brandId){
+        BrandAdminResponse response = brandAdminService.getBrandById(brandId);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/all")
-    public ResponseEntity<AllBrandAdminResponse> getAllBrandByAdmin(){
-        AllBrandAdminResponse response = brandAdminService.getAllBrandByAdmin();
+    public ResponseEntity<AllBrandAdminResponse> getAllBrandAdmin(){
+        AllBrandAdminResponse response = brandAdminService.getAllBrandAdmin();
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<BrandAdminResponse> updateBrandAdmin(@RequestBody BrandAdminRequest request){
+        request.validate();
+        request.checkBrandId();
+        BrandAdminResponse response = brandAdminService.updateBrandAdmin(request);
         return ResponseEntity.ok(response);
     }
 }

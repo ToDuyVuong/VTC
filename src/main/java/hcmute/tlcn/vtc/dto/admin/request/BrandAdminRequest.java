@@ -10,6 +10,8 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class BrandAdminRequest {
 
+    private Long brandId;
+
     private String name;
 
     private String image;
@@ -49,5 +51,11 @@ public class BrandAdminRequest {
         }
 
 
+    }
+
+    public void checkBrandId(){
+        if (this.brandId == null || this.brandId == 0) {
+            throw new IllegalArgumentException("Mã thương hiệu không hợp lệ!");
+        }
     }
 }

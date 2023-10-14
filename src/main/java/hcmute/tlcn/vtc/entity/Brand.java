@@ -38,7 +38,11 @@ public class Brand {
 
     private boolean adminOnly;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "customer_id")
+//    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
