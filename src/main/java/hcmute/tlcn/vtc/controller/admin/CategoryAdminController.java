@@ -2,7 +2,10 @@ package hcmute.tlcn.vtc.controller.admin;
 
 
 import hcmute.tlcn.vtc.dto.admin.request.CategoryAdminRequest;
+import hcmute.tlcn.vtc.dto.admin.response.AllCategoryAdminResponse;
 import hcmute.tlcn.vtc.dto.admin.response.CategoryAdminResponse;
+import hcmute.tlcn.vtc.dto.vendor.response.CategoryResponse;
+import hcmute.tlcn.vtc.entity.extra.Status;
 import hcmute.tlcn.vtc.service.ICategoryAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +18,49 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryAdminController {
 
     @Autowired
-    private ICategoryAdminService categoryService;
+    private ICategoryAdminService categoryAdminService;
+
 
     @PostMapping("/add")
-    public ResponseEntity<CategoryAdminResponse> addNewCategoryByAdmin(@RequestBody CategoryAdminRequest request) {
+    public ResponseEntity<CategoryAdminResponse> addNewCategoryByAdmin(
+            @RequestBody CategoryAdminRequest request) {
         request.validate();
-        return ResponseEntity.ok(categoryService.addNewCategory(request));
+        return ResponseEntity.ok(categoryAdminService.addNewCategory(request));
     }
 
 
+    @GetMapping("/parent/detail")
+    public ResponseEntity<CategoryAdminResponse> getCategoryParentByAdmin(
+            @RequestParam("categoryId") Long categoryId) {
+        if (categoryId == null || categoryId == 0)
+            throw new IllegalArgumentException("Mã danh mục không hợp lệ!");
+        return ResponseEntity.ok(categoryAdminService.getCategoryParent(categoryId));
+    }
+
+
+    @GetMapping("/all-parent")
+    public ResponseEntity<AllCategoryAdminResponse> getCategoryParent() {
+        return ResponseEntity.ok(categoryAdminService.getParentCategory());
+    }
+
+
+    @PutMapping("/update")
+    public ResponseEntity<CategoryAdminResponse> updateCategoryParentByAdmin(
+            @RequestBody CategoryAdminRequest request) {
+        request.validate();
+        if (request.getCategoryId() == null || request.getCategoryId() == 0)
+            throw new IllegalArgumentException("Mã danh mục không hợp lệ!");
+        return ResponseEntity.ok(categoryAdminService.updateCategoryParent(request));
+    }
+
+
+    @PutMapping("/update/status")
+    public ResponseEntity<CategoryAdminResponse> updateStatusCategoryParentByAdmin(
+            @RequestParam Long categoryId, @RequestParam Status status) {
+        if (categoryId == null || categoryId == 0)
+            throw new IllegalArgumentException("Mã danh mục không hợp lệ!");
+        return ResponseEntity.ok(categoryAdminService.updateStatusCategoryParent(categoryId, status));
+    }
 
 
 }

@@ -9,6 +9,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class CategoryAdminRequest {
 
+    private Long categoryId;
     private String name;
     private String description;
     private String image;

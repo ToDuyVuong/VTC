@@ -13,8 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import java.util.Arrays;
-
 import static hcmute.tlcn.vtc.entity.extra.Permission.*;
 import static hcmute.tlcn.vtc.entity.extra.Role.*;
 import static org.springframework.http.HttpMethod.*;
@@ -50,14 +48,11 @@ public class SecurityConfig {
     };
 
     private static final String[] VENDOR_ROLE = {
-            "/api/vendor/shop/*",
-            "/api/vendor/category/parent",
-
+            "/api/vendor/shop/**",
+            "/api/vendor/category/**"
     };
 
     private static final String[] ADMIN_ROLE = {
-            Arrays.toString(VENDOR_ROLE),
-            Arrays.toString(CUSTOMER_ROLE),
             "/api/admin/category/**",
     };
 

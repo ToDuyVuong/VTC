@@ -17,7 +17,7 @@ public class CategoryController {
     @Autowired
     private ICategoryAdminService categoryService;
 
-    @GetMapping("/parent")
+    @GetMapping("/all-parent")
     public ResponseEntity<AllCategoryAdminResponse> getParentCategory() {
         return ResponseEntity.ok(categoryService.getParentCategory());
     }

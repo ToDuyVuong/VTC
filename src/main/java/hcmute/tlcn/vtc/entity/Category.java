@@ -27,13 +27,6 @@ public class Category {
 
     private boolean adminOnly;
 
-//    public void setAdminOnly(boolean isAdminOnly) {
-//        this.adminOnly = isAdminOnly;
-//    }
-
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
-
     @Enumerated(EnumType.STRING)
     private Status status;
 
