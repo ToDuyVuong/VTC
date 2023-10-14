@@ -1,15 +1,13 @@
 package hcmute.tlcn.vtc.controller.admin;
 
 import hcmute.tlcn.vtc.dto.admin.request.BrandAdminRequest;
+import hcmute.tlcn.vtc.dto.admin.response.AllBrandAdminResponse;
 import hcmute.tlcn.vtc.dto.admin.response.BrandAdminResponse;
 import hcmute.tlcn.vtc.service.IBrandAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/brand")
@@ -23,6 +21,12 @@ public class BrandAdminController {
     public ResponseEntity<BrandAdminResponse> addNewBrand (@RequestBody BrandAdminRequest request){
         request.validate();
         BrandAdminResponse response = brandAdminService.addNewBrand(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<AllBrandAdminResponse> getAllBrandByAdmin(){
+        AllBrandAdminResponse response = brandAdminService.getAllBrandByAdmin();
         return ResponseEntity.ok(response);
     }
 }

@@ -53,6 +53,7 @@ public class SecurityConfig {
 
     private static final String[] ADMIN_ROLE = {
             "/api/admin/category/**",
+            "/api/admin/brand/**",
     };
 
 
