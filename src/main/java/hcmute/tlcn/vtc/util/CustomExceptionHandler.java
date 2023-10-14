@@ -58,4 +58,10 @@ public class CustomExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,500, "Thông báo", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
+
+    @ExceptionHandler(SaveFailedException.class)
+    public ResponseEntity<ErrorResponse> handleSaveFailedException(SaveFailedException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,500, "Thông báo", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }

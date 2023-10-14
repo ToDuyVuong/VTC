@@ -8,17 +8,19 @@ import hcmute.tlcn.vtc.entity.Category;
 import hcmute.tlcn.vtc.entity.extra.Status;
 import hcmute.tlcn.vtc.repository.CategoryRepository;
 import hcmute.tlcn.vtc.service.ICategoryAdminService;
+import hcmute.tlcn.vtc.util.exception.SaveFailedException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService {
+public class CategoryAdminServiceImpl implements ICategoryAdminService {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -38,11 +40,8 @@ public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService
 
         try {
             Category categorySave = categoryRepository.save(category);
-            System.out.println(categorySave);
 
             CategoryAdminDTO categoryAdminDTO = modelMapper.map(categorySave, CategoryAdminDTO.class);
-            System.out.println(categoryAdminDTO);
-
 
             CategoryAdminResponse response = new CategoryAdminResponse();
             response.setCategoryAdminDTO(categoryAdminDTO);
@@ -52,11 +51,7 @@ public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService
 
             return response;
         } catch (Exception e) {
-            CategoryAdminResponse response = new CategoryAdminResponse();
-            response.setCode(500);
-            response.setMessage("Thêm danh mục từ admin thất bại!");
-            response.setStatus("error");
-            return response;
+            throw new SaveFailedException("Thêm danh mục từ admin thất bại!");
         }
     }
 
@@ -89,6 +84,7 @@ public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService
             return response;
         }
 
+        categories.sort(Comparator.comparing(Category::getName));
         List<CategoryAdminDTO> categoryAdminDTOS = CategoryAdminDTO.convertToListDTO(categories);
 
         AllCategoryAdminResponse response = new AllCategoryAdminResponse();
@@ -98,7 +94,6 @@ public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService
         response.setStatus("ok");
 
         return response;
-
     }
 
 
@@ -114,8 +109,8 @@ public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService
         category.setAtUpdate(LocalDateTime.now());
 
         try {
-            Category categorySave = categoryRepository.save(category);
-            CategoryAdminDTO categoryAdminDTO = modelMapper.map(categorySave, CategoryAdminDTO.class);
+            categoryRepository.save(category);
+            CategoryAdminDTO categoryAdminDTO = modelMapper.map(category, CategoryAdminDTO.class);
 
             CategoryAdminResponse response = new CategoryAdminResponse();
             response.setCategoryAdminDTO(categoryAdminDTO);
@@ -125,12 +120,7 @@ public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService
 
             return response;
         } catch (Exception e) {
-            CategoryAdminResponse response = new CategoryAdminResponse();
-            response.setCode(500);
-            response.setMessage("Cập nhật danh mục thất bại!");
-            response.setStatus("error");
-
-            return response;
+            throw new SaveFailedException("Cập nhật danh mục thất bại!");
         }
     }
 
@@ -170,54 +160,10 @@ public class CategoryAdminAdminAdminServiceImpl implements ICategoryAdminService
 
             return response;
         } catch (Exception e) {
-            throw new IllegalArgumentException("Cập nhật danh mục thất bại!");
+            throw new SaveFailedException("Cập nhật danh mục thất bại!");
         }
     }
 
-//    @Override
-//    public CategoryAdminResponse updateStatusCategoryParent(Long categoryId, Status status) {
-//        Category category = categoryRepository.findById(categoryId)
-//                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy danh mục!"));
-//
-//        category.setStatus(status);
-//        category.setAtUpdate(LocalDateTime.now());
-//
-//
-//        if (status == Status.DELETED) {
-//            List<Category> categories = categoryRepository.findAllByParent(category);
-//            if (!categories.isEmpty()) {
-//                for (Category category1 : categories) {
-//                    category1.setStatus(Status.DELETED);
-//                    category1.setAtUpdate(LocalDateTime.now());
-//                    try {
-//                        categoryRepository.save(category1);
-//                    } catch (Exception e) {
-//                        throw new IllegalArgumentException("Cập nhật danh mục con thất bại!");
-//                    }
-//                }
-//                try {
-//                    categoryRepository.save(category);
-//                } catch (Exception e) {
-//                    throw new IllegalArgumentException("Cập nhật danh mục cha thất bại!");
-//                }
-//
-//            }
-//        }
-//
-//        try {
-//            Category categorySave = categoryRepository.save(category);
-//            CategoryAdminDTO categoryAdminDTO = modelMapper.map(categorySave, CategoryAdminDTO.class);
-//
-//            CategoryAdminResponse response = new CategoryAdminResponse();
-//            response.setCategoryAdminDTO(categoryAdminDTO);
-//            response.setCode(200);
-//            response.setMessage("Cập nhật danh mục thành công!");
-//            response.setStatus("ok");
-//
-//            return response;
-//        } catch (Exception e) {
-//           throw new IllegalArgumentException("Cập nhật danh mục thất bại!");
-//        }
-//    }
+
 
 }
