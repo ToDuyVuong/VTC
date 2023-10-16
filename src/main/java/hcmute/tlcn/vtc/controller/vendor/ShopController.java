@@ -4,12 +4,11 @@ package hcmute.tlcn.vtc.controller.vendor;
 import hcmute.tlcn.vtc.dto.vendor.request.RegisterShopRequest;
 import hcmute.tlcn.vtc.dto.vendor.request.UpdateShopRequest;
 import hcmute.tlcn.vtc.dto.vendor.response.ShopResponse;
-import hcmute.tlcn.vtc.entity.extra.Status;
-import hcmute.tlcn.vtc.service.IShopService;
+import hcmute.tlcn.vtc.model.extra.Status;
+import hcmute.tlcn.vtc.service.vendor.IShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

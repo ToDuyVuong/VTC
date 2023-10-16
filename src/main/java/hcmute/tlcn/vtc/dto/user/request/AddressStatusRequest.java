@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.dto.user.request;
 
-import hcmute.tlcn.vtc.entity.extra.Status;
+import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 
 @Getter

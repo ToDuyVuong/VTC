@@ -1,10 +1,9 @@
 package hcmute.tlcn.vtc.dto;
 
-import hcmute.tlcn.vtc.entity.Address;
-import hcmute.tlcn.vtc.entity.extra.Status;
+import hcmute.tlcn.vtc.model.extra.entity.Address;
+import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;

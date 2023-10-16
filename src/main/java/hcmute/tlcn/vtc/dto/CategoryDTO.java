@@ -1,15 +1,11 @@
 package hcmute.tlcn.vtc.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import hcmute.tlcn.vtc.entity.Address;
-import hcmute.tlcn.vtc.entity.Category;
-import hcmute.tlcn.vtc.entity.Shop;
-import hcmute.tlcn.vtc.entity.extra.Status;
-import jakarta.persistence.*;
+import hcmute.tlcn.vtc.model.extra.entity.Category;
+import hcmute.tlcn.vtc.model.extra.entity.Shop;
+import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

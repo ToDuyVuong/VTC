@@ -1,12 +1,8 @@
 package hcmute.tlcn.vtc.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import hcmute.tlcn.vtc.entity.Customer;
-import hcmute.tlcn.vtc.entity.extra.Status;
-import jakarta.persistence.*;
+import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 
 @Data

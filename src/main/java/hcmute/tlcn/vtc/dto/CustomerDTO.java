@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.dto;
 
 import hcmute.tlcn.vtc.dto.extra.EmailValidator;
-import hcmute.tlcn.vtc.entity.extra.Role;
+import hcmute.tlcn.vtc.model.extra.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

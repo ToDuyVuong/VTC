@@ -26,7 +26,5 @@ public class CategoryAdminRequest {
         if (this.image == null || this.image.isEmpty()) {
             throw new IllegalArgumentException("Hình ảnh danh mục không được để trống!");
         }
-
-
     }
 }

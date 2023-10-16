@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
 import hcmute.tlcn.vtc.dto.admin.response.AllCategoryAdminResponse;
-import hcmute.tlcn.vtc.service.ICategoryAdminService;
+import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

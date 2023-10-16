@@ -1,8 +1,7 @@
 package hcmute.tlcn.vtc.dto.vendor.request;
 
 import hcmute.tlcn.vtc.dto.extra.EmailValidator;
-import hcmute.tlcn.vtc.entity.Customer;
-import hcmute.tlcn.vtc.entity.extra.Status;
+import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 
 import java.util.regex.Pattern;

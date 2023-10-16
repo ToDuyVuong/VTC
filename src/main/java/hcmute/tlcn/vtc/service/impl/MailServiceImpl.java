@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.service.impl;
 
 import hcmute.tlcn.vtc.dto.MailDTO;
 import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
-import hcmute.tlcn.vtc.entity.Customer;
+import hcmute.tlcn.vtc.model.extra.entity.Customer;
 import hcmute.tlcn.vtc.service.ICustomerService;
 import hcmute.tlcn.vtc.service.IMailService;
 import hcmute.tlcn.vtc.service.IOtpService;

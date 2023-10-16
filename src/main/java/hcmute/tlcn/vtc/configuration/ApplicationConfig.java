@@ -1,10 +1,9 @@
 package hcmute.tlcn.vtc.configuration;
 
 import hcmute.tlcn.vtc.authentication.request.RegisterRequest;
-import hcmute.tlcn.vtc.entity.extra.Role;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.authentication.service.IAuthenticationService;
-import hcmute.tlcn.vtc.service.IAdminService;
+import hcmute.tlcn.vtc.service.admin.IAdminService;
 import hcmute.tlcn.vtc.util.exception.InvalidPasswordException;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
