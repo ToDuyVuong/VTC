@@ -31,13 +31,5 @@ public class ProductAttribute {
 
     private LocalDateTime atUpdate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "product_variant_attribute",
-            joinColumns = @JoinColumn(name = "product_attribute_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_variant_id")
-    )
-    private List<ProductVariant> productVariants;
-
 
 }

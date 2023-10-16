@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -96,6 +97,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         }
 
         List<BrandDTO> brandDTOS = BrandDTO.convertToListDTO(brands);
+        brandDTOS.sort(Comparator.comparing(BrandDTO::getName));
 
         AllBrandAdminResponse response = new AllBrandAdminResponse();
         response.setBrandDTOS(brandDTOS);

@@ -21,13 +21,13 @@ public class ProductVariant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productVariantId;
 
-    private Long price;
-
-    private Long quantity;
-
     private String sku;
 
     private String image;
+
+    private Long price;
+
+    private Long quantity;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -39,23 +39,14 @@ public class ProductVariant {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-//
-//    @OneToMany(mappedBy = "productVariants")
-//    private List<ProductAttribute> productAttributes;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "product_variant_attribute",
-            joinColumns = @JoinColumn(name = "product_variant_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_attribute_id")
+            joinColumns = @JoinColumn(name = "product_variant_id", nullable = true),
+            inverseJoinColumns = @JoinColumn(name = "product_attribute_id", nullable = true)
     )
     private List<ProductAttribute> productAttributes;
-
-
-
-
-
-
 
 
 }

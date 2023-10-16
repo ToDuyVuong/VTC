@@ -38,6 +38,10 @@ public class Product {
     private LocalDateTime atUpdate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
@@ -47,8 +51,8 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
 
-//    @OneToMany(mappedBy = "product")
-//    private List<Cart> carts;
+
+
 
 
 }
