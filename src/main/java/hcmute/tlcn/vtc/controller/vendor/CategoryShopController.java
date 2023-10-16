@@ -4,6 +4,7 @@ import hcmute.tlcn.vtc.model.dto.admin.response.AllCategoryAdminResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.request.CategoryShopRequest;
 import hcmute.tlcn.vtc.model.dto.vendor.response.AllCategoryShopResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.CategoryShopResponse;
+import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +58,33 @@ public class CategoryShopController {
 
         CategoryShopResponse response = categoryService.getCategoryById(categoryId, shopId);
         return ResponseEntity.ok(response);
+    }
+
+
+    @PutMapping("/update")
+    public ResponseEntity<CategoryShopResponse> updateCategoryShop(CategoryShopRequest request) {
+        request.validateUpdate();
+        CategoryShopResponse response = categoryService.updateCategoryShop(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("update-status/{categoryId}")
+    public ResponseEntity<CategoryShopResponse> updateStatusCategoryShop(@PathVariable Long categoryId,
+                                                                         @RequestParam Long shopId,
+                                                                         @RequestParam Status status) {
+        if (categoryId == null) {
+            throw new NullPointerException("Mã danh mục không được để trống!");
+
+        }
+        if (shopId == null) {
+            throw new NullPointerException("Mã cửa hàng không được để trống!");
+        }
+        if (status == null) {
+            throw new NullPointerException("Trạng thái không được để trống!");
+        }
+        CategoryShopResponse response = categoryService.updateStatusCategoryShop(categoryId, shopId, status);
+        return ResponseEntity.ok(response);
+
     }
 
 
