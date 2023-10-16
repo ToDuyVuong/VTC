@@ -36,12 +36,12 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id", nullable = true)
-    @JsonIgnore
+//    @JsonIgnore
     private Shop shop;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", nullable = true)
-    @JsonIgnore
+//    @JsonIgnore
     private Category parent;
 
 

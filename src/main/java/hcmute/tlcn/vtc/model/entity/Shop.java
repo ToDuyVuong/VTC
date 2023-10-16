@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Shop {
+public class Shop{
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -45,11 +45,10 @@ public class Shop {
 
     private LocalDateTime atUpdate;
 
-    @OneToOne(fetch = FetchType.LAZY) // chỉ lấy dữ liệu khi gọi đến
-    //    @JoinColumn(name = "customer_id", nullable = false, unique = true, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
-    @JsonIgnore  // sẻ không trả về trong trường này bằng Json trong hợp có truy vấn đến bảng này
     private Customer customer;
+
 
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     @JsonIgnore

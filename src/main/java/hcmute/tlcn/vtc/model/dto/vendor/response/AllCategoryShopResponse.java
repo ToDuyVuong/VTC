@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListCategoryShopResponse extends ResponseAbstract {
+public class AllCategoryShopResponse extends ResponseAbstract {
 
     private List<CategoryDTO> categoryDTOS;
 }

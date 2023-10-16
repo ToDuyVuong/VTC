@@ -28,9 +28,9 @@ public class CategoryDTO {
 
     private Status status;
 
-    private Shop shop;
+    private Long shopId;
 
-    private Category parent;
+    private Long parentId;
 
     public static List<CategoryDTO> convertToListDTO(List<Category> categories) {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();

@@ -32,11 +32,10 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     @Override
     public CategoryAdminResponse addNewCategory(CategoryAdminRequest request) {
 
-        categoryRepository.findByNameAndAdminOnly(request.getName(), true)
-                .orElseThrow(
-                        () -> new IllegalArgumentException("Tên danh mục đã tồn tại!")
-                );
-
+        Optional<Category> existingCategory = categoryRepository.findByNameAndAdminOnly(request.getName(), true);
+        if (existingCategory.isPresent()) {
+            throw new IllegalArgumentException("Tên danh mục đã tồn tại!");
+        }
         Category category = modelMapper.map(request, Category.class);
         category.setAdminOnly(true);
         category.setStatus(Status.ACTIVE);
