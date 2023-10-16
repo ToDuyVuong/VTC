@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.vendor;
 
-import hcmute.tlcn.vtc.dto.vendor.request.RegisterShopRequest;
-import hcmute.tlcn.vtc.dto.vendor.request.UpdateShopRequest;
-import hcmute.tlcn.vtc.dto.vendor.response.ShopResponse;
+import hcmute.tlcn.vtc.model.dto.vendor.request.RegisterShopRequest;
+import hcmute.tlcn.vtc.model.dto.vendor.request.UpdateShopRequest;
+import hcmute.tlcn.vtc.model.dto.vendor.response.ShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 
 public interface IShopService {

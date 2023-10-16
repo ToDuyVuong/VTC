@@ -1,10 +1,10 @@
 package hcmute.tlcn.vtc.controller.user;
 
-import hcmute.tlcn.vtc.dto.user.request.ChangePasswordRequest;
-import hcmute.tlcn.vtc.dto.user.request.ForgotPasswordRequest;
-import hcmute.tlcn.vtc.dto.user.request.ProfileCustomerRequest;
-import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
-import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
+import hcmute.tlcn.vtc.model.dto.user.request.ChangePasswordRequest;
+import hcmute.tlcn.vtc.model.dto.user.request.ForgotPasswordRequest;
+import hcmute.tlcn.vtc.model.dto.user.request.ProfileCustomerRequest;
+import hcmute.tlcn.vtc.model.dto.user.response.ProfileCustomerResponse;
+import hcmute.tlcn.vtc.model.dto.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.service.user.IMailService;
 import lombok.RequiredArgsConstructor;

@@ -1,40 +1,33 @@
-package hcmute.tlcn.vtc.authentication.request;
+package hcmute.tlcn.vtc.model.dto.user.request;
 
 import hcmute.tlcn.vtc.model.extra.EmailValidator;
 import lombok.*;
 
 import java.util.Date;
-@Builder
+
 @Getter
 @Setter
 @ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class ProfileCustomerRequest {
 
     private String username;
 
-    private String password;
-
     private String email;
-
-    private boolean gender;
 
     private String fullName;
 
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private Date birthday;
 
-//    private String phone;
-//
-//    private Role role;
+
+    private boolean gender;
 
     public void validate() {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("Tài khoản không được để trống.");
-        }
-
-        if (password == null || password.isEmpty()) {
-            throw new IllegalArgumentException("Mật khẩu không được để trống.");
         }
 
         if (email == null || email.isEmpty()) {
@@ -51,13 +44,7 @@ public class RegisterRequest {
             throw new IllegalArgumentException("Ngày sinh không được để trống.");
         }
 
-//        if (phone == null || phone.isEmpty()) {
-//            throw new IllegalArgumentException("Số điện thoại không được để trống.");
-//        }
 
 
     }
-
-
-
 }

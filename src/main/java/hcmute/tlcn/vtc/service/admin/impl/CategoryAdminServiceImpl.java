@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.service.admin.impl;
 
-import hcmute.tlcn.vtc.dto.admin.CategoryAdminDTO;
-import hcmute.tlcn.vtc.dto.admin.request.CategoryAdminRequest;
-import hcmute.tlcn.vtc.dto.admin.response.AllCategoryAdminResponse;
-import hcmute.tlcn.vtc.dto.admin.response.CategoryAdminResponse;
+import hcmute.tlcn.vtc.model.dto.admin.CategoryAdminDTO;
+import hcmute.tlcn.vtc.model.dto.admin.request.CategoryAdminRequest;
+import hcmute.tlcn.vtc.model.dto.admin.response.AllCategoryAdminResponse;
+import hcmute.tlcn.vtc.model.dto.admin.response.CategoryAdminResponse;
 import hcmute.tlcn.vtc.model.entity.Category;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CategoryRepository;

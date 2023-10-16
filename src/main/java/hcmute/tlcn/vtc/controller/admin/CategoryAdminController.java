@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.controller.admin;
 
 
-import hcmute.tlcn.vtc.dto.admin.request.CategoryAdminRequest;
-import hcmute.tlcn.vtc.dto.admin.response.AllCategoryAdminResponse;
-import hcmute.tlcn.vtc.dto.admin.response.CategoryAdminResponse;
+import hcmute.tlcn.vtc.model.dto.admin.request.CategoryAdminRequest;
+import hcmute.tlcn.vtc.model.dto.admin.response.AllCategoryAdminResponse;
+import hcmute.tlcn.vtc.model.dto.admin.response.CategoryAdminResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
 import lombok.RequiredArgsConstructor;

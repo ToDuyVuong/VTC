@@ -1,20 +1,23 @@
-package hcmute.tlcn.vtc.authentication.request;
+package hcmute.tlcn.vtc.model.dto;
 
 import hcmute.tlcn.vtc.model.extra.EmailValidator;
+import hcmute.tlcn.vtc.model.extra.Role;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
-@Builder
+import java.util.Set;
+
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class CustomerDTO {
+
+    private Long customerId;
 
     private String username;
-
-    private String password;
 
     private String email;
 
@@ -22,19 +25,17 @@ public class RegisterRequest {
 
     private String fullName;
 
+//    private String phone;
+
     private Date birthday;
 
-//    private String phone;
-//
-//    private Role role;
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
 
     public void validate() {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("Tài khoản không được để trống.");
-        }
-
-        if (password == null || password.isEmpty()) {
-            throw new IllegalArgumentException("Mật khẩu không được để trống.");
         }
 
         if (email == null || email.isEmpty()) {
@@ -57,7 +58,5 @@ public class RegisterRequest {
 
 
     }
-
-
 
 }

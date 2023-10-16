@@ -1,11 +1,11 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.dto.CustomerDTO;
-import hcmute.tlcn.vtc.dto.user.request.ChangePasswordRequest;
-import hcmute.tlcn.vtc.dto.user.request.ForgotPasswordRequest;
-import hcmute.tlcn.vtc.dto.user.request.ProfileCustomerRequest;
-import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
-import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
+import hcmute.tlcn.vtc.model.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.dto.user.request.ChangePasswordRequest;
+import hcmute.tlcn.vtc.model.dto.user.request.ForgotPasswordRequest;
+import hcmute.tlcn.vtc.model.dto.user.request.ProfileCustomerRequest;
+import hcmute.tlcn.vtc.model.dto.user.response.ForgotPasswordResponse;
+import hcmute.tlcn.vtc.model.dto.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.service.user.ICustomerService;

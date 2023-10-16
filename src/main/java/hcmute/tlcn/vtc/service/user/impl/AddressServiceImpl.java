@@ -1,11 +1,11 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.dto.AddressDTO;
-import hcmute.tlcn.vtc.dto.CustomerDTO;
-import hcmute.tlcn.vtc.dto.user.request.AddressRequest;
-import hcmute.tlcn.vtc.dto.user.request.AddressStatusRequest;
-import hcmute.tlcn.vtc.dto.user.response.AddressResponse;
-import hcmute.tlcn.vtc.dto.user.response.ListAddressResponse;
+import hcmute.tlcn.vtc.model.dto.AddressDTO;
+import hcmute.tlcn.vtc.model.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.dto.user.request.AddressRequest;
+import hcmute.tlcn.vtc.model.dto.user.request.AddressStatusRequest;
+import hcmute.tlcn.vtc.model.dto.user.response.AddressResponse;
+import hcmute.tlcn.vtc.model.dto.user.response.ListAddressResponse;
 import hcmute.tlcn.vtc.model.entity.Address;
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.model.extra.Status;

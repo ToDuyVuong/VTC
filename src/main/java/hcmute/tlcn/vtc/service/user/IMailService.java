@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user;
 
-import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
+import hcmute.tlcn.vtc.model.dto.user.response.ForgotPasswordResponse;
 
 public interface IMailService {
 
