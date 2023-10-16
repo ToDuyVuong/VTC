@@ -21,4 +21,6 @@ public class CategoryController {
     public ResponseEntity<AllCategoryAdminResponse> getParentCategory() {
         return ResponseEntity.ok(categoryService.getParentCategory());
     }
+
+
 }

@@ -1,11 +1,11 @@
-package hcmute.tlcn.vtc.service.impl;
+package hcmute.tlcn.vtc.service.user.impl;
 
 import hcmute.tlcn.vtc.dto.MailDTO;
 import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.model.entity.Customer;
-import hcmute.tlcn.vtc.service.ICustomerService;
-import hcmute.tlcn.vtc.service.IMailService;
-import hcmute.tlcn.vtc.service.IOtpService;
+import hcmute.tlcn.vtc.service.user.ICustomerService;
+import hcmute.tlcn.vtc.service.user.IMailService;
+import hcmute.tlcn.vtc.service.user.IOtpService;
 import hcmute.tlcn.vtc.util.exception.EmailSendingException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;

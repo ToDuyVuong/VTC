@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.service;
+package hcmute.tlcn.vtc.service.user;
 
 public interface IOtpService {
     String generateRandomOtp();

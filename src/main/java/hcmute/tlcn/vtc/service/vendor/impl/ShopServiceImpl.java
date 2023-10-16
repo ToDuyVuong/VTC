@@ -12,7 +12,7 @@ import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.repository.ShopRepository;
-import hcmute.tlcn.vtc.service.impl.CustomerServiceImpl;
+import hcmute.tlcn.vtc.service.user.impl.CustomerServiceImpl;
 import hcmute.tlcn.vtc.service.vendor.IShopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.service;
+package hcmute.tlcn.vtc.service.user;
 
 import hcmute.tlcn.vtc.dto.user.request.AddressRequest;
 import hcmute.tlcn.vtc.dto.user.request.AddressStatusRequest;

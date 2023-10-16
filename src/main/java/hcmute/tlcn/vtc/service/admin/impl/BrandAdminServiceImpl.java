@@ -10,7 +10,7 @@ import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.BrandRepository;
 import hcmute.tlcn.vtc.service.admin.IBrandAdminService;
-import hcmute.tlcn.vtc.service.ICustomerService;
+import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.UnauthorizedAccessException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.service;
+package hcmute.tlcn.vtc.service.user;
 
 import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
 

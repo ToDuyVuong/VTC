@@ -1,6 +1,6 @@
-package hcmute.tlcn.vtc.service.impl;
+package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.service.IOtpService;
+import hcmute.tlcn.vtc.service.user.IOtpService;
 import hcmute.tlcn.vtc.util.exception.InvalidOtpException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

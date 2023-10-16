@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.service.impl;
+package hcmute.tlcn.vtc.service.user.impl;
 
 import hcmute.tlcn.vtc.dto.CustomerDTO;
 import hcmute.tlcn.vtc.dto.user.request.ChangePasswordRequest;
@@ -8,8 +8,8 @@ import hcmute.tlcn.vtc.dto.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
-import hcmute.tlcn.vtc.service.ICustomerService;
-import hcmute.tlcn.vtc.service.IOtpService;
+import hcmute.tlcn.vtc.service.user.ICustomerService;
+import hcmute.tlcn.vtc.service.user.IOtpService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

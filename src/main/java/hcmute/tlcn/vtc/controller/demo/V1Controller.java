@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.controller.demo;
 
 import hcmute.tlcn.vtc.dto.user.request.ProfileCustomerRequest;
 import hcmute.tlcn.vtc.dto.user.response.ProfileCustomerResponse;
-import hcmute.tlcn.vtc.service.ICustomerService;
+import hcmute.tlcn.vtc.service.user.ICustomerService;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

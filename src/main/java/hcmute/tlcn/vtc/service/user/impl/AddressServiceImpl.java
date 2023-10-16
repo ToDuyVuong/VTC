@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.service.impl;
+package hcmute.tlcn.vtc.service.user.impl;
 
 import hcmute.tlcn.vtc.dto.AddressDTO;
 import hcmute.tlcn.vtc.dto.CustomerDTO;
@@ -10,8 +10,8 @@ import hcmute.tlcn.vtc.model.entity.Address;
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.AddressRepository;
-import hcmute.tlcn.vtc.service.IAddressService;
-import hcmute.tlcn.vtc.service.ICustomerService;
+import hcmute.tlcn.vtc.service.user.IAddressService;
+import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

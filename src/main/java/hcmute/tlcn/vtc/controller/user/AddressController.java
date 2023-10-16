@@ -4,12 +4,10 @@ import hcmute.tlcn.vtc.dto.user.request.AddressRequest;
 import hcmute.tlcn.vtc.dto.user.request.AddressStatusRequest;
 import hcmute.tlcn.vtc.dto.user.response.AddressResponse;
 import hcmute.tlcn.vtc.dto.user.response.ListAddressResponse;
-import hcmute.tlcn.vtc.service.IAddressService;
+import hcmute.tlcn.vtc.service.user.IAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
