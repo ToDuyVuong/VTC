@@ -5,14 +5,25 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+
     List<Category> findAllByAdminOnly(boolean adminOnly);
 
     List<Category> findAllByParent(Category parent);
 
-    Category findByName(String name);
+    Optional<Category> findByName(String name);
+
+    Optional<Category> findByNameAndAdminOnly(String name, boolean adminOnly);
+
+    Optional<Category> findByNameAndAdminOnlyNot(String name, boolean adminOnly);
+
+    List<Category> findAllByShopShopId(Long shopId);
+
+
+
 
 
 }

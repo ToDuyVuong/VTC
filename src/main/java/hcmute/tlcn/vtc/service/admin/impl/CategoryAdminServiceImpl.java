@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,11 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
 
     @Override
     public CategoryAdminResponse addNewCategory(CategoryAdminRequest request) {
+
+        categoryRepository.findByNameAndAdminOnly(request.getName(), true)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Tên danh mục đã tồn tại!")
+                );
 
         Category category = modelMapper.map(request, Category.class);
         category.setAdminOnly(true);
@@ -103,6 +109,10 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy danh mục!"));
 
+        if (!category.getName().equals(request.getName())) {
+            checkCategoryName(request.getName());
+        }
+
         category.setName(request.getName());
         category.setDescription(request.getDescription());
         category.setImage(request.getImage());
@@ -165,5 +175,10 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     }
 
 
-
+    private void checkCategoryName(String name) {
+        Optional<Category> category = categoryRepository.findByNameAndAdminOnly(name, true);
+        if (category.isPresent()) {
+            throw new IllegalArgumentException("Tên danh mục đã tồn tại!");
+        }
+    }
 }

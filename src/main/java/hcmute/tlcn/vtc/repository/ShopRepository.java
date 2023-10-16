@@ -4,6 +4,8 @@ import hcmute.tlcn.vtc.model.entity.Shop;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Long> {
 
@@ -12,4 +14,6 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     Shop findByPhone(String phone);
 
     Shop findByCustomer_Username(String username);
+
+    Optional<Shop> findByCustomerUsername(String username);
 }
