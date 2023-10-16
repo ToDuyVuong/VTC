@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.dto;
 
-import hcmute.tlcn.vtc.model.extra.entity.Address;
+import hcmute.tlcn.vtc.model.entity.Address;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 import org.modelmapper.ModelMapper;

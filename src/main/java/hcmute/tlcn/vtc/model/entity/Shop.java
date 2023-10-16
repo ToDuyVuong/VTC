@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.extra.entity;
+package hcmute.tlcn.vtc.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

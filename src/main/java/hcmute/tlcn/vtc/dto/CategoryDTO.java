@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.dto;
 
-import hcmute.tlcn.vtc.model.extra.entity.Category;
-import hcmute.tlcn.vtc.model.extra.entity.Shop;
+import hcmute.tlcn.vtc.model.entity.Category;
+import hcmute.tlcn.vtc.model.entity.Shop;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 import org.modelmapper.ModelMapper;

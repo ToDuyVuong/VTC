@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.dto;
 
 
-import hcmute.tlcn.vtc.model.extra.entity.Brand;
+import hcmute.tlcn.vtc.model.entity.Brand;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 import org.modelmapper.ModelMapper;

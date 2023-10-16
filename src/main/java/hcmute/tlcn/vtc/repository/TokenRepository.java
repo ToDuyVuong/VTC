@@ -3,7 +3,7 @@ package hcmute.tlcn.vtc.repository;
 import java.util.List;
 import java.util.Optional;
 
-import hcmute.tlcn.vtc.model.extra.entity.Token;
+import hcmute.tlcn.vtc.model.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

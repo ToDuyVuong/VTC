@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.dto.admin;
 
-import hcmute.tlcn.vtc.model.extra.entity.Category;
+import hcmute.tlcn.vtc.model.entity.Category;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 import org.modelmapper.ModelMapper;

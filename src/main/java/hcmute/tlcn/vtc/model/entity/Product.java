@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.extra.entity;
+package hcmute.tlcn.vtc.model.entity;
 
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;

@@ -4,7 +4,7 @@ import hcmute.tlcn.vtc.dto.admin.CategoryAdminDTO;
 import hcmute.tlcn.vtc.dto.admin.request.CategoryAdminRequest;
 import hcmute.tlcn.vtc.dto.admin.response.AllCategoryAdminResponse;
 import hcmute.tlcn.vtc.dto.admin.response.CategoryAdminResponse;
-import hcmute.tlcn.vtc.model.extra.entity.Category;
+import hcmute.tlcn.vtc.model.entity.Category;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CategoryRepository;
 import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
