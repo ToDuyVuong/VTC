@@ -8,4 +8,6 @@ public interface ICategoryShopService {
     CategoryShopResponse addNewCategoryShop(CategoryShopRequest request);
 
     AllCategoryShopResponse getAllCategoryByShopId(Long shopId);
+
+    CategoryShopResponse getCategoryById(Long categoryId, Long shopId);
 }

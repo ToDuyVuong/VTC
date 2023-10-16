@@ -89,6 +89,30 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         response.setCode(200);
         response.setMessage("Lấy danh sách danh mục của cửa hàng " + shop.getName() + " thành công!");
         response.setStatus("ok");
+
+        return response;
+    }
+
+
+    @Override
+    public CategoryShopResponse getCategoryById(Long categoryId, Long shopId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Danh mục không tồn tại!"));
+
+        if (category.getShop() == null || !category.getShop().getShopId().equals(shopId) ) {
+            throw new NotFoundException("Danh mục không tồn tại trong cửa hàng!");
+        }
+
+        CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
+        categoryDTO.setShopId(category.getShop().getShopId());
+        categoryDTO.setParentId(category.getParent().getCategoryId());
+
+        CategoryShopResponse response = new CategoryShopResponse();
+        response.setCategoryDTO(categoryDTO);
+        response.setCode(200);
+        response.setMessage("Lấy danh mục thành công.");
+        response.setStatus("ok");
+
         return response;
     }
 

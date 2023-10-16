@@ -9,10 +9,7 @@ import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vendor/shop/category")
@@ -38,12 +35,27 @@ public class CategoryShopController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<AllCategoryShopResponse> getAllCategoryByShopId(Long shopId) {
+    @GetMapping("/all/{shopId}")
+    public ResponseEntity<AllCategoryShopResponse> getAllCategoryByShopId(@PathVariable Long shopId) {
         if (shopId == null) {
             throw new NullPointerException("Mã cửa hàng không được để trống!");
         }
         AllCategoryShopResponse response = categoryService.getAllCategoryByShopId(shopId);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("/get/{categoryId}")
+    public ResponseEntity<CategoryShopResponse> getCategoryById(@PathVariable Long categoryId,
+                                                                @RequestParam Long shopId) {
+        if (categoryId == null) {
+            throw new NullPointerException("Mã danh mục không được để trống!");
+        }
+        if (shopId == null) {
+            throw new NullPointerException("Mã cửa hàng không được để trống!");
+        }
+
+        CategoryShopResponse response = categoryService.getCategoryById(categoryId, shopId);
         return ResponseEntity.ok(response);
     }
 

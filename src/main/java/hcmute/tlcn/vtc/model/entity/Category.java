@@ -34,12 +34,12 @@ public class Category {
 
     private LocalDateTime atUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id", nullable = true)
 //    @JsonIgnore
     private Shop shop;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id", nullable = true)
 //    @JsonIgnore
     private Category parent;
