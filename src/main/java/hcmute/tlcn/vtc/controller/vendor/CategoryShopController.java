@@ -36,6 +36,7 @@ public class CategoryShopController {
         return ResponseEntity.ok(response);
     }
 
+
     @GetMapping("/all/{shopId}")
     public ResponseEntity<AllCategoryShopResponse> getAllCategoryByShopId(@PathVariable Long shopId) {
         if (shopId == null) {
@@ -68,7 +69,8 @@ public class CategoryShopController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("update-status/{categoryId}")
+
+    @PatchMapping("update/status/{categoryId}")
     public ResponseEntity<CategoryShopResponse> updateStatusCategoryShop(@PathVariable Long categoryId,
                                                                          @RequestParam Long shopId,
                                                                          @RequestParam Status status) {
@@ -82,6 +84,7 @@ public class CategoryShopController {
         if (status == null) {
             throw new NullPointerException("Trạng thái không được để trống!");
         }
+
         CategoryShopResponse response = categoryService.updateStatusCategoryShop(categoryId, shopId, status);
         return ResponseEntity.ok(response);
 

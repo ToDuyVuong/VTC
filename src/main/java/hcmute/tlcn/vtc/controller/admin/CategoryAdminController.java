@@ -53,7 +53,7 @@ public class CategoryAdminController {
     }
 
 
-    @PutMapping("/update/status")
+    @PatchMapping("/update/status")
     public ResponseEntity<CategoryAdminResponse> updateStatusCategoryParentByAdmin(
             @RequestParam Long categoryId, @RequestParam Status status) {
         if (categoryId == null || categoryId == 0)

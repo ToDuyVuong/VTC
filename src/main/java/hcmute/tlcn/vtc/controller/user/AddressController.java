@@ -41,7 +41,7 @@ public class AddressController {
     }
 
 
-    @PutMapping("/update/status")
+    @PatchMapping("/update/status")
     public ResponseEntity<AddressResponse> updateStatusAddressByUsername(@RequestBody AddressStatusRequest request) {
         AddressResponse response = addressService.updateStatusAddress(request);
         return ResponseEntity.ok(response);

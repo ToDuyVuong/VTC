@@ -47,7 +47,7 @@ public class BrandAdminController {
     }
 
 
-    @PutMapping("/update-status")
+    @PatchMapping("/update-status")
     public ResponseEntity<BrandAdminResponse> updateStatusBrandAdmin(@RequestParam Long brandId,
                                                                      @RequestParam String username,
                                                                      @RequestParam Status status) {

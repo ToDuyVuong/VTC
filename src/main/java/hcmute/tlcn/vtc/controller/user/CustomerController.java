@@ -43,18 +43,17 @@ public class CustomerController {
         return ResponseEntity.ok(profileCustomerResponse);
     }
 
+
     @GetMapping("/forgot-password")
     public ResponseEntity<ForgotPasswordResponse> sendMailForgotPassword(@RequestParam("username") String username) {
         ForgotPasswordResponse response = mailService.sendMailForgotPassword(username);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/reset-password")
+
+    @PatchMapping("/reset-password")
     public ResponseEntity<ForgotPasswordResponse> resetPassword(@RequestBody ForgotPasswordRequest request) {
-
         ForgotPasswordResponse response = customerService.resetPassword(request);
-
-
         return ResponseEntity.ok(response);
     }
 

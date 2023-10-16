@@ -47,7 +47,7 @@ public class ShopController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/shop/update/status")
+    @PatchMapping("/shop/update/status")
     public ResponseEntity<ShopResponse> updateStatusShop(@RequestParam String username, @RequestParam Status status) {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("Tài khoản không được để trống!");
