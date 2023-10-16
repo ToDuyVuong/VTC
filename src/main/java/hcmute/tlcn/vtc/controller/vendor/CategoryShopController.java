@@ -2,6 +2,7 @@ package hcmute.tlcn.vtc.controller.vendor;
 
 import hcmute.tlcn.vtc.model.dto.admin.response.AllCategoryAdminResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.request.CategoryShopRequest;
+import hcmute.tlcn.vtc.model.dto.vendor.response.AllCategoryShopResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.CategoryShopResponse;
 import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/vendor/shop/category")
 @RequiredArgsConstructor
-public class CategoryController {
+public class CategoryShopController {
 
     @Autowired
     private ICategoryAdminService categoryAdminService;
@@ -34,6 +35,15 @@ public class CategoryController {
     public ResponseEntity<CategoryShopResponse> addNewCategoryShop(CategoryShopRequest request) {
         request.validate();
         CategoryShopResponse response = categoryService.addNewCategoryShop(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<AllCategoryShopResponse> getAllCategoryByShopId(Long shopId) {
+        if (shopId == null) {
+            throw new NullPointerException("Mã cửa hàng không được để trống!");
+        }
+        AllCategoryShopResponse response = categoryService.getAllCategoryByShopId(shopId);
         return ResponseEntity.ok(response);
     }
 

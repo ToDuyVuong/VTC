@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryShopShopServiceImpl implements ICategoryShopService {
+public class CategoryShopServiceImpl implements ICategoryShopService {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -83,6 +83,7 @@ public class CategoryShopShopServiceImpl implements ICategoryShopService {
     public AllCategoryShopResponse getAllCategoryByShopId(Long shopId) {
         Shop shop = shopRepository.findById(shopId)
                 .orElseThrow(() -> new NotFoundException("Cửa hàng không tồn tại!"));
+
         AllCategoryShopResponse response = new AllCategoryShopResponse();
         response.setCategoryDTOS(CategoryDTO.convertToListDTO(categoryRepository.findAllByShopShopId(shopId)));
         response.setCode(200);
