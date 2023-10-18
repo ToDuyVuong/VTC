@@ -1,12 +1,16 @@
 package hcmute.tlcn.vtc.model.dto;
 
 
+import hcmute.tlcn.vtc.model.entity.Product;
+import hcmute.tlcn.vtc.model.entity.ProductVariant;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,54 +41,17 @@ public class ProductDTO {
     private List<ProductVariantDTO> productVariantDTOs;
 
 
-//    public void validate() {
-//        if (this.name == null || this.name.isEmpty()) {
-//            throw new IllegalArgumentException("Tên sản phẩm không được để trống!");
-//        }
-//
-//        if (this.description == null || this.description.isEmpty()) {
-//            throw new IllegalArgumentException("Mô tả sản phẩm không được để trống!");
-//        }
-//
-//        if (this.information == null || this.information.isEmpty()) {
-//            throw new IllegalArgumentException("Thông tin sản phẩm không được để trống!");
-//        }
-//
-//        if (this.categoryId == null) {
-//            throw new IllegalArgumentException("Danh mục sản phẩm không được để trống!");
-//        }
-//
-////        if (this.brandId == null) {
-////            throw new IllegalArgumentException("Thương hiệu sản phẩm không được để trống!");
-////        }
-//    }
-//
-//
-//    public void validateUpdate() {
-//        if (this.productId == null) {
-//            throw new IllegalArgumentException("Mã sản phẩm không được để trống!");
-//        }
-//
-//        if (this.name == null || this.name.isEmpty()) {
-//            throw new IllegalArgumentException("Tên sản phẩm không được để trống!");
-//        }
-//
-//        if (this.description == null || this.description.isEmpty()) {
-//            throw new IllegalArgumentException("Mô tả sản phẩm không được để trống!");
-//        }
-//
-//        if (this.information == null || this.information.isEmpty()) {
-//            throw new IllegalArgumentException("Thông tin sản phẩm không được để trống!");
-//        }
-//
-//        if (this.categoryId == null) {
-//            throw new IllegalArgumentException("Danh mục sản phẩm không được để trống!");
-//        }
-//
-////        if (this.brandId == null) {
-////            throw new IllegalArgumentException("Thương hiệu sản phẩm không được để trống!");
-////        }
-//    }
+    public static List<ProductDTO> convertToListDTO(List<Product> products) {
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+
+        for (Product product : products) {
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(product.getProductVariants()));
+            productDTOs.add(productDTO);
+        }
+        return productDTOs;
+    }
 
 
 

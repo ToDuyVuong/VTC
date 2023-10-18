@@ -36,16 +36,6 @@ public class AttributeRequest {
             throw new IllegalArgumentException("Mã thuộc tính không được để trống!");
         }
 
-        if (this.name == null || this.name.isEmpty()) {
-            throw new IllegalArgumentException("Tên thuộc tính không được để trống!");
-        }
-
-        if (this.value == null || this.value.isEmpty()) {
-            throw new IllegalArgumentException("Giá trị thuộc tính không được để trống!");
-        }
-
-        if (this.shopId == null) {
-            throw new IllegalArgumentException("Mã cửa hàng không được để trống!");
-        }
+        validate();
     }
 }

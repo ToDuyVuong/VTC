@@ -33,6 +33,8 @@ public class ShopServiceImpl implements IShopService {
     @Autowired
     ModelMapper modelMapper;
 
+
+
     @Override
     public ShopResponse registerShop(RegisterShopRequest request) {
 
@@ -65,6 +67,7 @@ public class ShopServiceImpl implements IShopService {
 
     }
 
+
     @Override
     public ShopResponse getProfileShop(String username) {
         Customer customer = customerService.getCustomerByUsername(username);
@@ -86,6 +89,7 @@ public class ShopServiceImpl implements IShopService {
         return shopResponse;
 
     }
+
 
     @Override
     public ShopResponse updateShop(UpdateShopRequest request) {
@@ -121,6 +125,7 @@ public class ShopServiceImpl implements IShopService {
 
     }
 
+
     @Override
     public ShopResponse updateStatusShop(String username, Status status) {
         Shop shop = shopRepository.findByCustomer_Username(username);
@@ -147,6 +152,17 @@ public class ShopServiceImpl implements IShopService {
             throw new IllegalArgumentException("Cập nhật trạng thái cửa hàng thất bại!");
         }
     }
+
+
+    @Override
+    public Shop checkShop(Long shopId) {
+        return shopRepository.findById(shopId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy cửa hàng!"));
+    }
+
+
+
+
 
     private void checkEmailAndPhoneAndUsernameInShop(String email, String phone, String username) {
         Shop shop = shopRepository.findByCustomer_Username(username);

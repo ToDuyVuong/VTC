@@ -11,10 +11,13 @@ import java.util.Optional;
 @Repository
 public interface AttributeRepository extends JpaRepository<Attribute, Long> {
 
+    Attribute findByAttributeId(Long attributeId);
 
     Optional<Attribute> findByNameAndValueAndShop_ShopId(String name, String value, Long shopId);
 
     boolean existsByNameAndValueAndShop_ShopId(String name, String value, Long shopId);
+
+    boolean existsByAttributeIdAndActive(Long attributeId, boolean active);
 
 //    Optional<Attribute> findByProductAttributeIdAndShop_ShopId(Long productAttributeId, Long shopId);
 
@@ -23,6 +26,8 @@ public interface AttributeRepository extends JpaRepository<Attribute, Long> {
     List<Attribute> findAllByShop_ShopIdAndActive(Long shopId, boolean active);
 
     List<Attribute> findAllByShop_ShopIdAndName(Long shopId, String name);
+
+    List<Attribute> findAllByAttributeIdIn(List<Long> attributeIds);
 
 
 

@@ -26,7 +26,7 @@ public class ProductVariant {
 
     private Long price;
 
-    private Long quantity;
+    private int quantity;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -40,7 +40,9 @@ public class ProductVariant {
     private Product product;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "product_variant_attribute", joinColumns = @JoinColumn(name = "product_variant_id", nullable = true), inverseJoinColumns = @JoinColumn(name = "attribute_id", nullable = true))
+    @JoinTable(name = "product_variant_attribute", joinColumns =
+    @JoinColumn(name = "product_variant_id", nullable = true), inverseJoinColumns =
+    @JoinColumn(name = "attribute_id", nullable = true))
     private List<Attribute> attributes;
 
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class AttributeServiceImpl implements IAttributeService {
     private CustomerServiceImpl customerService;
     @Autowired
     ModelMapper modelMapper;
+
 
     @Override
     public AttributeResponse addNewAttribute(AttributeRequest attributeRequest) {
@@ -65,6 +67,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
     }
 
+
     @Override
     public AttributeResponse getAttributeById(Long attributeId, Long shopId) {
         Attribute attribute = checkAttributeInShop(attributeId, shopId);
@@ -77,6 +80,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
         return attributeResponse;
     }
+
 
     @Override
     public ListAttributeResponse getListAttributeByShopId(Long shopId) {
@@ -96,6 +100,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
         return response;
     }
+
 
     @Override
     public AttributeResponse updateAttribute(AttributeRequest attributeRequest) {
@@ -120,6 +125,7 @@ public class AttributeServiceImpl implements IAttributeService {
             throw new IllegalArgumentException("Cập nhật thuộc tính thất bại!");
         }
     }
+
 
     @Override
     public AttributeResponse lockOrActiveAttribute(Long attributeId, Long shopId, boolean active) {
@@ -146,6 +152,7 @@ public class AttributeServiceImpl implements IAttributeService {
         }
     }
 
+
     @Override
     public AttributeResponse deleteAttribute(Long attributeId, Long shopId) {
         Attribute attribute = checkAttributeInShop(attributeId, shopId);
@@ -167,6 +174,33 @@ public class AttributeServiceImpl implements IAttributeService {
             throw new IllegalArgumentException("Xóa thuộc tính thất bại trong cửa hàng!");
         }
     }
+
+
+    @Override
+    public List<Attribute> getListAttributeByListId(List<Long> attributeIds) {
+
+        List<Attribute> attributes = new ArrayList<>();
+        if (attributeIds != null) {
+            attributeIds.forEach(attributeId -> {
+                if (!attributeRepository.existsById(attributeId)) {
+                    throw new IllegalArgumentException("Mã thuộc tính không tồn tại!");
+                }
+                if (attributes.contains(attributeRepository.findByAttributeId(attributeId))) {
+                    throw new IllegalArgumentException("Mã thuộc tính bị trùng!");
+                }
+                if(attributeRepository.existsByAttributeIdAndActive(attributeId, false)){
+                    throw new IllegalArgumentException("Mã thuộc tính đã bị khóa trong cửa hàng!");
+                }
+
+                attributes.add(attributeRepository.findByAttributeId(attributeId));
+            });
+        }
+        return attributes;
+    }
+
+
+
+
 
     private Attribute checkAttributeInShop(Long attributeId, Long shopId) {
         Attribute attribute = attributeRepository.findById(attributeId)

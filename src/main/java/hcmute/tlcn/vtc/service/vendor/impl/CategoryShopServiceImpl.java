@@ -43,6 +43,8 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
     @Autowired
     ModelMapper modelMapper;
 
+
+
     @Override
     public CategoryShopResponse addNewCategoryShop(CategoryShopRequest request) {
 
@@ -83,6 +85,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         }
     }
 
+
     @Override
     public ListCategoryShopResponse getAllCategoryByShopId(Long shopId) {
         Shop shop = shopRepository.findById(shopId)
@@ -107,6 +110,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         return response;
     }
 
+
     @Override
     public CategoryShopResponse getCategoryById(Long categoryId, Long shopId) {
         Category category = checkCategory(categoryId, shopId);
@@ -123,6 +127,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
         return response;
     }
+
 
     @Override
     public CategoryShopResponse updateCategoryShop(CategoryShopRequest request) {
@@ -162,6 +167,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         }
     }
 
+
     @Override
     public CategoryShopResponse updateStatusCategoryShop(Long categoryId, Long shopId, Status status) {
         Category category = checkCategory(categoryId, shopId);
@@ -195,9 +201,14 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         }
     }
 
-    private Category checkCategory(Long categoryId, Long shopId) {
+
+
+
+
+    @Override
+    public Category checkCategory(Long categoryId, Long shopId) {
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NotFoundException("Danh mục không tồn tại trong cửa hàng!"));
+                .orElseThrow(() -> new NotFoundException("Danh mục không tồn tại!"));
 
         if (category.getShop() == null || !category.getShop().getShopId().equals(shopId)) {
             throw new NotFoundException("Danh mục không tồn tại trong cửa hàng!");
