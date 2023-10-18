@@ -24,8 +24,7 @@ public class Attribute {
 
     private String value;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private boolean active;
 
     private LocalDateTime atCreate;
 
@@ -35,7 +34,7 @@ public class Attribute {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    @ManyToMany(mappedBy = "attributes")
+    @ManyToMany(mappedBy = "attributes", fetch = FetchType.EAGER)
     private List<ProductVariant> productVariants;
 
     public boolean isUsedInProductVariants() {

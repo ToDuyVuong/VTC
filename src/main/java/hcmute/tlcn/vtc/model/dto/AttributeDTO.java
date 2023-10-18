@@ -1,8 +1,13 @@
 package hcmute.tlcn.vtc.model.dto;
 
 
+import hcmute.tlcn.vtc.model.entity.Attribute;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
+import org.modelmapper.ModelMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +22,17 @@ public class AttributeDTO {
 
     private String value;
 
-    private Status status;
+    private boolean active;
 
     private Long shopId;
+
+    public static List<AttributeDTO> convertToListDTO(List<Attribute> attributes){
+        List<AttributeDTO> attributeDTOS = new ArrayList<>();
+        for (Attribute attribute : attributes){
+            ModelMapper modelMapper = new ModelMapper();
+            AttributeDTO attributeDTO = modelMapper.map(attribute, AttributeDTO.class);
+            attributeDTOS.add(attributeDTO);
+        }
+        return attributeDTOS;
+    }
 }

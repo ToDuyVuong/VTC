@@ -10,7 +10,7 @@ public interface ICategoryAdminService {
 
     CategoryAdminResponse getCategoryParent(Long categoryId);
 
-    AllCategoryAdminResponse getParentCategory();
+    AllCategoryAdminResponse getAllCategoryParent();
 
     CategoryAdminResponse updateCategoryParent(CategoryAdminRequest request);
 

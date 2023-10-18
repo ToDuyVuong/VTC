@@ -25,7 +25,7 @@ public class CategoryShopController {
 
     @GetMapping("/all-parent")
     public ResponseEntity<AllCategoryAdminResponse> getParentCategory() {
-        return ResponseEntity.ok(categoryAdminService.getParentCategory());
+        return ResponseEntity.ok(categoryAdminService.getAllCategoryParent());
     }
 
 

@@ -56,7 +56,7 @@ public class AddressServiceImpl implements IAddressService {
             AddressResponse response = new AddressResponse();
             response.setAddressDTO(addressDTOSave);
             response.setCustomerDTO(customerDTO);
-            response.setStatus("ok");
+            response.setStatus("success");
             response.setCode(200);
             response.setMessage("Thêm địa chỉ mới của khách hàng: " + customer.getFullName() + " thành công.");
 
@@ -118,7 +118,7 @@ public class AddressServiceImpl implements IAddressService {
             AddressResponse response = new AddressResponse();
             response.setAddressDTO(addressDTO);
             response.setCustomerDTO(customerDTO);
-            response.setStatus("ok");
+            response.setStatus("success");
             response.setCode(200);
             response.setMessage("Cập nhật địa chỉ của khách hàng: " + customer.getFullName() + " thành công.");
             return response;
@@ -150,7 +150,7 @@ public class AddressServiceImpl implements IAddressService {
                 AddressResponse response = new AddressResponse();
                 response.setCustomerDTO(customerDTO);
                 response.setAddressDTO(addressDTO);
-                response.setStatus("ok");
+                response.setStatus("success");
                 response.setCode(200);
                 response.setMessage(message);
 

@@ -52,7 +52,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
             response.setCategoryAdminDTO(categoryAdminDTO);
             response.setCode(200);
             response.setMessage("Thêm danh mục thành công từ admin thành công!");
-            response.setStatus("ok");
+            response.setStatus("success");
 
             return response;
         } catch (Exception e) {
@@ -79,8 +79,8 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
 
 
     @Override
-    public AllCategoryAdminResponse getParentCategory() {
-        List<Category> categories = categoryRepository.findAllByAdminOnly(true);
+    public AllCategoryAdminResponse getAllCategoryParent() {
+        List<Category> categories = categoryRepository.findAllByAdminOnlyAndStatus(true, Status.ACTIVE);
         if (categories.isEmpty()) {
             AllCategoryAdminResponse response = new AllCategoryAdminResponse();
             response.setCode(404);
@@ -125,7 +125,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
             response.setCategoryAdminDTO(categoryAdminDTO);
             response.setCode(200);
             response.setMessage("Cập nhật danh mục thành công!");
-            response.setStatus("ok");
+            response.setStatus("success");
 
             return response;
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
             response.setCategoryAdminDTO(categoryAdminDTO);
             response.setCode(200);
             response.setMessage("Cập nhật danh mục thành công!");
-            response.setStatus("ok");
+            response.setStatus("success");
 
             return response;
         } catch (Exception e) {

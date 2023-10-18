@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -73,7 +75,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
             response.setCategoryDTO(categoryDTO);
             response.setCode(200);
             response.setMessage("Thêm danh mục vào cửa hàng " + shop.getName() + " thành công!");
-            response.setStatus("ok");
+            response.setStatus("success");
 
             return response;
         } catch (Exception e) {
@@ -87,8 +89,18 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         Shop shop = shopRepository.findById(shopId)
                 .orElseThrow(() -> new NotFoundException("Cửa hàng không tồn tại!"));
 
+        List<Category> categories = categoryRepository.findAllByShopShopIdAndStatus(shopId, Status.ACTIVE);
+        if (categories.isEmpty()) {
+            throw new NotFoundException("Cửa hàng chưa có danh mục nào!");
+        }
+        categories.sort(Comparator.comparing(Category::getName));
+        // Cách 2 sắp xếp bằng lambda expression
+//        categories.sort((category1, category2) -> category1.getName().compareTo(category2.getName()));
+        List<CategoryDTO> categoryDTOS = CategoryDTO.convertToListDTO(categories);
+
+
         AllCategoryShopResponse response = new AllCategoryShopResponse();
-        response.setCategoryDTOS(CategoryDTO.convertToListDTO(categoryRepository.findAllByShopShopId(shopId)));
+        response.setCategoryDTOS(categoryDTOS);
         response.setCode(200);
         response.setMessage("Lấy danh sách danh mục của cửa hàng " + shop.getName() + " thành công!");
         response.setStatus("ok");

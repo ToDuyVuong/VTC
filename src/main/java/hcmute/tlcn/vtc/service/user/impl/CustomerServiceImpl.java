@@ -76,7 +76,7 @@ public class CustomerServiceImpl implements ICustomerService {
             ProfileCustomerResponse response = new ProfileCustomerResponse();
             response.setCustomerDTO(customerDTO);
             response.setMessage("Cập nhật thông tin khách hàng thành công.");
-            response.setStatus("ok");
+            response.setStatus("success");
             response.setCode(200);
 
             return response;
@@ -108,7 +108,7 @@ public class CustomerServiceImpl implements ICustomerService {
             ProfileCustomerResponse response = new ProfileCustomerResponse();
             response.setCustomerDTO(customerDTO);
             response.setMessage("Cập nhật mật khẩu của khách hàng thành công.");
-            response.setStatus("ok");
+            response.setStatus("success");
             response.setCode(200);
 
             return response;
@@ -135,7 +135,7 @@ public class CustomerServiceImpl implements ICustomerService {
             response.setUsername(customerDTO.getUsername());
             response.setEmail(customerDTO.getEmail());
             response.setMessage("Mật khẩu của tài khoản" + request.getUsername() + " đã được cài lại thành công.");
-            response.setStatus("ok");
+            response.setStatus("success");
             response.setCode(200);
 
             return response;

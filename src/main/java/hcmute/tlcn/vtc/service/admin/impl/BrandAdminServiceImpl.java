@@ -84,7 +84,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         BrandAdminResponse response = new BrandAdminResponse();
         response.setBrandDTO(brandDTO);
         response.setCode(200);
-        response.setStatus("success");
+        response.setStatus("ok");
         response.setMessage("Lấy thông tin thương hiệu thành công.");
 
         return response;
@@ -105,7 +105,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         AllBrandAdminResponse response = new AllBrandAdminResponse();
         response.setBrandDTOS(brandDTOS);
         response.setCode(200);
-        response.setStatus("success");
+        response.setStatus("ok");
         response.setMessage("Lấy danh sách thương hiệu thành công.");
         return response;
     }

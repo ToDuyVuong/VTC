@@ -20,11 +20,10 @@ public interface AttributeRepository extends JpaRepository<Attribute, Long> {
 
     List<Attribute> findAllByShop_ShopId(Long shopId);
 
-    List<Attribute> findAllByShop_ShopIdAndStatus(Long shopId, Status status);
+    List<Attribute> findAllByShop_ShopIdAndActive(Long shopId, boolean active);
 
     List<Attribute> findAllByShop_ShopIdAndName(Long shopId, String name);
 
-    List<Attribute> findAllByShop_ShopIdAndStatusAndNameContaining(Long shopId, Status status, String name);
 
 
 }

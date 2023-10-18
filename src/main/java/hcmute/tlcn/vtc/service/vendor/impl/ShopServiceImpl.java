@@ -58,7 +58,7 @@ public class ShopServiceImpl implements IShopService {
             shopResponse.setShopDTO(shopDTO);
             shopResponse.setCode(200);
             shopResponse.setMessage("Đăng ký cửa hàng thành công.");
-            shopResponse.setStatus("ok");
+            shopResponse.setStatus("success");
             return shopResponse;
 
         } catch (Exception e) {

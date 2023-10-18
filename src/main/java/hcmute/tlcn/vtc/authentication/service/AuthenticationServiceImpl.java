@@ -78,7 +78,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         var saveCustomer = customerRepository.save(customer);
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);
-        registerResponse.setStatus("ok");
+        registerResponse.setStatus("success");
         registerResponse.setMessage("Đăng ký tài khoản khách hàng thành công");
 
         return registerResponse;

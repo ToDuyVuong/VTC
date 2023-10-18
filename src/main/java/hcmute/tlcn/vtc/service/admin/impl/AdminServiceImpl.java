@@ -52,7 +52,7 @@ public class AdminServiceImpl implements IAdminService {
 
         var saveCustomer = customerRepository.save(customer);
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);
-        registerResponse.setStatus("ok");
+        registerResponse.setStatus("success");
         registerResponse.setMessage("Đăng ký tài khoản admin thành công");
 
         return registerResponse;

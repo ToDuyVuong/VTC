@@ -39,7 +39,7 @@ public class CategoryAdminController {
 
     @GetMapping("/all-parent")
     public ResponseEntity<AllCategoryAdminResponse> getCategoryParent() {
-        return ResponseEntity.ok(categoryAdminService.getParentCategory());
+        return ResponseEntity.ok(categoryAdminService.getAllCategoryParent());
     }
 
 
