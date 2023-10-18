@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,12 +13,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ProductAttribute {
+public class Attribute {
 
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productAttributeId;
+    private Long attributeId;
 
     private String name;
 
@@ -29,6 +30,17 @@ public class ProductAttribute {
     private LocalDateTime atCreate;
 
     private LocalDateTime atUpdate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
+    @ManyToMany(mappedBy = "attributes")
+    private List<ProductVariant> productVariants;
+
+    public boolean isUsedInProductVariants() {
+        return productVariants != null && !productVariants.isEmpty();
+    }
 
 
 }

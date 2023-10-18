@@ -9,6 +9,7 @@ import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.BrandRepository;
+import hcmute.tlcn.vtc.repository.ProductRepository;
 import hcmute.tlcn.vtc.service.admin.IBrandAdminService;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.UnauthorizedAccessException;
@@ -31,6 +32,8 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
     private ModelMapper modelMapper;
     @Autowired
     private ICustomerService customerService;
+    @Autowired
+    private ProductRepository productRepository;
 
 
     @Override
@@ -158,6 +161,9 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
             }
             if (brand.getStatus() == Status.DELETED){
                 throw new IllegalArgumentException("Thương hiệu đã bị xóa!");
+            }
+            if (status == Status.DELETED && !productRepository.existsByBrandBrandId(brand.getBrandId()) ){
+                throw new IllegalArgumentException("Thương hiệu đã có sản phẩm!");
             }
 
             brand.setStatus(status);

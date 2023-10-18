@@ -15,7 +15,7 @@
 - Đồ án sử dụng công nghệ Spring Boot, Security, Spring Data JPA, Hibernate, MySQL, Restful API, ReactJS, Redux, Axios,
   Bootstrap, HTML, CSS, JavaScript...
 - Đồ án sử dụng mô hình Client - Server.
-- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.
+_~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~_
 
 
 ## 4. Các chức năng

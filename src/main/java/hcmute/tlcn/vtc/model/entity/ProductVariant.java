@@ -36,7 +36,7 @@ public class ProductVariant {
 
     private LocalDateTime atUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -44,9 +44,9 @@ public class ProductVariant {
     @JoinTable(
             name = "product_variant_attribute",
             joinColumns = @JoinColumn(name = "product_variant_id", nullable = true),
-            inverseJoinColumns = @JoinColumn(name = "product_attribute_id", nullable = true)
+            inverseJoinColumns = @JoinColumn(name = "attribute_id", nullable = true)
     )
-    private List<ProductAttribute> productAttributes;
+    private List<Attribute> attributes;
 
 
 }
