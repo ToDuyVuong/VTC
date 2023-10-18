@@ -22,12 +22,14 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
 
 - Đăng nhập, đăng ký, đăng xuất.
 
+
 - Quản lý thông tài khoản:
     - Xem thông tin tài khoản.
     - Cập nhật thông tin tài khoản.
     - Đổi mật khẩu. 
     - Lấy lại mật khẩu.
     
+
 - Quản lý địa chỉ:
     - Thêm địa chỉ.
     - Xem chi tiết địa chỉ.
@@ -42,6 +44,7 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Xem chi tiết cửa hàng.
     - Cập nhật thông tin chi tiết cửa hàng.
     - Chọn trạng thái cửa hàng.
+
 
 - Quản lý danh mục từ quyền admin:
     - Thêm danh mục bằng quyền admin.

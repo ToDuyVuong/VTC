@@ -32,13 +32,11 @@ public class CustomerServiceImpl implements ICustomerService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     @Override
     public Customer getCustomerByUsername(String username) {
         return customerRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Tài khoản không tồn tại."));
     }
-
 
     @Override
     public ProfileCustomerResponse getProfileCustomer(String username) {
@@ -57,7 +55,6 @@ public class CustomerServiceImpl implements ICustomerService {
         return response;
     }
 
-
     @Override
     public ProfileCustomerResponse updateProfileCustomer(ProfileCustomerRequest request) {
         request.validate();
@@ -67,7 +64,7 @@ public class CustomerServiceImpl implements ICustomerService {
         customerUpdate.setEmail(request.getEmail());
         customerUpdate.setFullName(request.getFullName());
         customerUpdate.setGender(request.isGender());
-        customerUpdate.setAtUpdate(LocalDateTime.now());
+        customerUpdate.setUpdateAt(LocalDateTime.now());
 
         try {
             customerRepository.save(customerUpdate);
@@ -84,9 +81,7 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new IllegalArgumentException("Cập nhật thông tin khách hàng thất bại!");
         }
 
-
     }
-
 
     @Override
     public ProfileCustomerResponse changePassword(ChangePasswordRequest request) {
@@ -99,7 +94,7 @@ public class CustomerServiceImpl implements ICustomerService {
         }
 
         customerUpdate.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        customerUpdate.setAtUpdate(LocalDateTime.now());
+        customerUpdate.setUpdateAt(LocalDateTime.now());
 
         try {
             customerRepository.save(customerUpdate);
@@ -116,7 +111,6 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new IllegalArgumentException("Cập nhật mật khẩu của khách hàng thất bại!");
         }
 
-
     }
 
     @Override
@@ -126,7 +120,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
         Customer customerUpdate = getCustomerByUsername(request.getUsername());
         customerUpdate.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        customerUpdate.setAtUpdate(LocalDateTime.now());
+        customerUpdate.setUpdateAt(LocalDateTime.now());
         try {
             customerRepository.save(customerUpdate);
 
@@ -143,8 +137,6 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new IllegalArgumentException("Cài lại mật khẩu của tài khoản thất bại!");
         }
 
-
     }
-
 
 }

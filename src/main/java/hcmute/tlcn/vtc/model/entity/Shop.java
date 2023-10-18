@@ -1,6 +1,5 @@
 package hcmute.tlcn.vtc.model.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Shop{
+public class Shop {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -41,18 +40,16 @@ public class Shop{
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Category> categories;
-
 
 }

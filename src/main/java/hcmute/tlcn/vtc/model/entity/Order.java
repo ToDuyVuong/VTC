@@ -23,9 +23,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
@@ -35,9 +35,9 @@ public class Order {
     @JoinColumn(name = "address_id")
     private Address address;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "payment_id")
-//    private Payment payment;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "payment_id")
+    // private Payment payment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id")
@@ -48,9 +48,5 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
-
-
-
-
 
 }

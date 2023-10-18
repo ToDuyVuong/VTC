@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.controller.vendor;
 
 import hcmute.tlcn.vtc.model.dto.admin.response.AllCategoryAdminResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.request.CategoryShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.AllCategoryShopResponse;
+import hcmute.tlcn.vtc.model.dto.vendor.response.ListCategoryShopResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.CategoryShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
@@ -38,11 +38,11 @@ public class CategoryShopController {
 
 
     @GetMapping("/all/{shopId}")
-    public ResponseEntity<AllCategoryShopResponse> getAllCategoryByShopId(@PathVariable Long shopId) {
+    public ResponseEntity<ListCategoryShopResponse> getAllCategoryByShopId(@PathVariable Long shopId) {
         if (shopId == null) {
             throw new NullPointerException("Mã cửa hàng không được để trống!");
         }
-        AllCategoryShopResponse response = categoryService.getAllCategoryByShopId(shopId);
+        ListCategoryShopResponse response = categoryService.getAllCategoryByShopId(shopId);
         return ResponseEntity.ok(response);
     }
 

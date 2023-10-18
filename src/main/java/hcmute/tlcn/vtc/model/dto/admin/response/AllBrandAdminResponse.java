@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class AllBrandAdminResponse extends ResponseAbstract {
 
-    private List<BrandDTO> brandDTOS;
+    private List<BrandDTO> brandDTOs;
 }

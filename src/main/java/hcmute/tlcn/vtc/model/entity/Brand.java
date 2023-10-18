@@ -32,15 +32,15 @@ public class Brand {
 
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     private boolean adminOnly;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "customer_id")
-//    private Customer customer;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "customer_id")
+    // private Customer customer;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
@@ -49,6 +49,5 @@ public class Brand {
     @OneToMany(mappedBy = "brand")
     @JsonIgnore
     private List<Product> products;
-
 
 }

@@ -30,19 +30,18 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id", nullable = true)
-//    @JsonIgnore
+    // @JsonIgnore
     private Shop shop;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id", nullable = true)
-//    @JsonIgnore
+    // @JsonIgnore
     private Category parent;
-
 
 }

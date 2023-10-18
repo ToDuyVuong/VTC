@@ -24,22 +24,20 @@ public class Cart {
 
     private Long quantity;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "product_id")
+    // private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_variant_id")
     private ProductVariant productVariant;
-
-
 
 }

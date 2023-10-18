@@ -14,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ListAttributeResponse extends ResponseAbstract {
 
-    private List<AttributeDTO> attributeDTOS;
+    private List<AttributeDTO> attributeDTOs;
 }

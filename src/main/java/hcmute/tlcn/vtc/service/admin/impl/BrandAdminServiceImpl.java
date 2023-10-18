@@ -35,7 +35,6 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
     @Autowired
     private ProductRepository productRepository;
 
-
     @Override
     public BrandAdminResponse addNewBrand(BrandAdminRequest request) {
 
@@ -51,8 +50,8 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
 
         brand = modelMapper.map(request, Brand.class);
         brand.setAdminOnly(true);
-        brand.setAtCreate(LocalDateTime.now());
-        brand.setAtUpdate(LocalDateTime.now());
+        brand.setCreateAt(LocalDateTime.now());
+        brand.setUpdateAt(LocalDateTime.now());
         brand.setStatus(Status.ACTIVE);
         brand.setCustomer(customer);
 
@@ -72,7 +71,6 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         }
     }
 
-
     @Override
     public BrandAdminResponse getBrandById(Long brandId) {
 
@@ -90,7 +88,6 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         return response;
     }
 
-
     @Override
     public AllBrandAdminResponse getAllBrandAdmin() {
 
@@ -99,17 +96,16 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
             throw new IllegalArgumentException("Không có thương hiệu nào!");
         }
 
-        List<BrandDTO> brandDTOS = BrandDTO.convertToListDTO(brands);
-        brandDTOS.sort(Comparator.comparing(BrandDTO::getName));
+        List<BrandDTO> brandDTOs = BrandDTO.convertToListDTO(brands);
+        brandDTOs.sort(Comparator.comparing(BrandDTO::getName));
 
         AllBrandAdminResponse response = new AllBrandAdminResponse();
-        response.setBrandDTOS(brandDTOS);
+        response.setBrandDTOs(brandDTOs);
         response.setCode(200);
         response.setStatus("ok");
         response.setMessage("Lấy danh sách thương hiệu thành công.");
         return response;
     }
-
 
     @Override
     public BrandAdminResponse updateBrandAdmin(BrandAdminRequest request) {
@@ -132,7 +128,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         brand.setInformation(request.getInformation());
         brand.setOrigin(request.getOrigin());
         brand.setImage(request.getImage());
-        brand.setAtUpdate(LocalDateTime.now());
+        brand.setUpdateAt(LocalDateTime.now());
 
         try {
             brandRepository.save(brand);
@@ -150,39 +146,38 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
         }
     }
 
-
     @Override
     public BrandAdminResponse updateStatusBrandAdmin(Long brandId, String username, Status status) {
 
-            Brand brand = brandRepository.findById(brandId)
-                    .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thương hiệu!"));
-            if (!brand.getCustomer().getUsername().equals(username)) {
-                throw new UnauthorizedAccessException("Bạn không có quyền sửa thương hiệu này!");
-            }
-            if (brand.getStatus() == Status.DELETED){
-                throw new IllegalArgumentException("Thương hiệu đã bị xóa!");
-            }
-            if (status == Status.DELETED && !productRepository.existsByBrandBrandId(brand.getBrandId()) ){
-                throw new IllegalArgumentException("Thương hiệu đã có sản phẩm!");
-            }
+        Brand brand = brandRepository.findById(brandId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thương hiệu!"));
+        if (!brand.getCustomer().getUsername().equals(username)) {
+            throw new UnauthorizedAccessException("Bạn không có quyền sửa thương hiệu này!");
+        }
+        if (brand.getStatus() == Status.DELETED) {
+            throw new IllegalArgumentException("Thương hiệu đã bị xóa!");
+        }
+        if (status == Status.DELETED && !productRepository.existsByBrandBrandId(brand.getBrandId())) {
+            throw new IllegalArgumentException("Thương hiệu đã có sản phẩm!");
+        }
 
-            brand.setStatus(status);
-            brand.setAtUpdate(LocalDateTime.now());
+        brand.setStatus(status);
+        brand.setUpdateAt(LocalDateTime.now());
 
-            try {
-                brandRepository.save(brand);
+        try {
+            brandRepository.save(brand);
 
-                BrandDTO brandDTO = modelMapper.map(brand, BrandDTO.class);
-                BrandAdminResponse response = new BrandAdminResponse();
-                response.setBrandDTO(brandDTO);
-                response.setCode(200);
-                response.setStatus("success");
-                response.setMessage("Cập nhật trạng thái thương hiệu thành công.");
+            BrandDTO brandDTO = modelMapper.map(brand, BrandDTO.class);
+            BrandAdminResponse response = new BrandAdminResponse();
+            response.setBrandDTO(brandDTO);
+            response.setCode(200);
+            response.setStatus("success");
+            response.setMessage("Cập nhật trạng thái thương hiệu thành công.");
 
-                return response;
-            } catch (Exception e) {
-                throw new IllegalArgumentException("Cập nhật trạng thái thương hiệu thất bại!");
-            }
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật trạng thái thương hiệu thất bại!");
+        }
     }
 
 }

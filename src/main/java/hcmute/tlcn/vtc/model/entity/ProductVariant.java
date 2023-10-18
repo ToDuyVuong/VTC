@@ -1,6 +1,5 @@
 package hcmute.tlcn.vtc.model.entity;
 
-
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,21 +31,16 @@ public class ProductVariant {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "product_variant_attribute",
-            joinColumns = @JoinColumn(name = "product_variant_id", nullable = true),
-            inverseJoinColumns = @JoinColumn(name = "attribute_id", nullable = true)
-    )
+    @JoinTable(name = "product_variant_attribute", joinColumns = @JoinColumn(name = "product_variant_id", nullable = true), inverseJoinColumns = @JoinColumn(name = "attribute_id", nullable = true))
     private List<Attribute> attributes;
-
 
 }

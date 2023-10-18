@@ -33,9 +33,9 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -50,9 +50,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
-
-
-
-
 
 }

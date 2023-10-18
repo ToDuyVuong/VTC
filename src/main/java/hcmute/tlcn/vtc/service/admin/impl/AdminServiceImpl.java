@@ -44,11 +44,11 @@ public class AdminServiceImpl implements IAdminService {
 
         Customer customer = modelMapper.map(adminRequest, Customer.class);
         Set<Role> roles = new HashSet<>();
-        roles.add(Role.ADMIN);  // Every customer has a CUSTOMER role
+        roles.add(Role.ADMIN); // Every customer has a CUSTOMER role
         customer.setRoles(roles);
         customer.setPassword(passwordEncoder.encode(adminRequest.getPassword()));
-        customer.setAtCreate(LocalDateTime.now());
-        customer.setAtUpdate(LocalDateTime.now());
+        customer.setCreateAt(LocalDateTime.now());
+        customer.setUpdateAt(LocalDateTime.now());
 
         var saveCustomer = customerRepository.save(customer);
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);

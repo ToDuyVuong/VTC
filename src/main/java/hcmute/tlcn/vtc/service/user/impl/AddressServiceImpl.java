@@ -34,17 +34,16 @@ public class AddressServiceImpl implements IAddressService {
     @Autowired
     private final ModelMapper modelMapper;
 
-
     @Override
     public AddressResponse addNewAddress(AddressRequest request) {
-//        request.validate();
+        // request.validate();
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
 
         AddressDTO addressDTO = request.getAddressDTO();
         Address address = modelMapper.map(addressDTO, Address.class);
         address.setCustomer(customer);
-        address.setAtCreate(LocalDateTime.now());
-        address.setAtUpdate(LocalDateTime.now());
+        address.setCreateAt(LocalDateTime.now());
+        address.setUpdateAt(LocalDateTime.now());
         address.setStatus(request.getAddressDTO().getStatus());
 
         try {
@@ -66,7 +65,6 @@ public class AddressServiceImpl implements IAddressService {
         }
 
     }
-
 
     @Override
     public AddressResponse getAddressById(String addressId, String username) {
@@ -94,7 +92,6 @@ public class AddressServiceImpl implements IAddressService {
         return response;
     }
 
-
     @Override
     public AddressResponse updateAddress(AddressRequest request) {
         request.validate();
@@ -109,7 +106,7 @@ public class AddressServiceImpl implements IAddressService {
         address.setFullName(addressDTO.getFullName());
         address.setPhone(addressDTO.getPhone());
         address.setStatus(addressDTO.getStatus());
-        address.setAtUpdate(LocalDateTime.now());
+        address.setUpdateAt(LocalDateTime.now());
 
         try {
             addressRepository.save(address);
@@ -128,7 +125,6 @@ public class AddressServiceImpl implements IAddressService {
 
     }
 
-
     @Override
     public AddressResponse updateStatusAddress(AddressStatusRequest request) {
         request.validate();
@@ -138,7 +134,7 @@ public class AddressServiceImpl implements IAddressService {
         Address address = checkAddress(addressId, request.getUsername());
 
         if (address.getCustomer().getCustomerId().equals(customer.getCustomerId())) {
-            address.setAtUpdate(LocalDateTime.now());
+            address.setUpdateAt(LocalDateTime.now());
             address.setStatus(request.getStatus());
 
             try {
@@ -164,7 +160,6 @@ public class AddressServiceImpl implements IAddressService {
         }
     }
 
-
     @Override
     public ListAddressResponse getAllAddress(String username) {
         if (username == null || username.isEmpty()) {
@@ -176,13 +171,10 @@ public class AddressServiceImpl implements IAddressService {
                 .orElseThrow(() -> new NotFoundException("Khách hàng chưa có địa chỉ nào."));
         CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
 
-
         addresses.sort(Comparator.comparing(Address::getStatus,
                 Comparator.comparingInt(s -> s == Status.ACTIVE ? 0 : (s == Status.INACTIVE ? 1 : 2))));
 
-
         List<AddressDTO> addressDTOs = AddressDTO.convertToListDTO(addresses);
-
 
         ListAddressResponse response = new ListAddressResponse();
         response.setAddressDTOs(addressDTOs);
@@ -193,7 +185,6 @@ public class AddressServiceImpl implements IAddressService {
 
         return response;
     }
-
 
     private Address checkAddress(Long addressId, String username) {
 
@@ -211,13 +202,11 @@ public class AddressServiceImpl implements IAddressService {
         return address;
     }
 
-
     private String setMessageUpdateStatus(Status status, String fullName) {
         if (status.equals(Status.DELETED)) {
             return "Xóa địa chỉ của khách hàng: " + fullName + " thành công.";
         }
         return "Cập nhật trạng thái địa chỉ của khách hàng: " + fullName + " thành công.";
-
 
     }
 

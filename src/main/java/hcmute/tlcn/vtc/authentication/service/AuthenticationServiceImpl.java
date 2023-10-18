@@ -54,7 +54,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     @Value("${application.security.jwt.refresh-token.expiration}")
     private int refreshExpiration;
 
-
     @Override
     public RegisterResponse register(RegisterRequest customerRequest) {
         customerRequest.validate();
@@ -70,11 +69,11 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         Customer customer = modelMapper.map(customerRequest, Customer.class);
         Set<Role> roles = new HashSet<>();
-        roles.add(Role.CUSTOMER);  // Every customer has a CUSTOMER role
+        roles.add(Role.CUSTOMER); // Every customer has a CUSTOMER role
         customer.setRoles(roles);
         customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
-        customer.setAtCreate(LocalDateTime.now());
-        customer.setAtUpdate(LocalDateTime.now());
+        customer.setCreateAt(LocalDateTime.now());
+        customer.setUpdateAt(LocalDateTime.now());
 
         var saveCustomer = customerRepository.save(customer);
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);
@@ -84,14 +83,12 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         return registerResponse;
     }
 
-
     @Override
     public LoginResponse login(LoginRequest loginRequest, HttpServletResponse response) {
         loginRequest.validate();
 
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         Optional<Customer> customer = customerRepository.findByUsername(loginRequest.getUsername());
 
         var jwtToken = jwtService.generateToken(customer.get());
@@ -141,8 +138,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         return new LogoutResponse("success", "Đăng xuất thành công", 200);
     }
 
-
-
     public void saveCustomerToken(Customer customer, String jwtToken) {
         var token = Token.builder()
                 .customer(customer)
@@ -153,7 +148,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
                 .build();
         tokenRepository.save(token);
     }
-
 
     public void revokeAllCustomerTokens(Customer customer) {
         var validUserTokens = tokenRepository.findAllValidTokenByCustomer(customer.getCustomerId());
@@ -166,9 +160,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-
     @Override
-    public RefreshTokenResponse refreshToken(String refreshToken, HttpServletRequest request, HttpServletResponse response)
+    public RefreshTokenResponse refreshToken(String refreshToken, HttpServletRequest request,
+            HttpServletResponse response)
             throws IOException {
         if (refreshToken == null) {
             throw new JwtException("Refresh token không tồn tại.");
@@ -206,6 +200,5 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         }
         return null;
     }
-
 
 }

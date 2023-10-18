@@ -1,6 +1,5 @@
 package hcmute.tlcn.vtc.model.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hcmute.tlcn.vtc.model.extra.Role;
 import jakarta.persistence.*;
@@ -37,9 +36,9 @@ public class Customer implements UserDetails {
 
     private Date birthday;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -50,7 +49,6 @@ public class Customer implements UserDetails {
     public void addRole(Role role) {// Convert the string to the Role enum
         roles.add(role);
     }
-
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -64,15 +62,13 @@ public class Customer implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return roles.stream()
-//                .flatMap(role -> role.getPermissions().stream())
-//                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
-//                .collect(Collectors.toList());
-//    }
-
+    // @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    // return roles.stream()
+    // .flatMap(role -> role.getPermissions().stream())
+    // .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+    // .collect(Collectors.toList());
+    // }
 
     @Override
     public String getPassword() {
@@ -103,6 +99,5 @@ public class Customer implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 }

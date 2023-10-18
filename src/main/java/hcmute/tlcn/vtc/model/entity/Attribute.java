@@ -26,9 +26,9 @@ public class Attribute {
 
     private boolean active;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id")
@@ -40,6 +40,5 @@ public class Attribute {
     public boolean isUsedInProductVariants() {
         return productVariants != null && !productVariants.isEmpty();
     }
-
 
 }

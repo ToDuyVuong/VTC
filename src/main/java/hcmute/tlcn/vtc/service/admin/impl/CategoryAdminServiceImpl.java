@@ -28,7 +28,6 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
     public CategoryAdminResponse addNewCategory(CategoryAdminRequest request) {
 
@@ -39,9 +38,8 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
         Category category = modelMapper.map(request, Category.class);
         category.setAdminOnly(true);
         category.setStatus(Status.ACTIVE);
-        category.setAtCreate(LocalDateTime.now());
-        category.setAtUpdate(LocalDateTime.now());
-
+        category.setCreateAt(LocalDateTime.now());
+        category.setUpdateAt(LocalDateTime.now());
 
         try {
             Category categorySave = categoryRepository.save(category);
@@ -60,7 +58,6 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
         }
     }
 
-
     @Override
     public CategoryAdminResponse getCategoryParent(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
@@ -77,7 +74,6 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
         return response;
     }
 
-
     @Override
     public AllCategoryAdminResponse getAllCategoryParent() {
         List<Category> categories = categoryRepository.findAllByAdminOnlyAndStatus(true, Status.ACTIVE);
@@ -90,17 +86,16 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
         }
 
         categories.sort(Comparator.comparing(Category::getName));
-        List<CategoryAdminDTO> categoryAdminDTOS = CategoryAdminDTO.convertToListDTO(categories);
+        List<CategoryAdminDTO> categoryAdminDTOs = CategoryAdminDTO.convertToListDTO(categories);
 
         AllCategoryAdminResponse response = new AllCategoryAdminResponse();
-        response.setCategoryAdminDTOS(categoryAdminDTOS);
+        response.setCategoryAdminDTOs(categoryAdminDTOs);
         response.setCode(200);
         response.setMessage("Lấy danh mục thành công!");
         response.setStatus("ok");
 
         return response;
     }
-
 
     @Override
     public CategoryAdminResponse updateCategoryParent(CategoryAdminRequest request) {
@@ -115,7 +110,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
         category.setName(request.getName());
         category.setDescription(request.getDescription());
         category.setImage(request.getImage());
-        category.setAtUpdate(LocalDateTime.now());
+        category.setUpdateAt(LocalDateTime.now());
 
         try {
             categoryRepository.save(category);
@@ -133,21 +128,20 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
         }
     }
 
-
     @Override
     public CategoryAdminResponse updateStatusCategoryParent(Long categoryId, Status status) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy danh mục!"));
 
         category.setStatus(status);
-        category.setAtUpdate(LocalDateTime.now());
+        category.setUpdateAt(LocalDateTime.now());
 
         if (status == Status.DELETED) {
             List<Category> categories = categoryRepository.findAllByParent(category);
             if (!categories.isEmpty()) {
                 for (Category category1 : categories) {
                     category1.setStatus(Status.DELETED);
-                    category1.setAtUpdate(LocalDateTime.now());
+                    category1.setUpdateAt(LocalDateTime.now());
                     try {
                         categoryRepository.save(category1);
                     } catch (Exception e) {
@@ -172,7 +166,6 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
             throw new SaveFailedException("Cập nhật danh mục thất bại!");
         }
     }
-
 
     private void checkCategoryName(String name) {
         Optional<Category> category = categoryRepository.findByNameAndAdminOnly(name, true);

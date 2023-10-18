@@ -1,6 +1,5 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
-
 import hcmute.tlcn.vtc.model.dto.CustomerDTO;
 import hcmute.tlcn.vtc.model.dto.ShopDTO;
 import hcmute.tlcn.vtc.model.dto.vendor.request.UpdateShopRequest;
@@ -34,7 +33,6 @@ public class ShopServiceImpl implements IShopService {
     @Autowired
     ModelMapper modelMapper;
 
-
     @Override
     public ShopResponse registerShop(RegisterShopRequest request) {
 
@@ -44,8 +42,8 @@ public class ShopServiceImpl implements IShopService {
         Shop shop = modelMapper.map(request, Shop.class);
         shop.setCustomer(customer);
         shop.setStatus(Status.ACTIVE);
-        shop.setAtCreate(LocalDateTime.now());
-        shop.setAtUpdate(LocalDateTime.now());
+        shop.setCreateAt(LocalDateTime.now());
+        shop.setUpdateAt(LocalDateTime.now());
 
         try {
             Shop save = shopRepository.save(shop);
@@ -67,9 +65,8 @@ public class ShopServiceImpl implements IShopService {
 
     }
 
-
     @Override
-    public ShopResponse getProfileShop (String username){
+    public ShopResponse getProfileShop(String username) {
         Customer customer = customerService.getCustomerByUsername(username);
         Shop shop = shopRepository.findByCustomer_Username(username);
 
@@ -90,9 +87,8 @@ public class ShopServiceImpl implements IShopService {
 
     }
 
-
     @Override
-    public ShopResponse updateShop(UpdateShopRequest request){
+    public ShopResponse updateShop(UpdateShopRequest request) {
 
         checkEmailAndPhoneAndUsernameInShop(request.getEmail(), request.getPhone(), request.getUsername());
 
@@ -104,7 +100,7 @@ public class ShopServiceImpl implements IShopService {
         shop.setOpenTime(request.getOpenTime());
         shop.setCloseTime(request.getCloseTime());
         shop.setDescription(request.getDescription());
-        shop.setAtUpdate(LocalDateTime.now());
+        shop.setUpdateAt(LocalDateTime.now());
 
         try {
             shopRepository.save(shop);
@@ -119,23 +115,20 @@ public class ShopServiceImpl implements IShopService {
             shopResponse.setMessage("Cập nhật cửa hàng thành công.");
             shopResponse.setStatus("ok");
             return shopResponse;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("Cập nhật cửa hàng thất bại!");
         }
 
-
     }
 
-
     @Override
-    public ShopResponse updateStatusShop(String username, Status status){
+    public ShopResponse updateStatusShop(String username, Status status) {
         Shop shop = shopRepository.findByCustomer_Username(username);
         if (shop == null) {
             throw new IllegalArgumentException("Tài khoản chưa đăng ký cửa hàng!");
         }
         shop.setStatus(status);
-        shop.setAtUpdate(LocalDateTime.now());
+        shop.setUpdateAt(LocalDateTime.now());
 
         try {
             shopRepository.save(shop);
@@ -150,12 +143,10 @@ public class ShopServiceImpl implements IShopService {
             shopResponse.setMessage("Cập nhật trạng thái cửa hàng thành công.");
             shopResponse.setStatus("ok");
             return shopResponse;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("Cập nhật trạng thái cửa hàng thất bại!");
         }
     }
-
 
     private void checkEmailAndPhoneAndUsernameInShop(String email, String phone, String username) {
         Shop shop = shopRepository.findByCustomer_Username(username);
@@ -171,23 +162,21 @@ public class ShopServiceImpl implements IShopService {
 
             // Check if phone is used by a shop other than the current shop
             Shop shopByPhone = shopRepository.findByPhone(phone);
-            if (shopByPhone != null &&  !shopByPhone.getPhone().equals(shop.getPhone())) {
+            if (shopByPhone != null && !shopByPhone.getPhone().equals(shop.getPhone())) {
                 throw new IllegalArgumentException("Số điện thoại đã được sử dụng ở một cửa hàng khác!");
             }
         }
     }
 
-
     private Customer addRoleVendor(Customer customer) {
         customer.addRole(Role.VENDOR);
         try {
-           return customerRepository.save(customer);
+            return customerRepository.save(customer);
         } catch (Exception e) {
             throw new IllegalArgumentException("Cập nhật quyền cho tài khoản thất bại!");
         }
 
     }
-
 
     private void checkEmailAndPhoneAndUsername(String email, String phone, String username) {
         // Check if the email is already used by a shop
@@ -209,6 +198,5 @@ public class ShopServiceImpl implements IShopService {
         }
 
     }
-
 
 }

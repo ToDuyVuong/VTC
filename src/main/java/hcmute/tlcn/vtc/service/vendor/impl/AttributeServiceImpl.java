@@ -35,7 +35,6 @@ public class AttributeServiceImpl implements IAttributeService {
     @Autowired
     ModelMapper modelMapper;
 
-
     @Override
     public AttributeResponse addNewAttribute(AttributeRequest attributeRequest) {
 
@@ -47,8 +46,8 @@ public class AttributeServiceImpl implements IAttributeService {
         attribute.setValue(attributeRequest.getValue());
         attribute.setShop(shop);
         attribute.setActive(true);
-        attribute.setAtCreate(LocalDateTime.now());
-        attribute.setAtUpdate(LocalDateTime.now());
+        attribute.setCreateAt(LocalDateTime.now());
+        attribute.setUpdateAt(LocalDateTime.now());
 
         try {
             attributeRepository.save(attribute);
@@ -66,7 +65,6 @@ public class AttributeServiceImpl implements IAttributeService {
 
     }
 
-
     @Override
     public AttributeResponse getAttributeById(Long attributeId, Long shopId) {
         Attribute attribute = checkAttributeInShop(attributeId, shopId);
@@ -80,7 +78,6 @@ public class AttributeServiceImpl implements IAttributeService {
         return attributeResponse;
     }
 
-
     @Override
     public ListAttributeResponse getListAttributeByShopId(Long shopId) {
         checkShop(shopId);
@@ -89,17 +86,16 @@ public class AttributeServiceImpl implements IAttributeService {
             throw new IllegalArgumentException("Cửa hàng không có thuộc tính!");
         }
         attributes.sort(Comparator.comparing(Attribute::getName).thenComparing(Attribute::getValue));
-        List<AttributeDTO> attributeDTOS = AttributeDTO.convertToListDTO(attributes);
+        List<AttributeDTO> attributeDTOs = AttributeDTO.convertToListDTO(attributes);
 
         ListAttributeResponse response = new ListAttributeResponse();
-        response.setAttributeDTOS(attributeDTOS);
+        response.setAttributeDTOs(attributeDTOs);
         response.setStatus("ok");
         response.setMessage("Lấy danh sách thuộc tính trong cửa hàng thành công!");
         response.setCode(200);
 
         return response;
     }
-
 
     @Override
     public AttributeResponse updateAttribute(AttributeRequest attributeRequest) {
@@ -108,7 +104,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
         attribute.setName(attributeRequest.getName());
         attribute.setValue(attributeRequest.getValue());
-        attribute.setAtUpdate(LocalDateTime.now());
+        attribute.setUpdateAt(LocalDateTime.now());
 
         try {
             attributeRepository.save(attribute);
@@ -125,7 +121,6 @@ public class AttributeServiceImpl implements IAttributeService {
         }
     }
 
-
     @Override
     public AttributeResponse lockOrActiveAttribute(Long attributeId, Long shopId, boolean active) {
         Attribute attribute = checkAttributeInShop(attributeId, shopId);
@@ -133,7 +128,7 @@ public class AttributeServiceImpl implements IAttributeService {
             throw new IllegalArgumentException("Thuộc tính đã được sử dụng trong sản phẩm nên không thể khóa!");
         }
         attribute.setActive(active);
-        attribute.setAtUpdate(LocalDateTime.now());
+        attribute.setUpdateAt(LocalDateTime.now());
         String message = active ? "Mở khóa" : "Khóa";
 
         try {
@@ -150,7 +145,6 @@ public class AttributeServiceImpl implements IAttributeService {
             throw new IllegalArgumentException(message + " thuộc tính thất bại!");
         }
     }
-
 
     @Override
     public AttributeResponse deleteAttribute(Long attributeId, Long shopId) {
@@ -174,8 +168,6 @@ public class AttributeServiceImpl implements IAttributeService {
         }
     }
 
-
-
     private Attribute checkAttributeInShop(Long attributeId, Long shopId) {
         Attribute attribute = attributeRepository.findById(attributeId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thuộc tính!"));
@@ -186,12 +178,10 @@ public class AttributeServiceImpl implements IAttributeService {
         return attribute;
     }
 
-
     public Shop checkShop(Long shopId) {
         return shopRepository.findById(shopId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy cửa hàng!"));
     }
-
 
     public void existsAttribute(String name, String value, Long shopId) {
         boolean existsAttribute = attributeRepository.existsByNameAndValueAndShop_ShopId(
@@ -202,6 +192,5 @@ public class AttributeServiceImpl implements IAttributeService {
             throw new IllegalArgumentException("Thuộc tính đã tồn tại trong cửa hàng!");
         }
     }
-
 
 }

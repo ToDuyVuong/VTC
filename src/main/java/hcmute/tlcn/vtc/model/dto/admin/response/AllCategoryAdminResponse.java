@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class AllCategoryAdminResponse extends ResponseAbstract {
 
-    private List<CategoryAdminDTO> categoryAdminDTOS;
+    private List<CategoryAdminDTO> categoryAdminDTOs;
 }

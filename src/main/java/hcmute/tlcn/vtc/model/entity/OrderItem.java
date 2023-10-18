@@ -26,13 +26,13 @@ public class OrderItem {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-//    @JsonIgnore
+    // @JsonIgnore
     private Order order;
 
     @OneToOne(fetch = FetchType.LAZY)

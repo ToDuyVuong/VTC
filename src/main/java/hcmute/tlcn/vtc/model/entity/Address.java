@@ -23,7 +23,7 @@ public class Address {
 
     private String district;
 
-//    private String description;
+    // private String description;
 
     private String fullAddress;
 
@@ -31,21 +31,19 @@ public class Address {
 
     private String phone;
 
-//    private String email;
+    // private String email;
 
-//    private String note;
+    // private String note;
 
     private Status status;
 
-    private LocalDateTime atCreate;
+    private LocalDateTime createAt;
 
-    private LocalDateTime atUpdate;
+    private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private Customer customer;
-
-
 
 }
