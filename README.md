@@ -78,3 +78,10 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Cập nhật thông tin thuộc tính.
     - Khóa, mở khóa thuộc tính.
     - Xóa thuộc tính.
+
+- Quản lý sản phẩm từ quyền vendor:
+    - Thêm sản phẩm bằng quyền vendor.
+    - Xem danh sách sản phẩm của vendor.
+    - Xem chi tiết sản phẩm.
+    - Cập nhật thông tin sản phẩm.
+ 

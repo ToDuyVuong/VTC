@@ -10,7 +10,8 @@ import java.util.List;
 public interface IProductVariantService {
 
 
-    ProductVariant addNewProductVariant(ProductVariantRequest request,  Long shopId);
 
     List<ProductVariant> addNewListProductVariant(List<ProductVariantRequest> productVariantRequests, Long shopId);
+
+    List<ProductVariant> getListProductVariant(List<ProductVariantRequest> requests, Long shopId, Long productId);
 }

@@ -21,7 +21,7 @@ public class ProductVariantRequest {
 
     private Long price;
 
-    private Long quantity;
+    private int quantity;
 
     private List<Long> attributeIds;
 
@@ -32,7 +32,7 @@ public class ProductVariantRequest {
         if (price == null) {
             throw new IllegalArgumentException("Giá sản phẩm không được để trống!");
         }
-        if (quantity == null) {
+        if (quantity == 0) {
             throw new IllegalArgumentException("Số lượng sản phẩm không được để trống!");
         }
 
