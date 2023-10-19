@@ -190,9 +190,6 @@ public class AttributeServiceImpl implements IAttributeService {
             attributeIds.forEach(attributeId -> {
                 Attribute attribute = attributeRepository.findById(attributeId)
                         .orElseThrow(() -> new IllegalArgumentException("Mã thuộc tính không tồn tại!"));
-                if (attributes.contains(attributeRepository.findByAttributeId(attributeId))) {
-                    throw new IllegalArgumentException("Mã thuộc tính bị trùng!");
-                }
                 if(!attribute.isActive()){
                     throw new IllegalArgumentException("Mã thuộc tính đã bị khóa trong cửa hàng!");
                 }

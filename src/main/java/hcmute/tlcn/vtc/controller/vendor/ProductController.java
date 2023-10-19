@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vendor/product")
@@ -29,6 +26,13 @@ public class ProductController {
         request.setUsername(username);
         request.validate();
         return ResponseEntity.ok(productService.addNewProduct(request));
+    }
+
+    @GetMapping("/detail/{productId}")
+    public ResponseEntity<ProductResponse> getProductDetail(@PathVariable Long productId,
+                                                            HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(productService.getProductDetail(productId, username));
     }
 
 

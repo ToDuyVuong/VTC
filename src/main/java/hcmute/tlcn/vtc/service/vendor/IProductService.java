@@ -5,4 +5,6 @@ import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
 
 public interface IProductService {
     ProductResponse addNewProduct(ProductRequest request);
+
+    ProductResponse getProductDetail(Long productId, String username);
 }

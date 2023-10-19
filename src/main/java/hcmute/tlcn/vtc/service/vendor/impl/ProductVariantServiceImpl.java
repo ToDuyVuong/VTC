@@ -42,40 +42,46 @@ public class ProductVariantServiceImpl implements IProductVariantService {
 
 
     @Override
-    public ProductVariant addNewProductVariant(ProductVariantRequest request, Product product, Long shopId) {
-
-        request.validate();
-        List<Attribute> attributes = new ArrayList<>();
-        if (request.getAttributeIds() != null && !request.getAttributeIds().isEmpty()) {
-            attributes = attributeService.getListAttributeByListId(request.getAttributeIds(), shopId);
-        }
-
-        ProductVariant productVariant = modelMapper.map(request, ProductVariant.class);
-        productVariant.setProduct(product);
-        productVariant.setStatus(Status.ACTIVE);
-        productVariant.setAttributes(attributes);
-        productVariant.setCreateAt(LocalDateTime.now());
-        productVariant.setUpdateAt(LocalDateTime.now());
-
-        try {
-            return  productVariantRepository.save(productVariant);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Thêm biến thể sản phẩm thất bại!");
-
-        }
+    public ProductVariant addNewProductVariant(ProductVariantRequest request, Long shopId) {
+//        List<Attribute> attributes = new ArrayList<>();
+//        if (request.getAttributeIds() != null && !request.getAttributeIds().isEmpty()) {
+//            attributes = attributeService.getListAttributeByListId(request.getAttributeIds(), shopId);
+//        }
+//
+//        ProductVariant productVariant = modelMapper.map(request, ProductVariant.class);
+////        productVariant.setProduct(product);
+//        productVariant.setStatus(Status.ACTIVE);
+//        productVariant.setAttributes(attributes);
+//        productVariant.setCreateAt(LocalDateTime.now());
+//        productVariant.setUpdateAt(LocalDateTime.now());
+//
+////        try {
+//            return  productVariantRepository.save(productVariant);
+//        } catch (Exception e) {
+//            throw new IllegalArgumentException("Thêm biến thể sản phẩm thất bại!");
+//
+//        }
+        return null;
     }
 
 
     @Override
-    public List<ProductVariant> addNewListProductVariant(List<ProductVariantRequest> requests, Long productId) {
-
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không tồn tại trong cửa hàng!"));
-        Long shopId = product.getCategory().getShop().getShopId();
+    public List<ProductVariant> addNewListProductVariant(List<ProductVariantRequest> requests, Long shopId) {
 
         List<ProductVariant> productVariants = new ArrayList<>();
         for (ProductVariantRequest request : requests) {
-            productVariants.add(addNewProductVariant(request, product, shopId));
+            List<Attribute> attributes = new ArrayList<>();
+            if (request.getAttributeIds() != null && !request.getAttributeIds().isEmpty()) {
+                attributes = attributeService.getListAttributeByListId(request.getAttributeIds(), shopId);
+            }
+
+            ProductVariant productVariant = modelMapper.map(request, ProductVariant.class);
+            productVariant.setStatus(Status.ACTIVE);
+            productVariant.setAttributes(attributes);
+            productVariant.setCreateAt(LocalDateTime.now());
+            productVariant.setUpdateAt(LocalDateTime.now());
+
+            productVariants.add(productVariant);
         }
         return productVariants;
     }

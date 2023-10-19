@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @ToString
@@ -24,39 +26,44 @@ public class ProductVariantRequest {
     private List<Long> attributeIds;
 
     public void validate() {
-        if (this.sku == null || this.sku.isEmpty()) {
-            throw new IllegalArgumentException("Mã sản phẩm không được để trống!");
+        if (sku == null || sku.isEmpty()) {
+            throw new IllegalArgumentException("Mã biến thể sản phẩm không được để trống!");
         }
-
-        if (this.price == null) {
+        if (price == null) {
             throw new IllegalArgumentException("Giá sản phẩm không được để trống!");
         }
-
-        if (this.price < 0) {
-            throw new IllegalArgumentException("Giá sản phẩm không được nhỏ hơn 0!");
-        }
-
-        if (this.quantity == null) {
+        if (quantity == null) {
             throw new IllegalArgumentException("Số lượng sản phẩm không được để trống!");
         }
 
-        if (this.quantity < 0) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Giá sản phẩm không được nhỏ hơn 0!");
+        }
+        if (quantity < 0) {
             throw new IllegalArgumentException("Số lượng sản phẩm không được nhỏ hơn 0!");
         }
-    }
 
+        if (containsDuplicate(attributeIds)) {
+            throw new IllegalArgumentException("Có mã thuộc tính trùng lặp trong danh sách thuộc tính!");
+        }
+    }
 
     public void validateUpdate() {
-        if (this.productVariantId == null) {
-            throw new IllegalArgumentException("Mã sản phẩm không được để trống!");
+        if (productVariantId == null) {
+            throw new IllegalArgumentException("Mã biến thể sản phẩm không được để trống!");
         }
-
         validate();
+
     }
 
 
-
-
-
-
+    private boolean containsDuplicate(List<Long> list) {
+        Set<Long> set = new HashSet<>();
+        for (Long item : list) {
+            if (!set.add(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

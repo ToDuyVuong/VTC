@@ -39,7 +39,7 @@ public class ProductVariant {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "product_variant_attribute", joinColumns =
     @JoinColumn(name = "product_variant_id", nullable = true), inverseJoinColumns =
     @JoinColumn(name = "attribute_id", nullable = true))
