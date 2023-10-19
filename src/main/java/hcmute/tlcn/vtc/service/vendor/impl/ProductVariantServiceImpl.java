@@ -42,12 +42,12 @@ public class ProductVariantServiceImpl implements IProductVariantService {
 
 
     @Override
-    public ProductVariant addNewProductVariant(ProductVariantRequest request, Product product) {
+    public ProductVariant addNewProductVariant(ProductVariantRequest request, Product product, Long shopId) {
 
         request.validate();
         List<Attribute> attributes = new ArrayList<>();
         if (request.getAttributeIds() != null && !request.getAttributeIds().isEmpty()) {
-            attributes = attributeService.getListAttributeByListId(request.getAttributeIds());
+            attributes = attributeService.getListAttributeByListId(request.getAttributeIds(), shopId);
         }
 
         ProductVariant productVariant = modelMapper.map(request, ProductVariant.class);
@@ -71,10 +71,11 @@ public class ProductVariantServiceImpl implements IProductVariantService {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không tồn tại trong cửa hàng!"));
+        Long shopId = product.getCategory().getShop().getShopId();
 
         List<ProductVariant> productVariants = new ArrayList<>();
         for (ProductVariantRequest request : requests) {
-            productVariants.add(addNewProductVariant(request, product));
+            productVariants.add(addNewProductVariant(request, product, shopId));
         }
         return productVariants;
     }

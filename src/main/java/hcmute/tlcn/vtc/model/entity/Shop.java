@@ -48,8 +48,11 @@ public class Shop {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Category> categories;
+//    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Category> categories;
+
+//    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Category> categories;
 
 }

@@ -46,8 +46,8 @@ public class Brand {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "brand")
-    @JsonIgnore
-    private List<Product> products;
+//    @OneToMany(mappedBy = "brand")
+//    @JsonIgnore
+//    private List<Product> products;
 
 }

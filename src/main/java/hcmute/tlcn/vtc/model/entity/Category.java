@@ -1,11 +1,13 @@
 package hcmute.tlcn.vtc.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hcmute.tlcn.vtc.model.dto.vendor.request.CategoryShopRequest;
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -43,5 +45,16 @@ public class Category {
     @JoinColumn(name = "parent_id", nullable = true)
     // @JsonIgnore
     private Category parent;
+
+//    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Category> children;
+
+    public static Category convertToEntity(CategoryShopRequest request){
+        Category category = new Category();
+        category.setName(request.getName());
+        category.setDescription(request.getDescription());
+        category.setImage(request.getImage());
+        return category;
+    }
 
 }

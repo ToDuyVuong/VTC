@@ -49,30 +49,31 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ProductResponse addNewProduct(ProductRequest request) {
 
-        Category category = categoryShopService.checkCategory(request.getCategoryId(), request.getShopId());
-
+        Category category = categoryShopService.getCategoryShopById(request.getCategoryId(), request.getUsername());
         Brand brand = null;
         if (request.getBrandId() != null) {
-            brand =  brandRepository.findById(request.getBrandId()).orElseThrow(() -> new IllegalArgumentException("Thương hiệu không tồn tại!"));
+            brand = brandRepository.findById(request.getBrandId())
+                    .orElseThrow(() -> new IllegalArgumentException("Thương hiệu không tồn tại!"));
         }
 
         Product product = modelMapper.map(request, Product.class);
         product.setCategory(category);
         product.setBrand(brand);
+        product.setSold(0L);
         product.setCreateAt(LocalDateTime.now());
         product.setUpdateAt(LocalDateTime.now());
         product.setStatus(Status.ACTIVE);
 
         try {
             Product saveProduct = productRepository.save(product);
+            System.out.println("saveProduct" + saveProduct);
 
-            List<ProductVariant> productVariants = productVariantService.addNewListProductVariant(request.getProductVariantRequests(), saveProduct.getProductId());
-
+            List<ProductVariant> productVariants = productVariantService
+                    .addNewListProductVariant(request.getProductVariantRequests(), saveProduct.getProductId());
 
             List<ProductVariantDTO> productVariantDTOs = ProductVariantDTO.convertToListDTO(productVariants);
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setProductVariantDTOs(productVariantDTOs);
-
             ProductResponse productResponse = new ProductResponse();
             productResponse.setProductDTO(productDTO);
             productResponse.setStatus("success");
@@ -80,8 +81,8 @@ public class ProductServiceImpl implements IProductService {
 
             return productResponse;
         } catch (Exception e) {
-//            throw new SaveFailedException("Thêm sản phẩm mới trong cửa hàng thất bại!");
-            throw new IllegalArgumentException(e.getMessage());
+            throw new SaveFailedException("Thêm sản phẩm mới trong cửa hàng thất bại!");
+//            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

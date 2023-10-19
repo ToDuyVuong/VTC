@@ -205,7 +205,6 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
     @Override
     public Category getCategoryShopById(Long categoryId, String username) {
-        System.out.println("category: 222222222" + categoryId);
         Shop shop = shopService.getShopByUsername(username);
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Danh mục không tồn tại!"));
@@ -213,8 +212,6 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         if (category.getShop() == null || !category.getShop().getShopId().equals(shop.getShopId())) {
             throw new NotFoundException("Danh mục không tồn tại trong cửa hàng!");
         }
-
-        System.out.println("category: 3333333333" + category==null);
 
         return category;
     }
