@@ -17,9 +17,6 @@ public class ChangePasswordRequest {
     private String newPassword;
 
     public void validate() {
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Tài khoản không được để trống.");
-        }
 
         if (oldPassword == null || oldPassword.isEmpty()) {
             throw new IllegalArgumentException("Mật khẩu cũ không được để trống.");

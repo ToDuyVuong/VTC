@@ -28,9 +28,9 @@ public class CategoryAdminController {
     }
 
 
-    @GetMapping("/parent/detail")
+    @GetMapping("/parent/detail/{categoryId}")
     public ResponseEntity<CategoryAdminResponse> getCategoryParentByAdmin(
-            @RequestParam("categoryId") Long categoryId) {
+            @PathVariable("categoryId") Long categoryId) {
         if (categoryId == null || categoryId == 0)
             throw new IllegalArgumentException("Mã danh mục không hợp lệ!");
         return ResponseEntity.ok(categoryAdminService.getCategoryParent(categoryId));

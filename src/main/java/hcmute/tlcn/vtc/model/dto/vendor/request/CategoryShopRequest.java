@@ -13,7 +13,7 @@ public class CategoryShopRequest {
     private String name;
     private String description;
     private String image;
-    private Long shopId;
+    private String username;
     private Long parentId;
 
     public void validate() {
@@ -27,10 +27,6 @@ public class CategoryShopRequest {
 
         if (this.image == null || this.image.isEmpty()) {
             throw new IllegalArgumentException("Hình ảnh danh mục không được để trống!");
-        }
-
-        if (this.shopId == null) {
-            throw new IllegalArgumentException("Mã cửa hàng không được để trống!");
         }
 
         if (this.parentId == null) {

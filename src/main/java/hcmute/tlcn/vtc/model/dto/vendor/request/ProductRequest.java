@@ -26,7 +26,7 @@ public class ProductRequest {
 
     private Long brandId;
 
-    private Long shopId;
+    private String username;
 
     private List<ProductVariantRequest> productVariantRequests;
 
@@ -38,10 +38,6 @@ public class ProductRequest {
 
         if (categoryId == null) {
             throw new IllegalArgumentException("Danh mục sản phẩm không được để trống!");
-        }
-
-        if (shopId == null) {
-            throw new IllegalArgumentException("Mã cửa hàng không được để trống!");
         }
 
         if (productVariantRequests == null || productVariantRequests.isEmpty()) {

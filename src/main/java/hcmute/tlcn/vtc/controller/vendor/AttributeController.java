@@ -5,6 +5,7 @@ import hcmute.tlcn.vtc.model.dto.vendor.request.AttributeRequest;
 import hcmute.tlcn.vtc.model.dto.vendor.response.AttributeResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ListAttributeResponse;
 import hcmute.tlcn.vtc.service.vendor.IAttributeService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,11 @@ public class AttributeController {
     private IAttributeService attributeService;
 
     @PostMapping("/add")
-    public ResponseEntity<AttributeResponse> addNewAttribute(AttributeRequest attributeRequest) {
+    public ResponseEntity<AttributeResponse> addNewAttribute(AttributeRequest attributeRequest,
+                                                             HttpServletRequest httpServletRequest) {
+
+        String username = (String) httpServletRequest.getAttribute("username");
+        attributeRequest.setUsername(username);
         attributeRequest.validate();
         AttributeResponse response = attributeService.addNewAttribute(attributeRequest);
         return ResponseEntity.ok(response);
@@ -27,32 +32,31 @@ public class AttributeController {
 
 
     @GetMapping("/{attributeId}")
-    public ResponseEntity<AttributeResponse> getAttributeById(@PathVariable Long attributeId, @RequestParam Long shopId) {
+    public ResponseEntity<AttributeResponse> getAttributeById(@PathVariable Long attributeId,
+                                                              HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
         if (attributeId == null) {
             throw new NullPointerException("Mã thuộc tính không được để trống!");
         }
-        if (shopId == null) {
-            throw new NullPointerException("Mã cửa hàng không được để trống!");
-        }
 
-        AttributeResponse response = attributeService.getAttributeById(attributeId, shopId);
+        AttributeResponse response = attributeService.getAttributeById(attributeId, username);
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/all")
-    public ResponseEntity<ListAttributeResponse> getListAttributeByShopId(@RequestParam Long shopId) {
-        if (shopId == null) {
-            throw new NullPointerException("Mã cửa hàng không được để trống!");
-        }
-
-        ListAttributeResponse response = attributeService.getListAttributeByShopId(shopId);
+    public ResponseEntity<ListAttributeResponse> getListAttributeByShopId(HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        ListAttributeResponse response = attributeService.getListAttributeByShopId(username);
         return ResponseEntity.ok(response);
     }
 
 
     @PutMapping("/update")
-    public ResponseEntity<AttributeResponse> updateAttribute(AttributeRequest attributeRequest) {
+    public ResponseEntity<AttributeResponse> updateAttribute(AttributeRequest attributeRequest,
+                                                             HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        attributeRequest.setUsername(username);
         attributeRequest.validateUpdate();
         AttributeResponse response = attributeService.updateAttribute(attributeRequest);
         return ResponseEntity.ok(response);
@@ -61,30 +65,28 @@ public class AttributeController {
 
     @PatchMapping("/lock")
     public ResponseEntity<AttributeResponse> lockAttribute(@RequestParam Long attributeId,
-                                                           @RequestParam Long shopId,
-                                                           @RequestParam boolean active) {
+                                                           @RequestParam boolean active,
+                                                           HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+
         if (attributeId == null) {
             throw new NullPointerException("Mã thuộc tính không được để trống!");
         }
-        if (shopId == null) {
-            throw new NullPointerException("Mã cửa hàng không được để trống!");
-        }
 
-        AttributeResponse response = attributeService.lockOrActiveAttribute(attributeId, shopId, active);
+        AttributeResponse response = attributeService.lockOrActiveAttribute(attributeId, username, active);
         return ResponseEntity.ok(response);
     }
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<AttributeResponse> deleteAttribute(@RequestParam Long attributeId, @RequestParam Long shopId) {
+    public ResponseEntity<AttributeResponse> deleteAttribute(@RequestParam Long attributeId,
+                                                             HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
         if (attributeId == null) {
             throw new NullPointerException("Mã thuộc tính không được để trống!");
         }
-        if (shopId == null) {
-            throw new NullPointerException("Mã cửa hàng không được để trống!");
-        }
 
-        AttributeResponse response = attributeService.deleteAttribute(attributeId, shopId);
+        AttributeResponse response = attributeService.deleteAttribute(attributeId, username);
         return ResponseEntity.ok(response);
     }
 }

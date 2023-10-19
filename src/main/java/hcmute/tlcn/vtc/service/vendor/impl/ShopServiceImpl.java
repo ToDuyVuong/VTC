@@ -71,11 +71,7 @@ public class ShopServiceImpl implements IShopService {
     @Override
     public ShopResponse getProfileShop(String username) {
         Customer customer = customerService.getCustomerByUsername(username);
-        Shop shop = shopRepository.findByCustomer_Username(username);
-
-        if (shop == null) {
-            throw new IllegalArgumentException("Tài khoản chưa đăng ký cửa hàng!");
-        }
+        Shop shop = getShopByUsername(username);
 
         ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
         shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
@@ -128,10 +124,8 @@ public class ShopServiceImpl implements IShopService {
 
     @Override
     public ShopResponse updateStatusShop(String username, Status status) {
-        Shop shop = shopRepository.findByCustomer_Username(username);
-        if (shop == null) {
-            throw new IllegalArgumentException("Tài khoản chưa đăng ký cửa hàng!");
-        }
+
+        Shop shop = getShopByUsername(username);
         shop.setStatus(status);
         shop.setUpdateAt(LocalDateTime.now());
 
@@ -155,9 +149,9 @@ public class ShopServiceImpl implements IShopService {
 
 
     @Override
-    public Shop checkShop(Long shopId) {
-        return shopRepository.findById(shopId)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy cửa hàng!"));
+    public Shop getShopByUsername(String username) {
+        return shopRepository.findByCustomerUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Tài khoản chưa đăng ký cửa hàng!"));
     }
 
 

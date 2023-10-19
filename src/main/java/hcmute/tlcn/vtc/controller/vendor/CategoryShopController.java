@@ -7,6 +7,7 @@ import hcmute.tlcn.vtc.model.dto.vendor.response.CategoryShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,40 +31,42 @@ public class CategoryShopController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<CategoryShopResponse> addNewCategoryShop(CategoryShopRequest request) {
+    public ResponseEntity<CategoryShopResponse> addNewCategoryShop(CategoryShopRequest request,
+                                                                   HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        request.setUsername(username);
         request.validate();
         CategoryShopResponse response = categoryService.addNewCategoryShop(request);
         return ResponseEntity.ok(response);
     }
 
 
-    @GetMapping("/all/{shopId}")
-    public ResponseEntity<ListCategoryShopResponse> getAllCategoryByShopId(@PathVariable Long shopId) {
-        if (shopId == null) {
-            throw new NullPointerException("Mã cửa hàng không được để trống!");
-        }
-        ListCategoryShopResponse response = categoryService.getAllCategoryByShopId(shopId);
+    @GetMapping("/all")
+    public ResponseEntity<ListCategoryShopResponse> getAllCategoryByShopId(HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        ListCategoryShopResponse response = categoryService.getListCategoryShop(username);
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/get/{categoryId}")
     public ResponseEntity<CategoryShopResponse> getCategoryById(@PathVariable Long categoryId,
-                                                                @RequestParam Long shopId) {
+                                                                HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
         if (categoryId == null) {
             throw new NullPointerException("Mã danh mục không được để trống!");
         }
-        if (shopId == null) {
-            throw new NullPointerException("Mã cửa hàng không được để trống!");
-        }
 
-        CategoryShopResponse response = categoryService.getCategoryById(categoryId, shopId);
+        CategoryShopResponse response = categoryService.getCategoryById(categoryId, username);
         return ResponseEntity.ok(response);
     }
 
 
     @PutMapping("/update")
-    public ResponseEntity<CategoryShopResponse> updateCategoryShop(CategoryShopRequest request) {
+    public ResponseEntity<CategoryShopResponse> updateCategoryShop(CategoryShopRequest request,
+                                                                   HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        request.setUsername(username);
         request.validateUpdate();
         CategoryShopResponse response = categoryService.updateCategoryShop(request);
         return ResponseEntity.ok(response);
@@ -72,20 +75,17 @@ public class CategoryShopController {
 
     @PatchMapping("update/status/{categoryId}")
     public ResponseEntity<CategoryShopResponse> updateStatusCategoryShop(@PathVariable Long categoryId,
-                                                                         @RequestParam Long shopId,
-                                                                         @RequestParam Status status) {
+                                                                         @RequestParam Status status,
+                                                                         HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
         if (categoryId == null) {
             throw new NullPointerException("Mã danh mục không được để trống!");
-
-        }
-        if (shopId == null) {
-            throw new NullPointerException("Mã cửa hàng không được để trống!");
         }
         if (status == null) {
             throw new NullPointerException("Trạng thái không được để trống!");
         }
 
-        CategoryShopResponse response = categoryService.updateStatusCategoryShop(categoryId, shopId, status);
+        CategoryShopResponse response = categoryService.updateStatusCategoryShop(categoryId, username, status);
         return ResponseEntity.ok(response);
 
     }

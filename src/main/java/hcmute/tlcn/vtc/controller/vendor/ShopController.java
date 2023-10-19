@@ -6,6 +6,7 @@ import hcmute.tlcn.vtc.model.dto.vendor.request.UpdateShopRequest;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.vendor.IShopService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,36 +24,40 @@ public class ShopController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<ShopResponse> registerShop(RegisterShopRequest request) {
+    public ResponseEntity<ShopResponse> registerShop(RegisterShopRequest request,
+                                                     HttpServletRequest httpServletRequest) {
+
+        String username = (String) httpServletRequest.getAttribute("username");
+        request.setUsername(username);
         request.validate();
         ShopResponse response = shopService.registerShop(request);
         return ResponseEntity.ok(response);
     }
 
 
-
     @GetMapping("/shop/profile")
-    public ResponseEntity<ShopResponse> getProfileShop(@RequestParam String username) {
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Tài khoản không được để trống!");
-        }
+    public ResponseEntity<ShopResponse> getProfileShop(HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
         ShopResponse response = shopService.getProfileShop(username);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/shop/update")
-    public ResponseEntity<ShopResponse> updateShop(UpdateShopRequest request) {
+    public ResponseEntity<ShopResponse> updateShop(UpdateShopRequest request,
+                                                   HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        request.setUsername(username);
         request.validate();
+
         ShopResponse response = shopService.updateShop(request);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/shop/update/status")
-    public ResponseEntity<ShopResponse> updateStatusShop(@RequestParam String username, @RequestParam Status status) {
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Tài khoản không được để trống!");
-        }
+    public ResponseEntity<ShopResponse> updateStatusShop(@RequestParam Status status,
+                                                         HttpServletRequest httpServletRequest) {
 
+        String username = (String) httpServletRequest.getAttribute("username");
         ShopResponse response = shopService.updateStatusShop(username, status);
 
         return ResponseEntity.ok(response);

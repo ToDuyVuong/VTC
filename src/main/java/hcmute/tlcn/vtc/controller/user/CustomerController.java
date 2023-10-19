@@ -7,6 +7,7 @@ import hcmute.tlcn.vtc.model.dto.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.model.dto.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.service.user.IMailService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,22 +25,31 @@ public class CustomerController {
 
 
     @GetMapping("/profile")
-    public ResponseEntity<ProfileCustomerResponse> getProfileCustomer(@RequestParam String username) {
+    public ResponseEntity<ProfileCustomerResponse> getProfileCustomer(HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
         ProfileCustomerResponse profileCustomerResponse = customerService.getProfileCustomer(username);
         return ResponseEntity.ok(profileCustomerResponse);
     }
 
 
     @PutMapping("/profile")
-    public ResponseEntity<ProfileCustomerResponse> updateProfileCustomer(@RequestBody ProfileCustomerRequest request) {
-        ProfileCustomerResponse profileCustomerResponse = customerService.updateProfileCustomer(request);
+    public ResponseEntity<ProfileCustomerResponse> updateProfileCustomer(
+            @RequestBody ProfileCustomerRequest profileCustomerRequest,
+            HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
+        profileCustomerRequest.setUsername(username);
+        ProfileCustomerResponse profileCustomerResponse = customerService.updateProfileCustomer(profileCustomerRequest);
         return ResponseEntity.ok(profileCustomerResponse);
     }
 
 
     @PatchMapping("/change-password")
-    public ResponseEntity<ProfileCustomerResponse> changePassword(@RequestBody ChangePasswordRequest request) {
-        ProfileCustomerResponse profileCustomerResponse = customerService.changePassword(request);
+    public ResponseEntity<ProfileCustomerResponse> changePassword(
+            @RequestBody ChangePasswordRequest changePasswordRequest,
+            HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
+        changePasswordRequest.setUsername(username);
+        ProfileCustomerResponse profileCustomerResponse = customerService.changePassword(changePasswordRequest);
         return ResponseEntity.ok(profileCustomerResponse);
     }
 

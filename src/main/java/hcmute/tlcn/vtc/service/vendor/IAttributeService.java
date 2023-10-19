@@ -10,15 +10,15 @@ import java.util.List;
 public interface IAttributeService {
     AttributeResponse addNewAttribute(AttributeRequest attributeRequest);
 
-    AttributeResponse getAttributeById(Long attributeId, Long shopId);
+    AttributeResponse getAttributeById(Long attributeId, String username);
 
-    ListAttributeResponse getListAttributeByShopId(Long shopId);
+    ListAttributeResponse getListAttributeByShopId(String username);
 
     AttributeResponse updateAttribute(AttributeRequest attributeRequest);
 
-    AttributeResponse lockOrActiveAttribute(Long attributeId, Long shopId, boolean active);
+    AttributeResponse lockOrActiveAttribute(Long attributeId, String username, boolean active);
 
-    AttributeResponse deleteAttribute(Long attributeId, Long shopId);
+    AttributeResponse deleteAttribute(Long attributeId, String username);
 
-    List<Attribute> getListAttributeByListId(List<Long> attributeIds);
+    List<Attribute> getListAttributeByListId(List<Long> attributeIds, Long shopId);
 }

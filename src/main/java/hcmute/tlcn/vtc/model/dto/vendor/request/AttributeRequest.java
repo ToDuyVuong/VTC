@@ -15,7 +15,7 @@ public class AttributeRequest {
 
     private String value;
 
-    private Long shopId;
+    private String username;
 
     public void validate() {
         if (this.name == null || this.name.isEmpty()) {
@@ -26,8 +26,8 @@ public class AttributeRequest {
             throw new IllegalArgumentException("Giá trị thuộc tính không được để trống!");
         }
 
-        if (this.shopId == null) {
-            throw new IllegalArgumentException("Mã cửa hàng không được để trống!");
+        if (this.username == null || this.username.isEmpty()) {
+            throw new IllegalArgumentException("Tên đăng nhập không được để trống!");
         }
     }
 

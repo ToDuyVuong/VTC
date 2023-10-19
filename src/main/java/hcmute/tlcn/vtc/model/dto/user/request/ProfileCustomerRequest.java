@@ -26,9 +26,6 @@ public class ProfileCustomerRequest {
     private boolean gender;
 
     public void validate() {
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Tài khoản không được để trống.");
-        }
 
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email không được để trống.");

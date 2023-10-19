@@ -59,6 +59,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (!isTokenValid) {
                 throw new UnauthorizedAccessException("Token đã hết hạn.");
             }
+
+            request.setAttribute("username", username);
+
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userDetails,
                     null,

@@ -15,5 +15,5 @@ public interface IShopService {
 
     ShopResponse updateStatusShop (String username, Status status);
 
-    Shop checkShop(Long shopId);
+    Shop getShopByUsername(String username);
 }

@@ -5,6 +5,7 @@ import hcmute.tlcn.vtc.model.dto.admin.response.AllBrandAdminResponse;
 import hcmute.tlcn.vtc.model.dto.admin.response.BrandAdminResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.admin.IBrandAdminService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,12 @@ public class BrandAdminController {
     private IBrandAdminService brandAdminService;
 
     @PostMapping("/add")
-    public ResponseEntity<BrandAdminResponse> addNewBrand(@RequestBody BrandAdminRequest request) {
-        request.validate();
-        BrandAdminResponse response = brandAdminService.addNewBrand(request);
+    public ResponseEntity<BrandAdminResponse> addNewBrand(@RequestBody BrandAdminRequest brandAdminRequest,
+                                                          HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
+        brandAdminRequest.setUsername(username);
+        brandAdminRequest.validate();
+        BrandAdminResponse response = brandAdminService.addNewBrand(brandAdminRequest);
         return ResponseEntity.ok(response);
     }
 
@@ -39,7 +43,10 @@ public class BrandAdminController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<BrandAdminResponse> updateBrandAdmin(@RequestBody BrandAdminRequest request) {
+    public ResponseEntity<BrandAdminResponse> updateBrandAdmin(@RequestBody BrandAdminRequest request,
+                                                               HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        request.setUsername(username);
         request.validate();
         request.checkBrandId();
         BrandAdminResponse response = brandAdminService.updateBrandAdmin(request);
@@ -47,10 +54,13 @@ public class BrandAdminController {
     }
 
 
-    @PatchMapping("/update-status")
-    public ResponseEntity<BrandAdminResponse> updateStatusBrandAdmin(@RequestParam Long brandId,
-                                                                     @RequestParam String username,
-                                                                     @RequestParam Status status) {
+    @PatchMapping("/update-status/{brandId}")
+    public ResponseEntity<BrandAdminResponse> updateStatusBrandAdmin(@PathVariable Long brandId,
+                                                                     @RequestParam Status status,
+                                                                     HttpServletRequest httpServletRequest) {
+
+        String username = (String) httpServletRequest.getAttribute("username");
+
         if (brandId == null || brandId == 0) {
             throw new IllegalArgumentException("Mã thương hiệu không hợp lệ!");
         }

@@ -9,13 +9,17 @@ import hcmute.tlcn.vtc.model.extra.Status;
 public interface ICategoryShopService {
     CategoryShopResponse addNewCategoryShop(CategoryShopRequest request);
 
-    ListCategoryShopResponse getAllCategoryByShopId(Long shopId);
 
-    CategoryShopResponse getCategoryById(Long categoryId, Long shopId);
+    ListCategoryShopResponse getListCategoryShop(String username);
+
+
+    CategoryShopResponse getCategoryById(Long categoryId, String username);
 
     CategoryShopResponse updateCategoryShop(CategoryShopRequest request);
 
-    CategoryShopResponse updateStatusCategoryShop(Long categoryId, Long shopId, Status status);
 
-    Category checkCategory(Long categoryId, Long shopId);
+    CategoryShopResponse updateStatusCategoryShop(Long categoryId, String username, Status status);
+
+
+    Category getCategoryShopById(Long categoryId, String username);
 }

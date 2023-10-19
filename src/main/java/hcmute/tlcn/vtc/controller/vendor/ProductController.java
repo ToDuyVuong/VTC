@@ -4,6 +4,7 @@ package hcmute.tlcn.vtc.controller.vendor;
 import hcmute.tlcn.vtc.model.dto.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.service.vendor.IProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,10 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<ProductResponse> addNewProduct(@RequestBody  ProductRequest request) {
+    public ResponseEntity<ProductResponse> addNewProduct(@RequestBody  ProductRequest request,
+                                                         HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        request.setUsername(username);
         request.validate();
         return ResponseEntity.ok(productService.addNewProduct(request));
     }

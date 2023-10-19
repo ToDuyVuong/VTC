@@ -19,7 +19,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Optional<Category> findByName(String name);
 
-    Optional<Category> findByNameAndShopShopId(String name, Long shopId);
+    Optional<Category> findByNameAndShopCustomerUsername(String name, String username);
 
     Optional<Category> findByNameAndAdminOnly(String name, boolean adminOnly);
 
@@ -28,7 +28,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findAllByShopShopId(Long shopId);
 
 
-    List<Category> findAllByShopShopIdAndStatus(Long shopId, Status status);
+    List<Category> findAllByShopCustomerUsernameAndStatus(String username, Status status);
 
 
 

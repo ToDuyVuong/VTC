@@ -13,6 +13,7 @@ import hcmute.tlcn.vtc.repository.ProductRepository;
 import hcmute.tlcn.vtc.repository.ShopRepository;
 import hcmute.tlcn.vtc.service.user.impl.CustomerServiceImpl;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;
+import hcmute.tlcn.vtc.service.vendor.IShopService;
 import hcmute.tlcn.vtc.util.exception.DuplicateEntryException;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import hcmute.tlcn.vtc.util.exception.SaveFailedException;
@@ -35,6 +36,8 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
     @Autowired
     private ShopRepository shopRepository;
     @Autowired
+    private IShopService shopService;
+    @Autowired
     private ProductRepository productRepository;
     @Autowired
     private CustomerRepository customerRepository;
@@ -44,21 +47,19 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
     ModelMapper modelMapper;
 
 
-
     @Override
     public CategoryShopResponse addNewCategoryShop(CategoryShopRequest request) {
 
-        Shop shop = shopRepository.findById(request.getShopId())
-                .orElseThrow(() -> new NotFoundException("Cửa hàng không tồn tại!"));
-        Optional<Category> existingCategory = categoryRepository.findByNameAndShopShopId(request.getName(),
-                shop.getShopId());
+        Shop shop = shopService.getShopByUsername(request.getUsername());
+        Optional<Category> existingCategory = categoryRepository.findByNameAndShopCustomerUsername(request.getName(),
+                request.getUsername());
         if (existingCategory.isPresent()) {
             throw new DuplicateEntryException("Tên danh mục đã tồn tại trong cửa hàng!");
         }
         Category parent = categoryRepository.findByCategoryIdAndAdminOnly(request.getParentId(), true)
                 .orElseThrow(() -> new NotFoundException("Danh mục cha không tồn tại!"));
 
-        Category category = modelMapper.map(request, Category.class);
+        Category category = Category.convertToEntity(request);
         category.setAdminOnly(false);
         category.setStatus(Status.ACTIVE);
         category.setShop(shop);
@@ -87,11 +88,9 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
 
     @Override
-    public ListCategoryShopResponse getAllCategoryByShopId(Long shopId) {
-        Shop shop = shopRepository.findById(shopId)
-                .orElseThrow(() -> new NotFoundException("Cửa hàng không tồn tại!"));
+    public ListCategoryShopResponse getListCategoryShop(String username) {
 
-        List<Category> categories = categoryRepository.findAllByShopShopIdAndStatus(shopId, Status.ACTIVE);
+        List<Category> categories = categoryRepository.findAllByShopCustomerUsernameAndStatus(username, Status.ACTIVE);
         if (categories.isEmpty()) {
             throw new NotFoundException("Cửa hàng chưa có danh mục nào!");
         }
@@ -104,7 +103,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
         ListCategoryShopResponse response = new ListCategoryShopResponse();
         response.setCategoryDTOs(categoryDTOs);
         response.setCode(200);
-        response.setMessage("Lấy danh sách danh mục của cửa hàng " + shop.getName() + " thành công!");
+        response.setMessage("Lấy danh sách danh mục của cửa hàng thành công!");
         response.setStatus("ok");
 
         return response;
@@ -112,8 +111,8 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
 
     @Override
-    public CategoryShopResponse getCategoryById(Long categoryId, Long shopId) {
-        Category category = checkCategory(categoryId, shopId);
+    public CategoryShopResponse getCategoryById(Long categoryId, String username) {
+        Category category = getCategoryShopById(categoryId, username);
 
         CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
         categoryDTO.setShopId(category.getShop().getShopId());
@@ -131,10 +130,12 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
     @Override
     public CategoryShopResponse updateCategoryShop(CategoryShopRequest request) {
-        Category category = checkCategory(request.getCategoryId(), request.getShopId());
+        Category category = getCategoryShopById(request.getCategoryId(), request.getUsername());
 
-        Optional<Category> existingCategory = categoryRepository.findByNameAndShopShopId(request.getName(),
-                request.getShopId());
+        Optional<Category> existingCategory = categoryRepository
+                .findByNameAndShopCustomerUsername(
+                        request.getName(),
+                        request.getUsername());
         if (existingCategory.isPresent() && !existingCategory.get().getCategoryId().equals(request.getCategoryId())) {
             throw new DuplicateEntryException("Tên danh mục đã tồn tại trong cửa hàng!");
         }
@@ -152,7 +153,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
             categoryRepository.save(category);
 
             CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-            categoryDTO.setShopId(request.getShopId());
+            categoryDTO.setShopId(category.getShop().getShopId());
             categoryDTO.setParentId(parent.getCategoryId());
 
             CategoryShopResponse response = new CategoryShopResponse();
@@ -169,8 +170,8 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
 
     @Override
-    public CategoryShopResponse updateStatusCategoryShop(Long categoryId, Long shopId, Status status) {
-        Category category = checkCategory(categoryId, shopId);
+    public CategoryShopResponse updateStatusCategoryShop(Long categoryId, String username, Status status) {
+        Category category = getCategoryShopById(categoryId, username);
 
         if (category.getStatus() == Status.DELETED) {
             throw new SaveFailedException("Danh mục trong cửa hàng này đã xóa trước đó!");
@@ -186,7 +187,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
             categoryRepository.save(category);
 
             CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-            categoryDTO.setShopId(shopId);
+            categoryDTO.setShopId(category.getShop().getShopId());
             categoryDTO.setParentId(category.getParent().getCategoryId());
 
             CategoryShopResponse response = new CategoryShopResponse();
@@ -202,17 +203,18 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
     }
 
 
-
-
-
     @Override
-    public Category checkCategory(Long categoryId, Long shopId) {
+    public Category getCategoryShopById(Long categoryId, String username) {
+        System.out.println("category: 222222222" + categoryId);
+        Shop shop = shopService.getShopByUsername(username);
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Danh mục không tồn tại!"));
 
-        if (category.getShop() == null || !category.getShop().getShopId().equals(shopId)) {
+        if (category.getShop() == null || !category.getShop().getShopId().equals(shop.getShopId())) {
             throw new NotFoundException("Danh mục không tồn tại trong cửa hàng!");
         }
+
+        System.out.println("category: 3333333333" + category==null);
 
         return category;
     }
