@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -51,6 +52,8 @@ public class ProductVariantServiceImpl implements IProductVariantService {
             ProductVariant productVariant = addNewProductVariant(request, shopId);
             productVariants.add(productVariant);
         }
+        productVariants.sort(Comparator.comparing(ProductVariant::getSku));
+
         return productVariants;
     }
 
@@ -88,6 +91,8 @@ public class ProductVariantServiceImpl implements IProductVariantService {
                 productVariants.add(existingVariant);
             }
         }
+
+        productVariants.sort(Comparator.comparing(ProductVariant::getSku));
 
         return productVariants;
     }

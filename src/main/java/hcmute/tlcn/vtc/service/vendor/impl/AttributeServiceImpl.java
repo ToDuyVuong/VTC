@@ -190,7 +190,7 @@ public class AttributeServiceImpl implements IAttributeService {
             attributeIds.forEach(attributeId -> {
                 Attribute attribute = attributeRepository.findById(attributeId)
                         .orElseThrow(() -> new IllegalArgumentException("Mã thuộc tính không tồn tại!"));
-                if(!attribute.isActive()){
+                if (!attribute.isActive()) {
                     throw new IllegalArgumentException("Mã thuộc tính đã bị khóa trong cửa hàng!");
                 }
                 if (!attribute.getShop().getShopId().equals(shopId)) {
@@ -200,11 +200,10 @@ public class AttributeServiceImpl implements IAttributeService {
                 attributes.add(attributeRepository.findByAttributeId(attributeId));
             });
         }
+        attributes.sort(Comparator.comparing(Attribute::getName).thenComparing(Attribute::getValue));
+
         return attributes;
     }
-
-
-
 
 
     private Attribute checkAttributeInShop(Long attributeId, Long shopId) {
@@ -216,7 +215,6 @@ public class AttributeServiceImpl implements IAttributeService {
         }
         return attribute;
     }
-
 
 
     public void existsAttribute(String name, String value, Long shopId) {
