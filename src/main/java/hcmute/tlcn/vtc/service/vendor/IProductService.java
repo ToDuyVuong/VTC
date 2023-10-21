@@ -17,4 +17,9 @@ public interface IProductService {
 
     @Transactional
     ProductResponse updateStatusProduct(Long productId, String username, Status status);
+
+    @Transactional
+    ProductResponse restoreProductById(Long productId, String username);
+
+    ListProductResponse getAllDeletedProduct(String username);
 }

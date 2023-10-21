@@ -67,4 +67,22 @@ public class ProductController {
     }
 
 
+    @GetMapping("/all-deleted")
+    public ResponseEntity<ListProductResponse> getAllDeletedProduct(HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(productService.getAllDeletedProduct(username));
+    }
+
+
+    @PutMapping("/restore/{productId}")
+    public ResponseEntity<ProductResponse> restoreProductById(@PathVariable Long productId,
+                                                          HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(productService.restoreProductById(productId, username));
+    }
+
+
+
+
+
 }

@@ -118,6 +118,7 @@ public class ProductVariantServiceImpl implements IProductVariantService {
         productVariant.setPrice(request.getPrice());
         productVariant.setQuantity(request.getQuantity());
         productVariant.setAttributes(attributes);
+        productVariant.setCreateAt(LocalDateTime.now());
 
         return productVariant;
     }
