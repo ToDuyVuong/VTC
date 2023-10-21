@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -36,6 +37,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
     private ProductRepository productRepository;
 
     @Override
+    @Transactional
     public BrandAdminResponse addNewBrand(BrandAdminRequest request) {
 
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
@@ -108,6 +110,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
     }
 
     @Override
+    @Transactional
     public BrandAdminResponse updateBrandAdmin(BrandAdminRequest request) {
 
         Brand brand = brandRepository.findById(request.getBrandId())
@@ -147,6 +150,7 @@ public class BrandAdminServiceImpl implements IBrandAdminService {
     }
 
     @Override
+    @Transactional
     public BrandAdminResponse updateStatusBrandAdmin(Long brandId, String username, Status status) {
 
         Brand brand = brandRepository.findById(brandId)

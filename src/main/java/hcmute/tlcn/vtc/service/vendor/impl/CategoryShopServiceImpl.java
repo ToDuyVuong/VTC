@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -48,6 +49,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
 
     @Override
+    @Transactional
     public CategoryShopResponse addNewCategoryShop(CategoryShopRequest request) {
 
         Shop shop = shopService.getShopByUsername(request.getUsername());
@@ -129,6 +131,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
 
     @Override
+    @Transactional
     public CategoryShopResponse updateCategoryShop(CategoryShopRequest request) {
         Category category = getCategoryShopById(request.getCategoryId(), request.getUsername());
 
@@ -170,6 +173,7 @@ public class CategoryShopServiceImpl implements ICategoryShopService {
 
 
     @Override
+    @Transactional
     public CategoryShopResponse updateStatusCategoryShop(Long categoryId, String username, Status status) {
         Category category = getCategoryShopById(categoryId, username);
 

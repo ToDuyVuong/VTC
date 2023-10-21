@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -29,6 +30,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     private ModelMapper modelMapper;
 
     @Override
+    @Transactional
     public CategoryAdminResponse addNewCategory(CategoryAdminRequest request) {
 
         Optional<Category> existingCategory = categoryRepository.findByNameAndAdminOnly(request.getName(), true);
@@ -59,6 +61,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     }
 
     @Override
+    @Transactional
     public CategoryAdminResponse getCategoryParent(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy danh mục!"));
@@ -75,6 +78,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     }
 
     @Override
+    @Transactional
     public AllCategoryAdminResponse getAllCategoryParent() {
         List<Category> categories = categoryRepository.findAllByAdminOnlyAndStatus(true, Status.ACTIVE);
         if (categories.isEmpty()) {
@@ -98,6 +102,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     }
 
     @Override
+    @Transactional
     public CategoryAdminResponse updateCategoryParent(CategoryAdminRequest request) {
 
         Category category = categoryRepository.findById(request.getCategoryId())
@@ -129,6 +134,7 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
     }
 
     @Override
+    @Transactional
     public CategoryAdminResponse updateStatusCategoryParent(Long categoryId, Status status) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy danh mục!"));
@@ -166,6 +172,8 @@ public class CategoryAdminServiceImpl implements ICategoryAdminService {
             throw new SaveFailedException("Cập nhật danh mục thất bại!");
         }
     }
+
+
 
     private void checkCategoryName(String name) {
         Optional<Category> category = categoryRepository.findByNameAndAdminOnly(name, true);

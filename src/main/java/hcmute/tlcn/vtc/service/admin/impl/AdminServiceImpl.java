@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ public class AdminServiceImpl implements IAdminService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public RegisterResponse register(RegisterRequest adminRequest) {
         adminRequest.validate();
 

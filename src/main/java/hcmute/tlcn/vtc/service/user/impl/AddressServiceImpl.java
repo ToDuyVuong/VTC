@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -35,6 +36,7 @@ public class AddressServiceImpl implements IAddressService {
     private final ModelMapper modelMapper;
 
     @Override
+    @Transactional
     public AddressResponse addNewAddress(AddressRequest request) {
         // request.validate();
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
@@ -93,6 +95,7 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
+    @Transactional
     public AddressResponse updateAddress(AddressRequest request) {
         request.validate();
 
@@ -126,6 +129,7 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
+    @Transactional
     public AddressResponse updateStatusAddress(AddressStatusRequest request) {
         request.validate();
 

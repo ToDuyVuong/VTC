@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class ProductVariantServiceImpl implements IProductVariantService {
 
 
     @Override
+    @Transactional
     public List<ProductVariant> addNewListProductVariant(List<ProductVariantRequest> requests, Long shopId) {
 
         List<ProductVariant> productVariants = new ArrayList<>();
@@ -56,9 +58,6 @@ public class ProductVariantServiceImpl implements IProductVariantService {
 
         return productVariants;
     }
-
-
-
 
 
     @Override
@@ -98,9 +97,6 @@ public class ProductVariantServiceImpl implements IProductVariantService {
     }
 
 
-
-
-
     private ProductVariant updateProductVariant(ProductVariantRequest request, Long shopId) {
         ProductVariant productVariant = productVariantRepository.findByProductVariantId(request.getProductVariantId());
         if (productVariant == null) {
@@ -126,7 +122,6 @@ public class ProductVariantServiceImpl implements IProductVariantService {
 
         return productVariant;
     }
-
 
 
     private ProductVariant addNewProductVariant(ProductVariantRequest request, Long shopId) {

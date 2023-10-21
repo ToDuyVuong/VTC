@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class ProductServiceImpl implements IProductService {
 
 
     @Override
+    @Transactional
     public ProductResponse addNewProduct(ProductRequest request) {
         Category category = categoryShopService.getCategoryShopById(request.getCategoryId(), request.getUsername());
 
@@ -142,19 +144,10 @@ public class ProductServiceImpl implements IProductService {
         return response;
     }
 
-    private ProductDTO getProduct (Product product) {
-        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-        List<ProductVariant> activeProductVariants = product.getProductVariants().stream()
-                .filter(productVariant -> productVariant.getStatus() == Status.ACTIVE)
-                .collect(Collectors.toList());
-
-        List<ProductVariantDTO> productVariantDTOs = ProductVariantDTO.convertToListDTO(activeProductVariants);
-        productDTO.setProductVariantDTOs(productVariantDTOs);
-        return productDTO;
-    }
 
 
     @Override
+    @Transactional
     public ProductResponse updateProduct(ProductRequest productRequest) {
         Product product = getProductById(productRequest.getProductId(), productRequest.getUsername());
         Category category = categoryShopService.getCategoryShopById(productRequest.getCategoryId(), productRequest.getUsername());
@@ -215,7 +208,20 @@ public class ProductServiceImpl implements IProductService {
     }
 
 
-    public Product getProductById(Long productId, String username) {
+    private ProductDTO getProduct (Product product) {
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        List<ProductVariant> activeProductVariants = product.getProductVariants().stream()
+                .filter(productVariant -> productVariant.getStatus() == Status.ACTIVE)
+                .collect(Collectors.toList());
+
+        List<ProductVariantDTO> productVariantDTOs = ProductVariantDTO.convertToListDTO(activeProductVariants);
+        productDTO.setProductVariantDTOs(productVariantDTOs);
+        return productDTO;
+    }
+
+
+
+    private Product getProductById(Long productId, String username) {
         Product product = productRepository
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException("Sản phẩm không tồn tại!"));

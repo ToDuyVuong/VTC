@@ -5,6 +5,7 @@ import hcmute.tlcn.vtc.util.exception.InvalidOtpException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Random;
@@ -36,6 +37,7 @@ public class OtpServiceImpl implements IOtpService {
     }
 
     @Override
+    @Transactional
     public void verifyOtp(String username, String otp) {
 
         OtpDetails otpDetails = otpMap.get(username);
@@ -51,6 +53,7 @@ public class OtpServiceImpl implements IOtpService {
     }
 
     @Override
+    @Transactional
     public long getTimeValid(String username) {
         OtpDetails otpDetails = otpMap.get(username);
 

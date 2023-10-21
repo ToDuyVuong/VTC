@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -36,6 +37,7 @@ public class ShopServiceImpl implements IShopService {
 
 
     @Override
+    @Transactional
     public ShopResponse registerShop(RegisterShopRequest request) {
 
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
@@ -88,6 +90,7 @@ public class ShopServiceImpl implements IShopService {
 
 
     @Override
+    @Transactional
     public ShopResponse updateShop(UpdateShopRequest request) {
 
         checkEmailAndPhoneAndUsernameInShop(request.getEmail(), request.getPhone(), request.getUsername());
@@ -123,6 +126,7 @@ public class ShopServiceImpl implements IShopService {
 
 
     @Override
+    @Transactional
     public ShopResponse updateStatusShop(String username, Status status) {
 
         Shop shop = getShopByUsername(username);

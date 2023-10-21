@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -56,6 +57,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    @Transactional
     public ProfileCustomerResponse updateProfileCustomer(ProfileCustomerRequest request) {
         request.validate();
 
@@ -84,6 +86,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    @Transactional
     public ProfileCustomerResponse changePassword(ChangePasswordRequest request) {
         request.validate();
         Customer customerUpdate = getCustomerByUsername(request.getUsername());
@@ -114,6 +117,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    @Transactional
     public ForgotPasswordResponse resetPassword(ForgotPasswordRequest request) {
         request.validate();
         otpService.verifyOtp(request.getUsername(), request.getOtp());

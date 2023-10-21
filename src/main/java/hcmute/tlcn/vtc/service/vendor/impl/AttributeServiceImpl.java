@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
 
     @Override
+    @Transactional
     public AttributeResponse addNewAttribute(AttributeRequest attributeRequest) {
 
         Shop shop = shopService.getShopByUsername(attributeRequest.getUsername());
@@ -106,6 +108,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
 
     @Override
+    @Transactional
     public AttributeResponse updateAttribute(AttributeRequest attributeRequest) {
         Shop shop = shopService.getShopByUsername(attributeRequest.getUsername());
         Attribute attribute = checkAttributeInShop(attributeRequest.getAttributeId(), shop.getShopId());
@@ -132,6 +135,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
 
     @Override
+    @Transactional
     public AttributeResponse lockOrActiveAttribute(Long attributeId, String username, boolean active) {
         Shop shop = shopService.getShopByUsername(username);
         Attribute attribute = checkAttributeInShop(attributeId, shop.getShopId());
@@ -159,6 +163,7 @@ public class AttributeServiceImpl implements IAttributeService {
 
 
     @Override
+    @Transactional
     public AttributeResponse deleteAttribute(Long attributeId, String username) {
         Shop shop = shopService.getShopByUsername(username);
         Attribute attribute = checkAttributeInShop(attributeId, shop.getShopId());

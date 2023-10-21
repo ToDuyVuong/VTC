@@ -29,6 +29,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -55,6 +56,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private int refreshExpiration;
 
     @Override
+    @Transactional
     public RegisterResponse register(RegisterRequest customerRequest) {
         customerRequest.validate();
 
@@ -114,6 +116,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     }
 
     @Override
+    @Transactional
     public LogoutResponse logout(String refreshToken) {
 
         if (refreshToken == null) {
