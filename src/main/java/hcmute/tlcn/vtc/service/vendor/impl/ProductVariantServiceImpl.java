@@ -46,7 +46,6 @@ public class ProductVariantServiceImpl implements IProductVariantService {
 
 
     @Override
-    @Transactional
     public List<ProductVariant> addNewListProductVariant(List<ProductVariantRequest> requests, Long shopId) {
 
         List<ProductVariant> productVariants = new ArrayList<>();
@@ -107,6 +106,7 @@ public class ProductVariantServiceImpl implements IProductVariantService {
         if (request.getAttributeIds() != null && !request.getAttributeIds().isEmpty()) {
             attributes = attributeService.getListAttributeByListId(request.getAttributeIds(), shopId);
         }
+
         if (!request.getSku().equals(productVariant.getSku()) && productVariantRepository
                 .existsBySkuAndProductProductId(request.getSku(),
                         productVariant.getProduct().getProductId())) {
@@ -118,7 +118,6 @@ public class ProductVariantServiceImpl implements IProductVariantService {
         productVariant.setPrice(request.getPrice());
         productVariant.setQuantity(request.getQuantity());
         productVariant.setAttributes(attributes);
-        productVariant.setUpdateAt(LocalDateTime.now());
 
         return productVariant;
     }
@@ -133,8 +132,6 @@ public class ProductVariantServiceImpl implements IProductVariantService {
         ProductVariant productVariant = modelMapper.map(request, ProductVariant.class);
         productVariant.setStatus(Status.ACTIVE);
         productVariant.setAttributes(attributes);
-        productVariant.setCreateAt(LocalDateTime.now());
-        productVariant.setUpdateAt(LocalDateTime.now());
 
         return productVariant;
     }

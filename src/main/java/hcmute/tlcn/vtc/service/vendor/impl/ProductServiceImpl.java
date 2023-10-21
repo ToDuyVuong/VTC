@@ -82,6 +82,8 @@ public class ProductServiceImpl implements IProductService {
 
             for (ProductVariant productVariant : productVariants) {
                 productVariant.setProduct(saveProduct);
+                productVariant.setCreateAt(product.getCreateAt());
+                productVariant.setUpdateAt(product.getUpdateAt());
                 try {
                     productVariantRepository.save(productVariant);
                 } catch (Exception e) {
@@ -89,9 +91,8 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
 
-            List<ProductVariantDTO> productVariantDTOs = ProductVariantDTO.convertToListDTO(productVariants);
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setProductVariantDTOs(productVariantDTOs);
+            productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(productVariants));
             ProductResponse productResponse = new ProductResponse();
             productResponse.setProductDTO(productDTO);
             productResponse.setStatus("success");
@@ -101,7 +102,6 @@ public class ProductServiceImpl implements IProductService {
             return productResponse;
         } catch (Exception e) {
             throw new SaveFailedException("Thêm sản phẩm mới trong cửa hàng thất bại!");
-//            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -109,7 +109,12 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ProductResponse getProductDetail(Long productId, String username) {
         Product product = getProductById(productId, username);
-        ProductDTO productDTO = getProduct(product);
+        ProductDTO productDTO;
+        if (product.getStatus() == Status.DELETED) {
+            productDTO  = getProductDeleteToDTO(product);
+        }else {
+            productDTO = getProductToDTO(product);
+        }
 
         ProductResponse productResponse = new ProductResponse();
         productResponse.setProductDTO(productDTO);
@@ -131,19 +136,19 @@ public class ProductServiceImpl implements IProductService {
         List<ProductDTO> productDTOs = new ArrayList<>();
 
         for (Product product : products) {
-            ProductDTO productDTO = getProduct(product);
+            ProductDTO productDTO = getProductToDTO(product);
             productDTOs.add(productDTO);
         }
 
         ListProductResponse response = new ListProductResponse();
         response.setProductDTOs(productDTOs);
+        response.setCount(productDTOs.size());
         response.setStatus("ok");
         response.setMessage("Lấy danh sách sản phẩm đang bán trong cửa hàng thành công.");
         response.setCode(200);
 
         return response;
     }
-
 
 
     @Override
@@ -158,9 +163,9 @@ public class ProductServiceImpl implements IProductService {
                     .orElseThrow(() -> new IllegalArgumentException("Thương hiệu không tồn tại!"));
         }
 
-        if ( !product.getName().equals(productRequest.getName()) &&
+        if (!product.getName().equals(productRequest.getName()) &&
                 productRepository.existsByNameAndCategoryShopShopIdAndStatus(
-                productRequest.getName(), category.getShop().getShopId(), Status.ACTIVE)) {
+                        productRequest.getName(), category.getShop().getShopId(), Status.ACTIVE)) {
             throw new IllegalArgumentException("Sản phẩm cập nhật đã có tên đã tồn tại trong cửa hàng!");
         }
 
@@ -180,6 +185,7 @@ public class ProductServiceImpl implements IProductService {
             Product saveProduct = productRepository.save(product);
             for (ProductVariant productVariant : productVariants) {
                 productVariant.setProduct(saveProduct);
+                productVariant.setUpdateAt(product.getUpdateAt());
                 try {
                     productVariantRepository.save(productVariant);
                 } catch (Exception e) {
@@ -189,11 +195,10 @@ public class ProductServiceImpl implements IProductService {
 
             List<ProductVariant> activeProductVariants = productVariants.stream()
                     .filter(productVariant -> productVariant.getStatus() == Status.ACTIVE)
-                    .collect(Collectors.toList());
+                    .toList();
 
-            List<ProductVariantDTO> productVariantDTOs = ProductVariantDTO.convertToListDTO(activeProductVariants);
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setProductVariantDTOs(productVariantDTOs);
+            productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(activeProductVariants));
 
             ProductResponse productResponse = new ProductResponse();
             productResponse.setProductDTO(productDTO);
@@ -207,18 +212,71 @@ public class ProductServiceImpl implements IProductService {
         }
     }
 
+    @Override
+    @Transactional
+    public ProductResponse updateStatusProduct(Long productId, String username, Status status) {
+        Product product = getProductById(productId, username);
 
-    private ProductDTO getProduct (Product product) {
+        if (product.getStatus() == Status.DELETED) {
+            throw new IllegalArgumentException("Sản phẩm đã bị xóa trong cửa hàng!");
+        }
+
+        product.setStatus(status);
+        product.setUpdateAt(LocalDateTime.now());
+
+        List<ProductVariant> activeProductVariants = product.getProductVariants().stream()
+                .filter(productVariant -> productVariant.getStatus() != Status.DELETED)
+                .toList();
+
+            for (ProductVariant productVariant : activeProductVariants) {
+            productVariant.setStatus(product.getStatus());
+            productVariant.setUpdateAt(product.getUpdateAt());
+            try {
+                productVariantRepository.save(productVariant);
+            } catch (Exception e) {
+                throw new SaveFailedException("Cập nhật trạng thái biến thể sản phẩm thất bại!");
+            }
+        }
+
+        try {
+            productRepository.save(product);
+
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(activeProductVariants));
+            ProductResponse productResponse = new ProductResponse();
+            productResponse.setProductDTO(productDTO);
+            productResponse.setStatus("success");
+            productResponse.setMessage("Cập nhật trạng thái sản phẩm trong cửa hàng thành công!");
+            productResponse.setCode(200);
+
+            return productResponse;
+        } catch (Exception e) {
+            throw new SaveFailedException("Cập nhật trạng thái sản phẩm trong cửa hàng thất bại!");
+        }
+
+    }
+
+
+    private ProductDTO getProductToDTO(Product product) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         List<ProductVariant> activeProductVariants = product.getProductVariants().stream()
-                .filter(productVariant -> productVariant.getStatus() == Status.ACTIVE)
-                .collect(Collectors.toList());
+                .filter(productVariant -> productVariant.getStatus() != Status.DELETED)
+                .toList();
 
-        List<ProductVariantDTO> productVariantDTOs = ProductVariantDTO.convertToListDTO(activeProductVariants);
-        productDTO.setProductVariantDTOs(productVariantDTOs);
+        productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(activeProductVariants));
         return productDTO;
     }
 
+
+    private ProductDTO getProductDeleteToDTO(Product product) {
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        List<ProductVariant> activeProductVariants = product.getProductVariants().stream()
+                .filter(productVariant -> productVariant.getUpdateAt().equals(product.getUpdateAt()))
+                .toList();
+
+        productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(activeProductVariants));
+        return productDTO;
+    }
 
 
     private Product getProductById(Long productId, String username) {

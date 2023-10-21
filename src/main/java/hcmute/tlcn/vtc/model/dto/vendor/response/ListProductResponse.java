@@ -13,5 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ListProductResponse extends ResponseAbstract {
 
+        private int count;
+
         private List<ProductDTO> productDTOs;
 }

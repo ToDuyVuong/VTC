@@ -4,6 +4,7 @@ package hcmute.tlcn.vtc.controller.vendor;
 import hcmute.tlcn.vtc.model.dto.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.vendor.IProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,15 @@ public class ProductController {
         request.setProductId(productId);
         request.validateUpdate();
         return ResponseEntity.ok(productService.updateProduct(request));
+    }
+
+
+    @PatchMapping("/update/status/{productId}")
+    public ResponseEntity<ProductResponse> updateStatusProduct(@PathVariable Long productId,
+                                                               @RequestParam Status status,
+                                                               HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(productService.updateStatusProduct(productId, username, status));
     }
 
 
