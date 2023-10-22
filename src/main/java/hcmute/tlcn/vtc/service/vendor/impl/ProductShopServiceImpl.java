@@ -174,6 +174,28 @@ public class ProductShopServiceImpl implements IProductShopService {
 
 
     @Override
+    public ListProductResponse getListProductByPriceRange(String username, Long minPrice, Long maxPrice) {
+        Shop shop = shopService.getShopByUsername(username);
+        List<Product> products = productRepository.findByPriceRange(shop.getShopId(), Status.ACTIVE, minPrice, maxPrice);
+        return getListProductResponseSort(products, "Lọc sản phẩm theo giá trong cửa hàng thành công.", true);
+    }
+
+
+    @Override
+    public ListProductResponse getListNewProduct(String username) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        List<Product> products = productRepository.findByCategoryShopShopIdAndStatusOrderByCreateAtDesc(shop.getShopId(), Status.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("Cửa hàng không có sản phẩm mới!"));
+
+        return getListProductResponseSort(products,
+                "Lấy danh sách sản phẩm mới trong cửa hàng thành công.",
+                false);
+    }
+
+
+
+    @Override
     @Transactional
     public ProductResponse updateProduct(ProductRequest productRequest) {
         Product product = getProductById(productRequest.getProductId(), productRequest.getUsername());

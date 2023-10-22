@@ -22,6 +22,10 @@ public interface IProductShopService {
 
     ListProductResponse getBestSellingProducts(int limit, String username);
 
+    ListProductResponse getListProductByPriceRange(String username, Long minPrice, Long maxPrice);
+
+    ListProductResponse getListNewProduct(String username);
+
     ProductResponse updateProduct(ProductRequest productRequest);
 
     @Transactional

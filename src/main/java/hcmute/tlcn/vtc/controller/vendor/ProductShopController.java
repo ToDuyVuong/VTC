@@ -49,6 +49,9 @@ public class ProductShopController {
     @GetMapping("/list/category/{categoryId}")
     public ResponseEntity<ListProductResponse> getListProductShopByCategoryId(@PathVariable Long categoryId,
                                                                               HttpServletRequest httpServletRequest) {
+        if (categoryId == null) {
+            throw new NullPointerException("Mã danh mục không được để trống!");
+        }
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.getListProductShopByCategoryId(categoryId, username));
     }
@@ -57,15 +60,41 @@ public class ProductShopController {
     @GetMapping("/search")
     public ResponseEntity<ListProductResponse> searchProductsByName(@RequestParam String productName,
                                                                     HttpServletRequest httpServletRequest) {
+        if (productName == null) {
+            throw new NullPointerException("Tên sản phẩm không được để trống!");
+        }
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.searchProductsByName(productName, username));
     }
 
 
     @GetMapping("/best-sellers")
-    public ResponseEntity<ListProductResponse> getBestSellingProducts(@RequestParam int limit, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<ListProductResponse> getBestSellingProducts(@RequestParam Long limit, HttpServletRequest httpServletRequest) {
+        int maxLimit = Math.toIntExact(limit);
+        if (maxLimit <= 0) {
+            throw new IllegalArgumentException("Số lượng sản phẩm bán chạy nhất phải lớn hơn 0!");
+        }
         String username = (String) httpServletRequest.getAttribute("username");
-        return ResponseEntity.ok(productService.getBestSellingProducts(limit, username));
+        return ResponseEntity.ok(productService.getBestSellingProducts(maxLimit, username));
+    }
+
+
+    @GetMapping("/price-range")
+    public ResponseEntity<ListProductResponse> getListProductByPriceRange(@RequestParam Long minPrice,
+                                                                          @RequestParam Long maxPrice,
+                                                                          HttpServletRequest httpServletRequest) {
+        if (minPrice == null || maxPrice == null) {
+            throw new NullPointerException("Giá sản phẩm không được để trống!");
+        }
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(productService.getListProductByPriceRange(username, minPrice, maxPrice));
+    }
+
+
+    @GetMapping("/list-new")
+    public ResponseEntity<ListProductResponse> getListNewProduct(HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(productService.getListNewProduct(username));
     }
 
 

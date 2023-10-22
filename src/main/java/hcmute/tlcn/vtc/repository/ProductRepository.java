@@ -27,16 +27,28 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
 
-    @Query(value = "SELECT p.* FROM product p " +
-            "WHERE p.category_shop_shop_id = :shopId AND p.status = :status " +
-            "ORDER BY p.sold DESC, p.name ASC LIMIT :limit", nativeQuery = true)
-    Optional<List<Product>> findBestSellingProducts(@Param("shopId") Long shopId,
-                                          @Param("status") Status status,
-                                          @Param("limit") int limit);
+//    @Query(value = "SELECT p.* FROM product p " +
+//            "WHERE p.category_shop_shop_id = :shopId AND p.status = :status " +
+//            "ORDER BY p.sold DESC, p.name ASC LIMIT :limit", nativeQuery = true)
+//    Optional<List<Product>> findBestSellingProducts(@Param("shopId") Long shopId,
+//                                          @Param("status") Status status,
+//                                          @Param("limit") int limit);
 
 
     Optional<List<Product>> findByCategoryShopShopIdAndStatusOrderBySoldDescNameAsc(Long shopId, Status status);
 
+    Optional<List<Product>> findByCategoryShopShopIdAndStatusOrderByCreateAtDesc(Long shopId, Status status);
+
+    @Query("SELECT p FROM Product p JOIN p.productVariants v " +
+            "WHERE p.category.shop.shopId = :shopId " +
+            "AND p.status = :status " +
+            "AND v.status = :status " +
+            "AND v.price >= :minPrice " +
+            "AND v.price <= :maxPrice")
+    List<Product> findByPriceRange(@Param("shopId") Long shopId,
+                                   @Param("status") Status status,
+                                   @Param("minPrice") Long minPrice,
+                                   @Param("maxPrice") Long maxPrice);
 
 
 }
