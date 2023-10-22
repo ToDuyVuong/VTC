@@ -4,7 +4,7 @@ package hcmute.tlcn.vtc.controller.vendor;
 import hcmute.tlcn.vtc.model.dto.vendor.request.AttributeRequest;
 import hcmute.tlcn.vtc.model.dto.vendor.response.AttributeResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ListAttributeResponse;
-import hcmute.tlcn.vtc.service.vendor.IAttributeService;
+import hcmute.tlcn.vtc.service.vendor.IAttributeShopService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/vendor/attribute")
 @RequiredArgsConstructor
-public class AttributeController {
+public class AttributeShopController {
 
     @Autowired
-    private IAttributeService attributeService;
+    private IAttributeShopService attributeService;
 
     @PostMapping("/add")
     public ResponseEntity<AttributeResponse> addNewAttribute(AttributeRequest attributeRequest,

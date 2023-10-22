@@ -7,7 +7,7 @@ import hcmute.tlcn.vtc.model.entity.Attribute;
 
 import java.util.List;
 
-public interface IAttributeService {
+public interface IAttributeShopService {
     AttributeResponse addNewAttribute(AttributeRequest attributeRequest);
 
     AttributeResponse getAttributeById(Long attributeId, String username);

@@ -6,13 +6,12 @@ import hcmute.tlcn.vtc.model.entity.ProductVariant;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.*;
 import hcmute.tlcn.vtc.service.user.impl.CustomerServiceImpl;
-import hcmute.tlcn.vtc.service.vendor.IAttributeService;
-import hcmute.tlcn.vtc.service.vendor.IProductVariantService;
+import hcmute.tlcn.vtc.service.vendor.IAttributeShopService;
+import hcmute.tlcn.vtc.service.vendor.IProductVariantShopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,13 +20,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductVariantServiceImpl implements IProductVariantService {
+public class ProductVariantShopServiceImpl implements IProductVariantShopService {
 
 
     @Autowired
     private AttributeRepository attributeRepository;
     @Autowired
-    private IAttributeService attributeService;
+    private IAttributeShopService attributeService;
     @Autowired
     private ShopRepository shopRepository;
     @Autowired

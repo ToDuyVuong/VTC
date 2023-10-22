@@ -9,8 +9,8 @@ import hcmute.tlcn.vtc.model.entity.*;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.*;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;
-import hcmute.tlcn.vtc.service.vendor.IProductService;
-import hcmute.tlcn.vtc.service.vendor.IProductVariantService;
+import hcmute.tlcn.vtc.service.vendor.IProductShopService;
+import hcmute.tlcn.vtc.service.vendor.IProductVariantShopService;
 import hcmute.tlcn.vtc.service.vendor.IShopService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import hcmute.tlcn.vtc.util.exception.SaveFailedException;
@@ -22,11 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImpl implements IProductService {
+public class ProductShopServiceImpl implements IProductShopService {
 
 
     @Autowired
@@ -42,7 +43,7 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private ProductVariantRepository productVariantRepository;
     @Autowired
-    private IProductVariantService productVariantService;
+    private IProductVariantShopService productVariantService;
     @Autowired
     ModelMapper modelMapper;
 
@@ -118,19 +119,55 @@ public class ProductServiceImpl implements IProductService {
                 .findAllByCategoryShopShopIdAndStatus(shop.getShopId(), Status.ACTIVE)
                 .orElseThrow(() -> new NotFoundException("Cửa hàng không có sản phẩm đang bán!"));
 
-        List<ProductDTO> productDTOs = new ArrayList<>();
+        return getListProductResponseSort(products,
+                "Lấy danh sách sản phẩm đang bán trong cửa hàng thành công.",
+                true);
+    }
 
-        for (Product product : products) {
-            ProductDTO productDTO = getProductToDTO(product);
-            productDTOs.add(productDTO);
+
+    @Override
+    public ListProductResponse getListProductShopByCategoryId(Long categoryId, String username) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        List<Product> products = productRepository
+                .findAllByCategoryCategoryIdAndCategoryShopShopIdAndStatus(categoryId, shop.getShopId(), Status.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("Cửa hàng không có sản phẩm đang bán nào thuộc danh mục này!"));
+
+        return getListProductResponseSort(products,
+                "Lấy danh sách sản phẩm đang bán trong danh mục thành công cửa hàng thành công.",
+                true);
+    }
+
+
+    @Override
+    public ListProductResponse searchProductsByName(String productName, String username) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        List<Product> products = productRepository
+                .findAllByNameContainingAndCategoryShopShopIdAndStatus(productName, shop.getShopId(), Status.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy sản phẩm nào có tên tương tự!"));
+
+        return getListProductResponseSort(products, "Tìm kiếm sản phẩm theo tên trong cửa hàng thành công!",
+                true);
+    }
+
+
+    @Override
+    public ListProductResponse getBestSellingProducts(int limit, String username) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        List<Product> products = productRepository.findByCategoryShopShopIdAndStatusOrderBySoldDescNameAsc(shop.getShopId(), Status.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("Cửa hàng không có sản phẩm bán chạy!"));
+
+        ListProductResponse response = getListProductResponseSort(products,
+                "Lấy danh sách sản phẩm bán chạy trong cửa hàng thành công.",
+                false);
+
+        if (response.getCount() > limit) {
+            response.setProductDTOs(response.getProductDTOs().subList(0, limit));
+            response.setCount(limit);
         }
 
-        ListProductResponse response = new ListProductResponse();
-        response.setProductDTOs(productDTOs);
-        response.setCount(productDTOs.size());
-        response.setStatus("ok");
-        response.setMessage("Lấy danh sách sản phẩm đang bán trong cửa hàng thành công.");
-        response.setCode(200);
 
         return response;
     }
@@ -281,6 +318,30 @@ public class ProductServiceImpl implements IProductService {
         response.setCount(productDTOs.size());
         response.setStatus("ok");
         response.setMessage("Lấy danh sách sản phẩm đã xóa trong cửa hàng thành công.");
+        response.setCode(200);
+
+        return response;
+    }
+
+
+    @Override
+    public ListProductResponse getListProductResponseSort(List<Product> products, String message, boolean isSort) {
+        List<ProductDTO> productDTOs = new ArrayList<>();
+
+        for (Product product : products) {
+            ProductDTO productDTO = getProductToDTO(product);
+            productDTOs.add(productDTO);
+        }
+
+        if (isSort) {
+            productDTOs.sort(Comparator.comparing(ProductDTO::getName));
+        }
+
+        ListProductResponse response = new ListProductResponse();
+        response.setProductDTOs(productDTOs);
+        response.setCount(productDTOs.size());
+        response.setStatus("ok");
+        response.setMessage(message);
         response.setCode(200);
 
         return response;

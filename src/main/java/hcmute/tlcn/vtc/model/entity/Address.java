@@ -23,17 +23,11 @@ public class Address {
 
     private String district;
 
-    // private String description;
-
     private String fullAddress;
 
     private String fullName;
 
     private String phone;
-
-    // private String email;
-
-    // private String note;
 
     private Status status;
 

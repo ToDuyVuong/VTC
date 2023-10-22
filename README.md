@@ -84,4 +84,8 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Xem danh sách sản phẩm của vendor.
     - Xem chi tiết sản phẩm.
     - Cập nhật thông tin sản phẩm.
+    - Chọn trạng thái sản phẩm.
+    - Xem danh sách sản phẩm đã xóa.
+    - Khôi phục sản phẩm đã xóa.
+    - Xem danh sách sản phẩm theo danh mục.
  

@@ -8,7 +8,7 @@ import hcmute.tlcn.vtc.model.entity.Attribute;
 import hcmute.tlcn.vtc.model.entity.Shop;
 import hcmute.tlcn.vtc.repository.*;
 import hcmute.tlcn.vtc.service.user.impl.CustomerServiceImpl;
-import hcmute.tlcn.vtc.service.vendor.IAttributeService;
+import hcmute.tlcn.vtc.service.vendor.IAttributeShopService;
 import hcmute.tlcn.vtc.service.vendor.IShopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,7 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AttributeServiceImpl implements IAttributeService {
+public class AttributeShopServiceImpl implements IAttributeShopService {
 
     @Autowired
     private AttributeRepository attributeRepository;
