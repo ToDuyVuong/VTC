@@ -25,6 +25,12 @@ public class SecurityConfig {
             "/api/auth/**",
             "/api/customer/forgot-password",
             "/api/customer/reset-password",
+            "/api/product/**",
+
+
+
+
+
 
             "/v2/api-docs",
             "/v3/api-docs",

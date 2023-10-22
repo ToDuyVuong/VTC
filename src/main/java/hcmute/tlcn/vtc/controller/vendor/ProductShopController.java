@@ -6,6 +6,7 @@ import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.vendor.IProductShopService;
+import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class ProductShopController {
     @GetMapping("/detail/{productId}")
     public ResponseEntity<ProductResponse> getProductDetail(@PathVariable Long productId,
                                                             HttpServletRequest httpServletRequest) {
+        if (productId == null) {
+            throw new NotFoundException("Mã sản phẩm không được để trống!");
+        }
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.getProductDetail(productId, username));
     }
@@ -50,7 +54,7 @@ public class ProductShopController {
     public ResponseEntity<ListProductResponse> getListProductShopByCategoryId(@PathVariable Long categoryId,
                                                                               HttpServletRequest httpServletRequest) {
         if (categoryId == null) {
-            throw new NullPointerException("Mã danh mục không được để trống!");
+            throw new NotFoundException("Mã danh mục không được để trống!");
         }
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.getListProductShopByCategoryId(categoryId, username));
@@ -61,7 +65,7 @@ public class ProductShopController {
     public ResponseEntity<ListProductResponse> searchProductsByName(@RequestParam String productName,
                                                                     HttpServletRequest httpServletRequest) {
         if (productName == null) {
-            throw new NullPointerException("Tên sản phẩm không được để trống!");
+            throw new NotFoundException("Tên sản phẩm không được để trống!");
         }
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.searchProductsByName(productName, username));
@@ -83,11 +87,22 @@ public class ProductShopController {
     public ResponseEntity<ListProductResponse> getListProductByPriceRange(@RequestParam Long minPrice,
                                                                           @RequestParam Long maxPrice,
                                                                           HttpServletRequest httpServletRequest) {
-        if (minPrice == null || maxPrice == null) {
-            throw new NullPointerException("Giá sản phẩm không được để trống!");
-        }
+        checkPrice(minPrice, maxPrice);
+
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.getListProductByPriceRange(username, minPrice, maxPrice));
+    }
+
+    public static void checkPrice(@RequestParam Long minPrice, @RequestParam Long maxPrice) {
+        if (minPrice == null || maxPrice == null) {
+            throw new NotFoundException("Giá sản phẩm không được để trống!");
+        }
+        if (minPrice <= 0 || maxPrice <= 0) {
+            throw new IllegalArgumentException("Giá sản phẩm không được nhỏ hơn hoặc bằng 0!");
+        }
+        if (minPrice >= maxPrice) {
+            throw new IllegalArgumentException("Giá sản phẩm tối thiểu phải nhỏ hơn hoặc bằng giá sản phẩm tối đa!");
+        }
     }
 
 
@@ -103,6 +118,9 @@ public class ProductShopController {
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long productId,
                                                          @RequestBody ProductRequest request,
                                                          HttpServletRequest httpServletRequest) {
+        if (productId == null) {
+            throw new NotFoundException("Mã sản phẩm không được để trống!");
+        }
         String username = (String) httpServletRequest.getAttribute("username");
         request.setUsername(username);
         request.setProductId(productId);
@@ -115,6 +133,13 @@ public class ProductShopController {
     public ResponseEntity<ProductResponse> updateStatusProduct(@PathVariable Long productId,
                                                                @RequestParam Status status,
                                                                HttpServletRequest httpServletRequest) {
+        if (productId == null) {
+            throw new NotFoundException("Mã sản phẩm không được để trống!");
+        }
+        if (status == null) {
+            throw new NotFoundException("Trạng thái sản phẩm không được để trống!");
+        }
+
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.updateStatusProduct(productId, username, status));
     }
@@ -130,6 +155,9 @@ public class ProductShopController {
     @PutMapping("/restore/{productId}")
     public ResponseEntity<ProductResponse> restoreProductById(@PathVariable Long productId,
                                                           HttpServletRequest httpServletRequest) {
+        if (productId == null) {
+            throw new NotFoundException("Mã sản phẩm không được để trống!");
+        }
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.restoreProductById(productId, username));
     }

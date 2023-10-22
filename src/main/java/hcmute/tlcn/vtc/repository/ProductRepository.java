@@ -26,7 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<List<Product>> findAllByNameContainingAndCategoryShopShopIdAndStatus(String name, Long shopId, Status status);
 
 
-
 //    @Query(value = "SELECT p.* FROM product p " +
 //            "WHERE p.category_shop_shop_id = :shopId AND p.status = :status " +
 //            "ORDER BY p.sold DESC, p.name ASC LIMIT :limit", nativeQuery = true)
@@ -37,7 +36,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<List<Product>> findByCategoryShopShopIdAndStatusOrderBySoldDescNameAsc(Long shopId, Status status);
 
+    Optional<List<Product>> findByStatusOrderBySoldDescNameAsc(Status status);
+
     Optional<List<Product>> findByCategoryShopShopIdAndStatusOrderByCreateAtDesc(Long shopId, Status status);
+
+    Optional<List<Product>> findByStatusOrderByCreateAtDesc(Status status);
+
 
     @Query("SELECT p FROM Product p JOIN p.productVariants v " +
             "WHERE p.category.shop.shopId = :shopId " +
@@ -45,10 +49,28 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "AND v.status = :status " +
             "AND v.price >= :minPrice " +
             "AND v.price <= :maxPrice")
-    List<Product> findByPriceRange(@Param("shopId") Long shopId,
-                                   @Param("status") Status status,
-                                   @Param("minPrice") Long minPrice,
-                                   @Param("maxPrice") Long maxPrice);
+    Optional<List<Product>> findByPriceRange(@Param("shopId") Long shopId,
+                                             @Param("status") Status status,
+                                             @Param("minPrice") Long minPrice,
+                                             @Param("maxPrice") Long maxPrice);
+
+
+    Optional<List<Product>> findByCategoryParentCategoryIdAndStatus(Long categoryParentId, Status status);
+
+    Optional<List<Product>> findByCategoryCategoryIdAndStatus(Long categoryId, Status status);
+
+    Optional<List<Product>> findByCategoryShopShopIdAndStatus(Long shopId, Status status);
+
+
+
+    @Query("SELECT p FROM Product p JOIN p.productVariants v " +
+            "WHERE p.status = :status " +
+            "AND v.status = :status " +
+            "AND v.price >= :minPrice " +
+            "AND v.price <= :maxPrice")
+    Optional<List<Product>> findByPriceRange(@Param("status") Status status,
+                                             @Param("minPrice") Long minPrice,
+                                             @Param("maxPrice") Long maxPrice);
 
 
 }

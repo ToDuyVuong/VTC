@@ -176,7 +176,8 @@ public class ProductShopServiceImpl implements IProductShopService {
     @Override
     public ListProductResponse getListProductByPriceRange(String username, Long minPrice, Long maxPrice) {
         Shop shop = shopService.getShopByUsername(username);
-        List<Product> products = productRepository.findByPriceRange(shop.getShopId(), Status.ACTIVE, minPrice, maxPrice);
+        List<Product> products = productRepository.findByPriceRange(shop.getShopId(), Status.ACTIVE, minPrice, maxPrice)
+                .orElseThrow(() -> new NotFoundException("Cửa hàng không có sản phẩm nào trong khoảng giá này!"));
         return getListProductResponseSort(products, "Lọc sản phẩm theo giá trong cửa hàng thành công.", true);
     }
 
@@ -192,7 +193,6 @@ public class ProductShopServiceImpl implements IProductShopService {
                 "Lấy danh sách sản phẩm mới trong cửa hàng thành công.",
                 false);
     }
-
 
 
     @Override
