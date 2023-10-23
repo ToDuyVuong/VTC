@@ -29,9 +29,6 @@ public class SecurityConfig {
             "/api/shop-detail/shop/**",
 
 
-
-
-
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
@@ -50,6 +47,7 @@ public class SecurityConfig {
             "/api/vendor/register/**",
             "/api/followed-shop/**",
             "/api/shop-detail/**",
+            "/api/cart/**",
 
 
     };
