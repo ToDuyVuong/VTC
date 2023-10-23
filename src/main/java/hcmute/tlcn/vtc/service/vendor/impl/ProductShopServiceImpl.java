@@ -94,7 +94,7 @@ public class ProductShopServiceImpl implements IProductShopService {
 
     @Override
     public ProductResponse getProductDetail(Long productId, String username) {
-        Product product = getProductById(productId, username);
+        Product product = getProductByIdOnShop(productId, username);
         ProductDTO productDTO;
         if (product.getStatus() == Status.DELETED) {
             productDTO = getProductDeleteToDTO(product);
@@ -198,7 +198,7 @@ public class ProductShopServiceImpl implements IProductShopService {
     @Override
     @Transactional
     public ProductResponse updateProduct(ProductRequest productRequest) {
-        Product product = getProductById(productRequest.getProductId(), productRequest.getUsername());
+        Product product = getProductByIdOnShop(productRequest.getProductId(), productRequest.getUsername());
         Category category = categoryShopService.getCategoryShopById(productRequest.getCategoryId(), productRequest.getUsername());
 
         Brand brand = checkBrand(productRequest.getBrandId());
@@ -250,7 +250,7 @@ public class ProductShopServiceImpl implements IProductShopService {
     @Override
     @Transactional
     public ProductResponse updateStatusProduct(Long productId, String username, Status status) {
-        Product product = getProductById(productId, username);
+        Product product = getProductByIdOnShop(productId, username);
 
         if (product.getStatus() == Status.DELETED) {
             throw new IllegalArgumentException("Sản phẩm đã bị xóa trong cửa hàng!");
@@ -287,7 +287,7 @@ public class ProductShopServiceImpl implements IProductShopService {
     @Override
     @Transactional
     public ProductResponse restoreProductById(Long productId, String username) {
-        Product product = getProductById(productId, username);
+        Product product = getProductByIdOnShop(productId, username);
 
         if (product.getStatus() != Status.DELETED) {
             throw new IllegalArgumentException("Sản phẩm chưa bị xóa trong cửa hàng!");
@@ -370,7 +370,8 @@ public class ProductShopServiceImpl implements IProductShopService {
     }
 
 
-    private ProductDTO getProductToDTO(Product product) {
+    @Override
+    public  ProductDTO getProductToDTO(Product product) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         List<ProductVariant> activeProductVariants = product.getProductVariants().stream()
                 .filter(productVariant -> productVariant.getStatus() != Status.DELETED)
@@ -402,7 +403,7 @@ public class ProductShopServiceImpl implements IProductShopService {
     }
 
 
-    private Product getProductById(Long productId, String username) {
+    private Product getProductByIdOnShop(Long productId, String username) {
         Product product = productRepository
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException("Sản phẩm không tồn tại!"));

@@ -24,19 +24,9 @@ public class ProductVariantShopServiceImpl implements IProductVariantShopService
 
 
     @Autowired
-    private AttributeRepository attributeRepository;
-    @Autowired
     private IAttributeShopService attributeService;
     @Autowired
-    private ShopRepository shopRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
     private ProductVariantRepository productVariantRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private CustomerServiceImpl customerService;
     @Autowired
     ModelMapper modelMapper;
 

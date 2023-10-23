@@ -167,4 +167,12 @@ public class ProductServiceImpl implements IProductService {
     }
 
 
+    @Override
+    public Product getProductById(Long productId) {
+        return productRepository
+                .findById(productId)
+                .orElseThrow(() -> new NotFoundException("Sản phẩm không tồn tại!"));
+    }
+
+
 }

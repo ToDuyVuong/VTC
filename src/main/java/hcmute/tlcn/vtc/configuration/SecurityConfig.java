@@ -46,7 +46,9 @@ public class SecurityConfig {
 
     private static final String[] CUSTOMER_ROLE = {
             "/api/customer/**",
+            "/api/favorite-product/**",
             "/api/vendor/register",
+
 
     };
 

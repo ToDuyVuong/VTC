@@ -46,14 +46,23 @@ public class Customer implements UserDetails {
     @Column(name = "role", nullable = false)
     private Set<Role> roles = new HashSet<>();
 
-    public void addRole(Role role) {// Convert the string to the Role enum
-        roles.add(role);
-    }
+
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<Token> tokens;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<FavoriteProduct> favoriteProducts;
+
+
+    public void addRole(Role role) {// Convert the string to the Role enum
+        roles.add(role);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

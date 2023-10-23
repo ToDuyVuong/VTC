@@ -2,6 +2,7 @@ package hcmute.tlcn.vtc.service.user;
 
 import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.entity.Product;
 
 public interface IProductService {
     ProductResponse getProductDetail(Long productId);
@@ -21,4 +22,6 @@ public interface IProductService {
 
 
     ListProductResponse searchProducts(Long shopId, String productName);
+
+    Product getProductById(Long productId);
 }

@@ -83,4 +83,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Page<Product>> findNewestProducts(@Param("status") Status status, Pageable pageable);
 
 
+
+
+
+
 }

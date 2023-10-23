@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.service.vendor;
 
+import hcmute.tlcn.vtc.model.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.dto.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
@@ -39,4 +40,6 @@ public interface IProductShopService {
 
 
     ListProductResponse getListProductResponseSort(List<Product> products, String message, boolean isSort);
+
+    ProductDTO getProductToDTO(Product product);
 }
