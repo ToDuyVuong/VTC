@@ -101,4 +101,17 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Xem danh sách sản phẩm mới nhất.
     - Tim kiếm sản phẩm theo tên.
     - Xem danh sách sản phẩm theo giá.
+
+
+- Yêu thích sản phẩm:
+    - Thêm sản phẩm vào danh sách yêu thích.
+    - Chi tiết sản phẩm yêu thích.
+    - Xem danh sách sản phẩm yêu thích.
+    - Xóa sản phẩm khỏi danh sách yêu thích.
+
+
+- Theo dõi cửa hàng:
+    - Thêm cửa hàng vào danh sách theo dõi.
+    - Xem danh sách cửa hàng theo dõi.
+    - Xóa cửa hàng khỏi danh sách theo dõi.
  

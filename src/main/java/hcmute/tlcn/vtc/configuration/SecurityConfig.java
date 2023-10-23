@@ -48,6 +48,7 @@ public class SecurityConfig {
             "/api/customer/**",
             "/api/favorite-product/**",
             "/api/vendor/register",
+            "/api/followed-shop",
 
 
     };
