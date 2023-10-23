@@ -26,7 +26,7 @@ public class SecurityConfig {
             "/api/customer/forgot-password",
             "/api/customer/reset-password",
             "/api/product/**",
-
+            "/api/shop-detail/shop/**",
 
 
 
@@ -47,8 +47,9 @@ public class SecurityConfig {
     private static final String[] CUSTOMER_ROLE = {
             "/api/customer/**",
             "/api/favorite-product/**",
-            "/api/vendor/register",
-            "/api/followed-shop",
+            "/api/vendor/register/**",
+            "/api/followed-shop/**",
+            "/api/shop-detail/**",
 
 
     };

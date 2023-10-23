@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.repository;
 
 import hcmute.tlcn.vtc.model.entity.Product;
+import hcmute.tlcn.vtc.model.entity.Shop;
 import hcmute.tlcn.vtc.model.extra.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -81,6 +82,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE p.status = :status " +
             "ORDER BY p.createAt DESC")
     Optional<Page<Product>> findNewestProducts(@Param("status") Status status, Pageable pageable);
+
+
 
 
 

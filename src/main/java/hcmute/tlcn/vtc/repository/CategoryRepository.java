@@ -31,6 +31,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findAllByShopCustomerUsernameAndStatus(String username, Status status);
 
 
+    Optional<List<Category>> findAllByShopShopIdAndStatus(Long shopId, Status status);
+
+
+
 
 
 }

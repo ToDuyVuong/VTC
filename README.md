@@ -79,6 +79,8 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Khóa, mở khóa thuộc tính.
     - Xóa thuộc tính.
 
+
+
 - Quản lý sản phẩm từ quyền vendor:
     - Thêm sản phẩm bằng quyền vendor.
     - Xem danh sách sản phẩm của vendor.
@@ -114,4 +116,13 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Thêm cửa hàng vào danh sách theo dõi.
     - Xem danh sách cửa hàng theo dõi.
     - Xóa cửa hàng khỏi danh sách theo dõi.
+
+
+- Xem cửa hàng:
+    - Xem chi tiết cửa hàng.
+    - Xem danh sách sản phẩm của cửa hàng.
+    - Xem danh sách sản phẩm bán chạy của cửa hàng.
+    - Xem danh sách sản phẩm mới nhất của cửa hàng.
+    - Tim kiếm sản phẩm theo tên của cửa hàng.
+    - Xem danh sách sản phẩm theo giá của cửa hàng.
  
