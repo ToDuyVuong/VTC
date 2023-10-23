@@ -2,6 +2,8 @@ package hcmute.tlcn.vtc.repository;
 
 import hcmute.tlcn.vtc.model.entity.Product;
 import hcmute.tlcn.vtc.model.extra.Status;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<List<Product>> findAllByCategoryCategoryIdAndCategoryShopShopIdAndStatus(Long categoryId, Long shopId, Status status);
 
     Optional<List<Product>> findAllByNameContainingAndCategoryShopShopIdAndStatus(String name, Long shopId, Status status);
+    Optional<List<Product>> findAllByNameContainingAndStatus(String name, Status status);
 
 
 //    @Query(value = "SELECT p.* FROM product p " +
@@ -71,6 +74,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<List<Product>> findByPriceRange(@Param("status") Status status,
                                              @Param("minPrice") Long minPrice,
                                              @Param("maxPrice") Long maxPrice);
+
+
+
+    @Query("SELECT p FROM Product p " +
+            "WHERE p.status = :status " +
+            "ORDER BY p.createAt DESC")
+    Optional<Page<Product>> findNewestProducts(@Param("status") Status status, Pageable pageable);
 
 
 }

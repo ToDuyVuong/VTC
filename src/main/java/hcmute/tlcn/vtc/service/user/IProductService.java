@@ -16,7 +16,9 @@ public interface IProductService {
 
     ListProductResponse getListNewProduct(Long shopId);
 
-    ListProductResponse getListProductByPriceRangeOnShop(Long shopId, Long minPrice, Long maxPrice);
+    ListProductResponse getListProductByPriceRange(Long shopId, Long minPrice, Long maxPrice);
 
-    ListProductResponse searchProductsByOnShop(Long shopId, String productName);
+
+
+    ListProductResponse searchProducts(Long shopId, String productName);
 }
