@@ -125,4 +125,11 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Xem danh sách sản phẩm mới nhất của cửa hàng.
     - Tim kiếm sản phẩm theo tên của cửa hàng.
     - Xem danh sách sản phẩm theo giá của cửa hàng.
+
+
+- Quản lý giỏ hàng:
+    - Thêm sản phẩm vào giỏ hàng.
+    - Xem danh sách sản phẩm trong giỏ hàng theo cửa hàng.
+    - Cập nhật số lượng sản phẩm trong giỏ hàng.
+    - Xóa sản phẩm khỏi giỏ hàng.
  

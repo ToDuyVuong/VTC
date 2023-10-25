@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.model.dto;
 
+import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.model.extra.EmailValidator;
 import hcmute.tlcn.vtc.model.extra.Role;
 import jakarta.persistence.*;
@@ -33,30 +34,17 @@ public class CustomerDTO {
     private Set<Role> roles;
 
 
-    public void validate() {
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Tài khoản không được để trống.");
-        }
-
-        if (email == null || email.isEmpty()) {
-            throw new IllegalArgumentException("Email không được để trống.");
-        } else if (!EmailValidator.isValidEmail(email)) {
-            throw new IllegalArgumentException("Email không hợp lệ.");
-        }
-
-        if (fullName == null || fullName.isEmpty()) {
-            throw new IllegalArgumentException("Tên đầy đủ không được để trống.");
-        }
-
-        if (birthday == null) {
-            throw new IllegalArgumentException("Ngày sinh không được để trống.");
-        }
-
-//        if (phone == null || phone.isEmpty()) {
-//            throw new IllegalArgumentException("Số điện thoại không được để trống.");
-//        }
-
-
+    public static CustomerDTO convertEntityToDTO(Customer customer) {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setCustomerId(customer.getCustomerId());
+        customerDTO.setUsername(customer.getUsername());
+        customerDTO.setEmail(customer.getEmail());
+        customerDTO.setGender(customer.isGender());
+        customerDTO.setFullName(customer.getFullName());
+        customerDTO.setBirthday(customer.getBirthday());
+        customerDTO.setRoles(customer.getRoles());
+        return customerDTO;
     }
+
 
 }

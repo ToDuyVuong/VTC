@@ -1,10 +1,10 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
 import hcmute.tlcn.vtc.model.dto.CartDTO;
-import hcmute.tlcn.vtc.model.dto.ProductDTO;
-import hcmute.tlcn.vtc.model.dto.ProductVariantDTO;
+import hcmute.tlcn.vtc.model.dto.user.ListCartByShopDTO;
 import hcmute.tlcn.vtc.model.dto.user.request.CartRequest;
 import hcmute.tlcn.vtc.model.dto.user.response.CartResponse;
+import hcmute.tlcn.vtc.model.dto.user.response.ListCartResponse;
 import hcmute.tlcn.vtc.model.entity.Cart;
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.model.entity.ProductVariant;
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -61,7 +62,7 @@ public class CartServiceImpl implements ICartService {
         try {
             Cart saveCart = cartRepository.save(cart);
 
-            CartDTO cartDTO = mapCartDTO(saveCart);
+            CartDTO cartDTO = CartDTO.convertEntityToDTO(saveCart);
 
             CartResponse response = new CartResponse();
             response.setCartDTO(cartDTO);
@@ -84,16 +85,18 @@ public class CartServiceImpl implements ICartService {
                         request.getProductVariantId(), request.getUsername())
                 .orElseThrow(() -> new NotFoundException("Không tìm thấy sản phẩm trong giỏ hàng."));
 
-        int quantity = request.getQuantity() + cart.getQuantity();
-        checkAndReturnProductVariant(request.getProductVariantId(), quantity);
+        if (request.getQuantity() <= 0) {
+            return deleteCart(cart.getCartId(), request.getUsername());
+        }
+        checkAndReturnProductVariant(request.getProductVariantId(), request.getQuantity());
 
-        cart.setQuantity(quantity);
+        cart.setQuantity(request.getQuantity());
         cart.setUpdateAt(LocalDateTime.now());
 
         try {
             cartRepository.save(cart);
 
-            CartDTO cartDTO = mapCartDTO(cart);
+            CartDTO cartDTO = CartDTO.convertEntityToDTO(cart);
 
             CartResponse response = new CartResponse();
             response.setCartDTO(cartDTO);
@@ -104,22 +107,58 @@ public class CartServiceImpl implements ICartService {
 
             return response;
         } catch (Exception e) {
-            throw new IllegalArgumentException("Cập nhật giỏ hàng thất bại.");
+            throw new IllegalArgumentException("Cập nhật giỏ hàng thất bại." + e.getMessage());
         }
     }
 
 
-    public CartDTO mapCartDTO(Cart cart) {
+    @Override
+    @Transactional
+    public CartResponse deleteCart(Long cartId, String username) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy giỏ hàng."));
+        if (!cart.getCustomer().getUsername().equals(username)) {
+            throw new IllegalArgumentException("Không thể xóa sản phẩm khỏi giỏ hàng của người khác.");
+        }
 
-        ProductDTO productDTO = modelMapper.map(cart.getProductVariant().getProduct(), ProductDTO.class);
-        productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(
-                cart.getProductVariant().getProduct().getProductVariants()));
+        try {
+            cartRepository.delete(cart);
 
-        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
-        cartDTO.setProductDTO(productDTO);
-        cartDTO.setProductVariantDTO(ProductVariantDTO.mapEntityToDTO(cart.getProductVariant()));
+            CartDTO cartDTO = CartDTO.convertEntityToDTO(cart);
+            CartResponse response = new CartResponse();
+            response.setCartDTO(cartDTO);
+            response.setUsername(username);
+            response.setStatus("success");
+            response.setMessage("Xóa sản phẩm khỏi giỏ hàng thành công.");
+            response.setCode(200);
 
-        return cartDTO;
+            return response;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Xóa sản phẩm khỏi giỏ hàng thất bại.");
+        }
+    }
+
+
+
+
+@Override
+    public ListCartResponse getListCartByUsername(String username){
+
+        List<Cart> carts = cartRepository.findAllByCustomerUsernameAndStatus(username, Status.CART)
+                .orElseThrow(() -> new NotFoundException("Giỏ hàng trống."));
+
+
+
+        List<ListCartByShopDTO> listCartByShopDTOs = ListCartByShopDTO.convertToListDTOByShop(carts);
+
+        ListCartResponse response = new ListCartResponse();
+        response.setListCartByShopDTOs(listCartByShopDTOs);
+        response.setCount(carts.size());
+        response.setUsername(username);
+        response.setStatus("ok");
+        response.setMessage("Lấy danh sách giỏ hàng thành công.");
+        response.setCode(200);
+        return response;
     }
 
 

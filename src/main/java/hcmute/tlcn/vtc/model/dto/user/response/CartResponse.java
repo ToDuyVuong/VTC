@@ -11,9 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 public class CartResponse extends ResponseAbstract {
 
+    private String username;
+
     private CartDTO cartDTO;
 
 
-
-    private String username;
 }

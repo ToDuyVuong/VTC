@@ -53,6 +53,13 @@ public class ProductDTO {
         return productDTOs;
     }
 
+    public static ProductDTO convertEntityToDTO(Product product) {
+        ModelMapper modelMapper = new ModelMapper();
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(product.getProductVariants()));
+        return productDTO;
+    }
+
 
 
 

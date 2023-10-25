@@ -43,6 +43,10 @@ public class ShopServiceImpl implements IShopService {
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
         checkEmailAndPhoneAndUsername(request.getEmail(), request.getPhone(), request.getUsername());
 
+        if (shopRepository.existsByName(request.getName())) {
+            throw new IllegalArgumentException("Tên cửa hàng đã được sử dụng!");
+        }
+
         Shop shop = modelMapper.map(request, Shop.class);
         shop.setCustomer(customer);
         shop.setStatus(Status.ACTIVE);

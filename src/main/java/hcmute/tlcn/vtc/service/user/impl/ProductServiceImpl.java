@@ -37,8 +37,7 @@ public class ProductServiceImpl implements IProductService {
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException("Sản phẩm không tồn tại!"));
 
-        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-        productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(product.getProductVariants()));
+        ProductDTO productDTO = ProductDTO.convertEntityToDTO(product);
 
         ProductResponse response = new ProductResponse();
         response.setProductDTO(productDTO);
