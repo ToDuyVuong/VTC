@@ -10,13 +10,11 @@ import lombok.*;
 @AllArgsConstructor
 public class CartRequest {
 
-    private Long cartId;
-
     private String username;
 
     private Long productVariantId;
 
-    private Long quantity;
+    private int quantity;
 
     public void validate() {
 
@@ -24,22 +22,10 @@ public class CartRequest {
             throw new IllegalArgumentException("Mã biến thể cửa sản phẩm không được để trống.");
         }
 
-        if (quantity == null) {
-            throw new IllegalArgumentException("Số lượng không được để trống.");
-        }
-
         if (quantity <= 0) {
-            throw new IllegalArgumentException("Số lượng không hợp lệ.");
+            throw new IllegalArgumentException("Số lượng sản phẩm không hợp lệ.");
         }
     }
 
-    public void validateUpdate() {
-
-        if (cartId == null) {
-            throw new IllegalArgumentException("Mã giỏ hàng không được để trống.");
-        }
-
-        validate();
-    }
 
 }

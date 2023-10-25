@@ -35,6 +35,22 @@ public class ProductVariantDTO {
     private List<AttributeDTO> attributeDTOs;
 
 
+
+    public static ProductVariantDTO mapEntityToDTO(ProductVariant productVariant) {
+        ProductVariantDTO productVariantDTO = new ProductVariantDTO();
+        productVariantDTO.setProductVariantId(productVariant.getProductVariantId());
+        productVariantDTO.setSku(productVariant.getSku());
+        productVariantDTO.setImage(productVariant.getImage());
+        productVariantDTO.setPrice(productVariant.getPrice());
+        productVariantDTO.setQuantity(productVariant.getQuantity());
+        productVariantDTO.setStatus(productVariant.getStatus());
+        productVariantDTO.setAttributeDTOs(AttributeDTO.convertToListDTO(productVariant.getAttributes()));
+        productVariantDTO.setProductId(productVariant.getProduct().getProductId());
+
+        return productVariantDTO;
+    }
+
+
     public static List<ProductVariantDTO> convertToListDTO(List<ProductVariant> productVariants) {
         List<ProductVariantDTO> productVariantDTOs = new ArrayList<>();
 

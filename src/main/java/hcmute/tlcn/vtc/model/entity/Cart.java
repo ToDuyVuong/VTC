@@ -19,11 +19,15 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
-    private Long quantity;
+    private int quantity;
 
     private LocalDateTime createAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    private LocalDateTime updateAt;
+
+    private Status status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

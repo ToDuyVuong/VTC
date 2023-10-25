@@ -20,7 +20,9 @@ public enum Status {
     REFUND("Refund"),
     REFUNDED("Refunded"),
     PAID("Paid"),
-    UNPAID("Unpaid");
+    UNPAID("Unpaid"),
+    CART("Cart"),
+    ORDER("Order");
 
 
     private final String value;
