@@ -139,24 +139,55 @@ public class CartServiceImpl implements ICartService {
     }
 
 
-
-
-@Override
-    public ListCartResponse getListCartByUsername(String username){
-
+    @Override
+    public ListCartResponse getListCartByUsername(String username) {
         List<Cart> carts = cartRepository.findAllByCustomerUsernameAndStatus(username, Status.CART)
                 .orElseThrow(() -> new NotFoundException("Giỏ hàng trống."));
 
+        return getListCartResponse(username, carts, "Lấy danh sách giỏ hàng của khách hàng thành công.");
+    }
 
 
-        List<ListCartByShopDTO> listCartByShopDTOs = ListCartByShopDTO.convertToListDTOByShop(carts);
+    @Override
+    public ListCartResponse getListCartByUsernameAndListCartId(String username, List<Long> cartIds) {
+        List<Cart> carts = cartRepository.findAllByCustomerUsernameAndStatusAndCartIdIn(username, Status.CART, cartIds)
+                .orElseThrow(() -> new NotFoundException("Giỏ hàng trống."));
 
+
+        return getListCartResponse(username, carts, "Lấy danh sách giỏ hàng theo danh sách mã giỏ hàng thành công.");
+    }
+
+
+    @Override
+    @Transactional
+    public ListCartResponse deleteCartByShopId(Long shopId, String username) {
+        List<Cart> carts = cartRepository
+                .findAllByCustomerUsernameAndProductVariantProductCategoryShopShopIdAndStatus(username, shopId, Status.CART)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy giỏ hàng theo cửa hàng."));
+        if (carts.isEmpty()) {
+            throw new NotFoundException("Không tìm thấy giỏ hàng.");
+        }
+
+        try {
+            cartRepository.deleteAll(carts);
+            List<Cart> cartsUpdate = cartRepository.findAllByCustomerUsernameAndStatus(username, Status.CART)
+                    .orElseThrow(() -> new NotFoundException("Giỏ hàng trống."));
+
+            String message = "Xóa giỏ hàng theo cửa hàng thành công.";
+
+            return getListCartResponse(username, cartsUpdate, message);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Xóa giỏ hàng thất bại.");
+        }
+    }
+
+    private ListCartResponse getListCartResponse(String username, List<Cart> carts, String message) {
         ListCartResponse response = new ListCartResponse();
-        response.setListCartByShopDTOs(listCartByShopDTOs);
+        response.setListCartByShopDTOs(ListCartByShopDTO.convertToListDTOByShop(carts));
         response.setCount(carts.size());
         response.setUsername(username);
         response.setStatus("ok");
-        response.setMessage("Lấy danh sách giỏ hàng thành công.");
+        response.setMessage(message);
         response.setCode(200);
         return response;
     }

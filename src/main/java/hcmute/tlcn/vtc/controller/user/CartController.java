@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class CartController {
         return ResponseEntity.ok(cartService.addNewCart(cartRequest));
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<CartResponse> updateCart(@RequestBody CartRequest cartRequest, HttpServletRequest request) {
         String username = (String) request.getAttribute("username");
         cartRequest.setUsername(username);
@@ -51,5 +53,28 @@ public class CartController {
         String username = (String) request.getAttribute("username");
         return ResponseEntity.ok(cartService.getListCartByUsername(username));
     }
+
+
+    @GetMapping("/get-list-by-list-cart-id")
+    public ResponseEntity<ListCartResponse> getListCartByUsernameAndListCartId(@RequestParam List<Long> cartIds,
+                                                                               HttpServletRequest request) {
+        if (cartIds == null || cartIds.isEmpty()) {
+            throw new NotFoundException("Danh sách mã giỏ hàng không hợp lệ!");
+        }
+        String username = (String) request.getAttribute("username");
+
+        return ResponseEntity.ok(cartService.getListCartByUsernameAndListCartId(username, cartIds));
+    }
+
+
+    @DeleteMapping("/delete-by-shop-id/{shopId}")
+    public ResponseEntity<ListCartResponse> deleteCartByShopId(@PathVariable Long shopId, HttpServletRequest request) {
+        if (shopId == null || shopId <= 0) {
+            throw new NotFoundException("Mã cửa hàng không hợp lệ!");
+        }
+        String username = (String) request.getAttribute("username");
+        return ResponseEntity.ok(cartService.deleteCartByShopId(shopId, username));
+    }
+
 
 }
