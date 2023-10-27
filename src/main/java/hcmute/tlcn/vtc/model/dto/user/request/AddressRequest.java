@@ -52,7 +52,7 @@ public class AddressRequest {
             throw new IllegalArgumentException("Số điện thoại không hợp lệ.");
         }
 
-        if (addressDTO.getStatus() == null || !Status.isValidStatus(String.valueOf(addressDTO.getStatus()))) {
+        if (addressDTO.getStatus() == null || Status.isValidStatus(String.valueOf(addressDTO.getStatus()))) {
             throw new IllegalArgumentException("Trạng thái không hợp lệ.");
         }
     }

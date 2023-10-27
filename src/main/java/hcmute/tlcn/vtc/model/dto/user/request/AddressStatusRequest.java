@@ -31,7 +31,7 @@ public class AddressStatusRequest {
             throw new IllegalArgumentException("Trạng thái không được để trống.");
         }
 
-        if (!Status.isValidStatus(String.valueOf(status))) {
+        if (Status.isValidStatus(String.valueOf(status))) {
             throw new IllegalArgumentException("Trạng thái không hợp lệ.");
         }
     }

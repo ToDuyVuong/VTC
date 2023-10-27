@@ -51,11 +51,6 @@ public class RegisterRequest {
             throw new IllegalArgumentException("Ngày sinh không được để trống.");
         }
 
-//        if (phone == null || phone.isEmpty()) {
-//            throw new IllegalArgumentException("Số điện thoại không được để trống.");
-//        }
-
-
     }
 
 

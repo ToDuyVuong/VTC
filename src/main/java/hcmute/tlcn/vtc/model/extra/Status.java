@@ -31,17 +31,13 @@ public enum Status {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public static boolean isValidStatus(String status) {
         for (Status validStatus : Status.values()) {
             if (validStatus.name().equalsIgnoreCase(status)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public static Status fromValue(String value) {

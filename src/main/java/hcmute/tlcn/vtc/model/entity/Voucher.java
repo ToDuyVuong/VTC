@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.model.entity;
 
 import hcmute.tlcn.vtc.model.extra.Status;
+import hcmute.tlcn.vtc.model.extra.VoucherType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -50,11 +51,13 @@ public class Voucher {
 
     private LocalDateTime updateAt;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "voucher_order", joinColumns = @JoinColumn(name = "voucher_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders;
+    private VoucherType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "voucher_order", joinColumns = @JoinColumn(name = "voucher_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
+//    private List<Order> orders;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id")
     private Shop shop;
 

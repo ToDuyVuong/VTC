@@ -71,7 +71,7 @@ public class RegisterShopRequest {
             throw new IllegalArgumentException("Ảnh đại diện không được để trống!");
         }
 
-        if (this.status == null || !Status.isValidStatus(String.valueOf(this.status))) {
+        if (this.status == null || Status.isValidStatus(String.valueOf(this.status))) {
             throw new IllegalArgumentException("Trạng thái không hợp lệ!");
         }
 

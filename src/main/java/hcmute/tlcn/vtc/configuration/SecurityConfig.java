@@ -28,6 +28,9 @@ public class SecurityConfig {
             "/api/product/**",
             "/api/shop-detail/shop/**",
 
+            "/api/payment/**",
+
+
 
             "/v2/api-docs",
             "/v3/api-docs",
@@ -48,6 +51,7 @@ public class SecurityConfig {
             "/api/followed-shop/**",
             "/api/shop-detail/**",
             "/api/cart/**",
+//            "/api/payment/**",
 
 
     };
