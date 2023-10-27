@@ -66,10 +66,10 @@ public class VoucherDTO {
             voucherDTO.setType("Giảm theo phần trăm");
         }
         if (voucher.getType().equals(VoucherType.AMOUNT_SHOP) ||
-                voucher.getType().equals(VoucherType.AMOUNT_SYSTEM)){
+                voucher.getType().equals(VoucherType.AMOUNT_SYSTEM)) {
             voucherDTO.setType("Giảm theo tiền");
         }
-        if (voucher.getType().equals(VoucherType.SHIPPING)){
+        if (voucher.getType().equals(VoucherType.SHIPPING)) {
             voucherDTO.setType("Giảm phí vận chuyển");
         }
 //        if (voucher.getType().equals(VoucherType.FREE_SHIP)){
@@ -81,15 +81,18 @@ public class VoucherDTO {
 
 
     public static List<VoucherDTO> convertToListDTO(List<Voucher> vouchers) {
-        List<VoucherDTO> voucherDTOS = new ArrayList<>();
+        List<VoucherDTO> voucherDTOs = new ArrayList<>();
         for (Voucher voucher : vouchers) {
-            voucherDTOS.add(convertEntityToDTO(voucher));
+            voucherDTOs.add(convertEntityToDTO(voucher));
         }
 
-        voucherDTOS.sort(Comparator.comparing(VoucherDTO::getStartDate).reversed());
+        voucherDTOs.sort(Comparator
+                .comparing(VoucherDTO::getType)
+                .thenComparing(VoucherDTO::getStartDate)
+                .thenComparing(VoucherDTO::getEndDate)
+                .reversed());
 
-
-        return voucherDTOS;
+        return voucherDTOs;
     }
 
     public String generateRandomCode(int length) {

@@ -20,6 +20,9 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
     Optional<Voucher> findByCode(String code);
 
     Optional<Voucher> findByCodeAndShopShopId(String code, Long shopId);
+
+    Optional<List<Voucher>> findAllByStatus(Status status);
+
     Optional<Voucher> findByVoucherIdAndShopShopId(Long voucherId, Long shopId);
 
     Optional<Voucher> findByCodeAndShopShopIdAndStatusNot(String code, Long shopId, Status status);
@@ -27,7 +30,7 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
     Optional<List<Voucher>> findAllByShopShopIdAndStatus(Long shopId, Status status);
 
-    Optional<List<Voucher>>  findAllByCustomerUsernameAndStatusNot(String customer_username, Status status);
+    Optional<List<Voucher>>  findAllByCustomerUsernameAndStatusNot(String username, Status status);
 
     Optional<List<Voucher>> findAllByShopAndStatusNot(Shop shop, Status status);
     Optional<List<Voucher>> findAllByShopNullAndStatusNot(Status status);
@@ -39,6 +42,10 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
     Optional<List<Voucher>> findAllByShopAndStatusNotAndType(Shop shop, Status status, VoucherType type);
 
+    Optional<List<Voucher>> findAllByShopShopIdAndStatusAndType(Long shopId, Status status, VoucherType type);
+
     Optional<List<Voucher>> findAllByShopNullAndStatusNotAndType(Status status, VoucherType type);
+
+    Optional<List<Voucher>> findAllByStatusAndType(Status status, VoucherType type);
 
 }

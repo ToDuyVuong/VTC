@@ -27,6 +27,7 @@ public class SecurityConfig {
             "/api/customer/reset-password",
             "/api/product/**",
             "/api/shop-detail/shop/**",
+            "/api/voucher/**",
 
             "/api/payment/**",
 

@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.controller.user;
+package hcmute.tlcn.vtc.controller;
 
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;

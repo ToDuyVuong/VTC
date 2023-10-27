@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.controller.user;
+package hcmute.tlcn.vtc.controller;
 
 import hcmute.tlcn.vtc.model.data.user.response.ShopDetailResponse;
 import hcmute.tlcn.vtc.service.user.IShopDetailService;
