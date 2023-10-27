@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class VoucherAdminResponse extends ResponseAbstract {
 
-    private String adminName;
+    private String username;
 
     private VoucherDTO voucherDTO;
 

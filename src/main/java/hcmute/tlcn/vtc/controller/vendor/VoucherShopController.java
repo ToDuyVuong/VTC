@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/vendor/shop/voucher")
 @RequiredArgsConstructor
-public class VoucherController {
+public class VoucherShopController {
 
     @Autowired
     private IVoucherShopService voucherShopService;

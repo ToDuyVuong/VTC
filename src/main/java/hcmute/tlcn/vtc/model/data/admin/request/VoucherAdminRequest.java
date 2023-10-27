@@ -88,10 +88,10 @@ public class VoucherAdminRequest {
         if (this.startDate.after(this.endDate)) {
             throw new IllegalArgumentException("Ngày bắt đầu không được sau ngày kết thúc");
         }
-        if(this.startDate.before(new Date())){
+        if (this.startDate.before(new Date())) {
             throw new IllegalArgumentException("Ngày bắt đầu không được trước ngày hiện tại");
         }
-        if(this.endDate.equals(this.startDate)){
+        if (this.endDate.equals(this.startDate)) {
             throw new IllegalArgumentException("Ngày bắt đầu không được trùng ngày kết thúc");
         }
 
@@ -100,36 +100,29 @@ public class VoucherAdminRequest {
     public void validateCreate() {
         validate();
 
-        if(this.type == null || this.type.isEmpty()){
+        if (this.type == null || this.type.isEmpty()) {
             throw new IllegalArgumentException("Loại giảm giá không được để trống");
         }
-        if(!this.type.equals("percent".trim()) && !this.type.equals("money".trim()) && !this.type.equals("shipping".trim())){
+        if (!this.type.equals("percent".trim()) && !this.type.equals("money".trim()) && !this.type.equals("shipping".trim())) {
             throw new IllegalArgumentException("Loại giảm giá không hợp lệ. Loại giảm giá cửa chỉ có thể là percent, money hoặc shipping");
         }
-        if(this.type.equals("percent") && this.discount >= 100){
+        if (this.type.equals("percent") && this.discount >= 100) {
             throw new IllegalArgumentException("Giá trị giảm giá không được lớn hơn hoặc bằng 100%");
         }
-        if(this.type.equals("money")  && this.discount > this.maxDiscount){
+        if (this.type.equals("money") && this.discount > this.maxDiscount) {
             throw new IllegalArgumentException("Giá trị giảm giá không được lớn hơn giá trị giảm giá tối đa");
         }
     }
 
     public void validateUpdate() {
-
-
         if (this.voucherId == null) {
             throw new IllegalArgumentException("Mã giảm giá không được để trống");
         }
 
-        validate();
+        validateCreate();
     }
 
     public static Voucher convertCreateToVoucher(VoucherAdminRequest request) {
-
-        if (request.getType().equals("percent")) {
-
-        }
-
         Voucher voucher = new Voucher();
         voucher.setCode(request.getCode());
         voucher.setName(request.getName());
@@ -145,23 +138,13 @@ public class VoucherAdminRequest {
         voucher.setUpdateAt(LocalDateTime.now());
         voucher.setQuantityUsed(0L);
         voucher.setStatus(Status.ACTIVE);
-
-        if (request.getType().equals("percent")) {
-            voucher.setType(VoucherType.PERCENTAGE_SYSTEM);
-        }
-        if(request.getType().equals("money")){
-            voucher.setType(VoucherType.AMOUNT_SYSTEM);
-        }else {
-            voucher.setType(VoucherType.SHIPPING);
-        }
-
-
+        voucher.setType(convertType(request.getType()));
 
         return voucher;
     }
 
 
-    public static Voucher convertUpdateToVoucher(VoucherAdminRequest request , Voucher voucher) {
+    public static Voucher convertUpdateToVoucher(VoucherAdminRequest request, Voucher voucher) {
         voucher.setName(request.getName());
         voucher.setDescription(request.getDescription());
         voucher.setDiscount(request.getDiscount());
@@ -172,8 +155,21 @@ public class VoucherAdminRequest {
         voucher.setStartDate(request.getStartDate());
         voucher.setEndDate(request.getEndDate());
         voucher.setUpdateAt(LocalDateTime.now());
+        voucher.setType(convertType(request.getType()));
 
         return voucher;
+    }
+
+
+    private static VoucherType convertType(String type) {
+        if (type.equals("percent")) {
+            return VoucherType.PERCENTAGE_SYSTEM;
+        }
+        if(type.equals("money")){
+            return VoucherType.AMOUNT_SYSTEM;
+        }else {
+            return VoucherType.SHIPPING;
+        }
     }
 
 

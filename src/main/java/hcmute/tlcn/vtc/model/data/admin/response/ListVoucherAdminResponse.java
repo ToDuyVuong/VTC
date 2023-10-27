@@ -12,8 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListVoucherAdminResponse extends ResponseAbstract {
-    private Long shopId;
-    private String shopName;
+
+    private String username;
     private int count;
     private List<VoucherDTO> voucherDTOs;
 }

@@ -121,15 +121,10 @@ public class VoucherShopRequest {
             throw new IllegalArgumentException("Mã giảm giá không được để trống");
         }
 
-        validate();
+        validateCreate();
     }
 
     public static Voucher convertCreateToVoucher(VoucherShopRequest request) {
-
-        if (request.getType().equals("percent")) {
-
-        }
-
         Voucher voucher = new Voucher();
         voucher.setCode(request.getCode());
         voucher.setName(request.getName());
@@ -146,11 +141,7 @@ public class VoucherShopRequest {
         voucher.setQuantityUsed(0L);
         voucher.setStatus(Status.ACTIVE);
 
-        if (request.getType().equals("percent")) {
-            voucher.setType(VoucherType.PERCENTAGE_SHOP);
-        } else {
-            voucher.setType(VoucherType.AMOUNT_SHOP);
-        }
+        voucher.setType(convertType(request.getType()));
 
         return voucher;
     }
@@ -167,8 +158,17 @@ public class VoucherShopRequest {
         voucher.setStartDate(request.getStartDate());
         voucher.setEndDate(request.getEndDate());
         voucher.setUpdateAt(LocalDateTime.now());
+        voucher.setType(convertType(request.getType()));
 
         return voucher;
+    }
+
+    private static VoucherType convertType(String type) {
+        if (type.equals("percent")) {
+            return VoucherType.PERCENTAGE_SHOP;
+        } else {
+            return VoucherType.AMOUNT_SHOP;
+        }
     }
 
 

@@ -91,6 +91,9 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
     @Transactional
     public VoucherShopResponse updateVoucher(VoucherShopRequest request, String username) {
         Voucher voucher = getVoucherByCodeAndUsername(request.getCode(), username);
+        if (!voucher.getCode().equals(request.getCode()) && existVoucherCodeOnShop(request.getCode(), voucher.getShop().getShopId())) {
+            throw new IllegalArgumentException("Mã giảm giá đã tồn tại trên cửa hàng này!");
+        }
         VoucherShopRequest.convertUpdateToVoucher(request, voucher);
 
         try {
@@ -125,6 +128,11 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
         }
     }
 
+
+
+    private boolean existVoucherCodeOnShop(String code, Long shopId) {
+        return voucherRepository.existsByCodeAndShopShopId(code, shopId);
+    }
 
     private Shop checkVoucherOnShop(String code, String username) {
         Shop shop = shopService.getShopByUsername(username);

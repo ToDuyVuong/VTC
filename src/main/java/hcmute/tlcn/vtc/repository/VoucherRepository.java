@@ -27,10 +27,18 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
     Optional<List<Voucher>> findAllByShopShopIdAndStatus(Long shopId, Status status);
 
+    Optional<List<Voucher>>  findAllByCustomerUsernameAndStatusNot(String customer_username, Status status);
 
     Optional<List<Voucher>> findAllByShopAndStatusNot(Shop shop, Status status);
+    Optional<List<Voucher>> findAllByShopNullAndStatusNot(Status status);
+
 
     Optional<List<Voucher>> findAllByShopAndStatus(Shop shop, Status status);
+    Optional<List<Voucher>> findAllByShopNullAndStatus(Status status);
+
 
     Optional<List<Voucher>> findAllByShopAndStatusNotAndType(Shop shop, Status status, VoucherType type);
+
+    Optional<List<Voucher>> findAllByShopNullAndStatusNotAndType(Status status, VoucherType type);
+
 }
