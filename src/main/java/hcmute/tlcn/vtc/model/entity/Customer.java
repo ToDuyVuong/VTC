@@ -71,14 +71,6 @@ public class Customer implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    // @Override
-    // public Collection<? extends GrantedAuthority> getAuthorities() {
-    // return roles.stream()
-    // .flatMap(role -> role.getPermissions().stream())
-    // .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
-    // .collect(Collectors.toList());
-    // }
-
     @Override
     public String getPassword() {
         return password;

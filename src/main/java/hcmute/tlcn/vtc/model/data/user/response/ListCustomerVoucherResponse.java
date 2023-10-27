@@ -4,11 +4,16 @@ import hcmute.tlcn.vtc.model.data.dto.VoucherDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
 import lombok.*;
 
+import java.util.List;
+
+
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class VoucherResponse extends ResponseAbstract {
-    private VoucherDTO voucherDTO;
+public class ListCustomerVoucherResponse extends ResponseAbstract {
+    private String username;
+    private int count;
+    private List<VoucherDTO> voucherDTOs;
 }

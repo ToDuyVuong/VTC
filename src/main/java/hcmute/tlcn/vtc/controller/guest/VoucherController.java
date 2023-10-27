@@ -1,9 +1,9 @@
-package hcmute.tlcn.vtc.controller;
+package hcmute.tlcn.vtc.controller.guest;
 
-import hcmute.tlcn.vtc.model.data.user.response.ListVoucherResponse;
-import hcmute.tlcn.vtc.model.data.user.response.VoucherResponse;
+import hcmute.tlcn.vtc.model.data.guest.ListVoucherResponse;
+import hcmute.tlcn.vtc.model.data.guest.VoucherResponse;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
-import hcmute.tlcn.vtc.service.user.IVoucherService;
+import hcmute.tlcn.vtc.service.guest.IVoucherService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

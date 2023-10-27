@@ -1,7 +1,6 @@
 package hcmute.tlcn.vtc.model.entity;
 
 import hcmute.tlcn.vtc.model.extra.Status;
-import hcmute.tlcn.vtc.payment.PaymentStrategy;
 import jakarta.persistence.*;
 import lombok.*;
 

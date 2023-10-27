@@ -134,4 +134,34 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Cập nhật số lượng sản phẩm trong giỏ hàng.
     - Xóa sản phẩm khỏi giỏ hàng.
     - Xóa sản phẩm khỏi giỏ hàng theo cửa hàng.
+
+
+- Quản lý mã giảm giá từ quyền admin:
+    - Thêm mã giảm giá bằng quyền admin.
+    - Xem danh sách mã giảm giá theo trạng thái và loại mã giảm giá.
+    - Xem chi tiết mã giảm giá.
+    - Cập nhật thông tin mã giảm giá.
+    - Chọn trạng thái mã giảm giá.
+
+
+- Quản lý mã giảm giá từ quyền vendor:
+    - Thêm mã giảm giá bằng quyền vendor.
+    - Xem danh sách mã giảm giá theo trạng thái, loại mã giảm giá và cửa hàng.
+    - Xem chi tiết mã giảm giá.
+    - Cập nhật thông tin mã giảm giá.
+    - Chọn trạng thái mã giảm giá.
+
+
+- Xem mã giảm giá từ quyền khách:
+    - Xem danh sách mã giảm giá theo trạng thái và loại mã giảm giá.
+    - Xem chi tiết mã giảm giá.
+    - Xem danh sách mã giảm giá theo cửa hàng.
+    - Xem danh sách tất cả mã giảm giá.
+
+
+- Quản lý mã giảm giá từ quyền customer:
+    - Lưu mã giảm giá.
+    - Xem danh sách mã giảm giá đã lưu.
+
+
  

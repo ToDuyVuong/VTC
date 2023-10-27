@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.user.response;
+package hcmute.tlcn.vtc.model.data.guest;
 
 import hcmute.tlcn.vtc.model.data.dto.CategoryDTO;
 import hcmute.tlcn.vtc.model.data.dto.ProductDTO;

@@ -13,7 +13,7 @@ import hcmute.tlcn.vtc.model.entity.Product;
 import hcmute.tlcn.vtc.repository.FavoriteProductRepository;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.service.user.IFavoriteProductService;
-import hcmute.tlcn.vtc.service.user.IProductService;
+import hcmute.tlcn.vtc.service.guest.IProductService;
 import hcmute.tlcn.vtc.service.vendor.IProductShopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

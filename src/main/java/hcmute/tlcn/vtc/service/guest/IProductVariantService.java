@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.service.user;
+package hcmute.tlcn.vtc.service.guest;
 
 public interface IProductVariantService {
 }

@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.user.response;
+package hcmute.tlcn.vtc.model.data.guest;
 
 import hcmute.tlcn.vtc.model.data.dto.VoucherDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;

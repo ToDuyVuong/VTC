@@ -1,7 +1,7 @@
-package hcmute.tlcn.vtc.controller;
+package hcmute.tlcn.vtc.controller.guest;
 
-import hcmute.tlcn.vtc.model.data.user.response.ShopDetailResponse;
-import hcmute.tlcn.vtc.service.user.IShopDetailService;
+import hcmute.tlcn.vtc.model.data.guest.ShopDetailResponse;
+import hcmute.tlcn.vtc.service.guest.IShopDetailService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

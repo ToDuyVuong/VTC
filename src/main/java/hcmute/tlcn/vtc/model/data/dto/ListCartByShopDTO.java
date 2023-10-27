@@ -1,6 +1,5 @@
-package hcmute.tlcn.vtc.model.data.user;
+package hcmute.tlcn.vtc.model.data.dto;
 
-import hcmute.tlcn.vtc.model.data.dto.CartDTO;
 import hcmute.tlcn.vtc.model.entity.Cart;
 import hcmute.tlcn.vtc.model.entity.Shop;
 import lombok.*;

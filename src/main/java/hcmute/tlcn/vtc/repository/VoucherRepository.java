@@ -6,6 +6,7 @@ import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,13 +31,15 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
     Optional<List<Voucher>> findAllByShopShopIdAndStatus(Long shopId, Status status);
 
-    Optional<List<Voucher>>  findAllByCustomerUsernameAndStatusNot(String username, Status status);
+    Optional<List<Voucher>> findAllByCustomerUsernameAndStatusNot(String username, Status status);
 
     Optional<List<Voucher>> findAllByShopAndStatusNot(Shop shop, Status status);
+
     Optional<List<Voucher>> findAllByShopNullAndStatusNot(Status status);
 
 
     Optional<List<Voucher>> findAllByShopAndStatus(Shop shop, Status status);
+
     Optional<List<Voucher>> findAllByShopNullAndStatus(Status status);
 
 
@@ -47,5 +50,13 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
     Optional<List<Voucher>> findAllByShopNullAndStatusNotAndType(Status status, VoucherType type);
 
     Optional<List<Voucher>> findAllByStatusAndType(Status status, VoucherType type);
+
+    @Query(value = "SELECT v.* FROM voucher v " +
+            "JOIN customer_voucher cv ON v.voucher_id = cv.voucher_id " +
+            "JOIN customer c ON cv.customer_id = c.customer_id " +
+            "WHERE c.username = ?1 AND cv.used = ?2", nativeQuery = true)
+    Optional<List<Voucher>> getAllByUsernameAndUsed(String username, boolean used);
+
+
 
 }

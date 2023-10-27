@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.payment;
+package hcmute.tlcn.vtc.vnpay.payment;
 
 import hcmute.tlcn.vtc.model.data.dto.OrderDTO;
 

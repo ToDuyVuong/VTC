@@ -1,7 +1,7 @@
-package hcmute.tlcn.vtc.service.user.impl;
+package hcmute.tlcn.vtc.service.guest.impl;
 
 import hcmute.tlcn.vtc.repository.ProductVariantRepository;
-import hcmute.tlcn.vtc.service.user.IProductVariantService;
+import hcmute.tlcn.vtc.service.guest.IProductVariantService;
 import hcmute.tlcn.vtc.service.vendor.IAttributeShopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

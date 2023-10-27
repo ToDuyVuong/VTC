@@ -1,9 +1,9 @@
-package hcmute.tlcn.vtc.service.user.impl;
+package hcmute.tlcn.vtc.service.guest.impl;
 
 import hcmute.tlcn.vtc.model.data.dto.CategoryDTO;
 import hcmute.tlcn.vtc.model.data.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.data.dto.ShopDTO;
-import hcmute.tlcn.vtc.model.data.user.response.ShopDetailResponse;
+import hcmute.tlcn.vtc.model.data.guest.ShopDetailResponse;
 import hcmute.tlcn.vtc.model.entity.Category;
 import hcmute.tlcn.vtc.model.entity.Product;
 import hcmute.tlcn.vtc.model.entity.Shop;
@@ -12,7 +12,7 @@ import hcmute.tlcn.vtc.repository.CategoryRepository;
 import hcmute.tlcn.vtc.repository.FollowedShopRepository;
 import hcmute.tlcn.vtc.repository.ProductRepository;
 import hcmute.tlcn.vtc.repository.ShopRepository;
-import hcmute.tlcn.vtc.service.user.IShopDetailService;
+import hcmute.tlcn.vtc.service.guest.IShopDetailService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

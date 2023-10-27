@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
 import hcmute.tlcn.vtc.model.data.dto.CartDTO;
-import hcmute.tlcn.vtc.model.data.user.ListCartByShopDTO;
+import hcmute.tlcn.vtc.model.data.dto.ListCartByShopDTO;
 import hcmute.tlcn.vtc.model.data.user.request.CartRequest;
 import hcmute.tlcn.vtc.model.data.user.response.CartResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListCartResponse;
@@ -13,7 +13,7 @@ import hcmute.tlcn.vtc.repository.CartRepository;
 import hcmute.tlcn.vtc.repository.ProductVariantRepository;
 import hcmute.tlcn.vtc.service.user.ICartService;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
-import hcmute.tlcn.vtc.service.user.IProductService;
+import hcmute.tlcn.vtc.service.guest.IProductService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

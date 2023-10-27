@@ -1,14 +1,13 @@
-package hcmute.tlcn.vtc.service.user.impl;
+package hcmute.tlcn.vtc.service.guest.impl;
 
 import hcmute.tlcn.vtc.model.data.dto.VoucherDTO;
-import hcmute.tlcn.vtc.model.data.user.response.ListVoucherResponse;
-import hcmute.tlcn.vtc.model.data.user.response.VoucherResponse;
+import hcmute.tlcn.vtc.model.data.guest.ListVoucherResponse;
+import hcmute.tlcn.vtc.model.data.guest.VoucherResponse;
 import hcmute.tlcn.vtc.model.entity.Voucher;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.repository.VoucherRepository;
-import hcmute.tlcn.vtc.service.user.ICustomerService;
-import hcmute.tlcn.vtc.service.user.IVoucherService;
+import hcmute.tlcn.vtc.service.guest.IVoucherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +20,6 @@ public class VoucherServiceImpl implements IVoucherService {
 
     @Autowired
     private VoucherRepository voucherRepository;
-    @Autowired
-    private ICustomerService customerService;
 
 
 
@@ -72,7 +69,8 @@ public class VoucherServiceImpl implements IVoucherService {
 
 
 
-    private VoucherResponse voucherResponse(Voucher voucher) {
+    @Override
+    public VoucherResponse voucherResponse(Voucher voucher) {
         VoucherResponse response = new VoucherResponse();
         response.setVoucherDTO(VoucherDTO.convertEntityToDTO(voucher));
         response.setMessage("Lấy mã giảm giá thành công.");
@@ -80,7 +78,8 @@ public class VoucherServiceImpl implements IVoucherService {
         return response;
     }
 
-    private ListVoucherResponse listVoucherResponse(List<Voucher> vouchers, String message) {
+    @Override
+    public ListVoucherResponse listVoucherResponse(List<Voucher> vouchers, String message) {
         ListVoucherResponse response = new ListVoucherResponse();
         response.setVoucherDTOs(VoucherDTO.convertToListDTO(vouchers));
         response.setMessage(message);
@@ -88,13 +87,12 @@ public class VoucherServiceImpl implements IVoucherService {
         response.setCount(vouchers.size());
         response.setCode(200);
 
-
-
         return response;
     }
 
 
-    private Voucher getVoucherById(Long voucherId) {
+    @Override
+    public Voucher getVoucherById(Long voucherId) {
         Voucher voucher = voucherRepository.findById(voucherId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy mã giảm giá!"));
         if (voucher.getStatus().equals(Status.DELETED)) {
