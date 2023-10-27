@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.controller.user;
 
-import hcmute.tlcn.vtc.model.dto.user.response.FollowedShopResponse;
-import hcmute.tlcn.vtc.model.dto.user.response.ListFollowedShopResponse;
+import hcmute.tlcn.vtc.model.data.user.response.FollowedShopResponse;
+import hcmute.tlcn.vtc.model.data.user.response.ListFollowedShopResponse;
 import hcmute.tlcn.vtc.service.user.IFollowedShopService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

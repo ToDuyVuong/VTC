@@ -1,11 +1,9 @@
 package hcmute.tlcn.vtc.controller.user;
 
-import hcmute.tlcn.vtc.controller.vendor.ProductShopController;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.service.user.IProductService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

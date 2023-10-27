@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user;
 
-import hcmute.tlcn.vtc.model.dto.user.response.ShopDetailResponse;
+import hcmute.tlcn.vtc.model.data.user.response.ShopDetailResponse;
 
 public interface IShopDetailService {
 

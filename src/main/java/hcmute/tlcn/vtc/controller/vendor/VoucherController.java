@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
-import hcmute.tlcn.vtc.model.dto.vendor.request.VoucherShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListVoucherShopResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.VoucherShopResponse;
+import hcmute.tlcn.vtc.model.data.vendor.request.VoucherShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListVoucherShopResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.VoucherShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.service.vendor.IVoucherShopService;

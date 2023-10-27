@@ -1,13 +1,11 @@
 package hcmute.tlcn.vtc.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import hcmute.tlcn.vtc.model.dto.vendor.request.CategoryShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.request.CategoryShopRequest;
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter

@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
 
-import hcmute.tlcn.vtc.model.dto.vendor.request.RegisterShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.request.UpdateShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ShopResponse;
+import hcmute.tlcn.vtc.model.data.vendor.request.RegisterShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.request.UpdateShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.ShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.vendor.IShopService;
 import jakarta.servlet.http.HttpServletRequest;

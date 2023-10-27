@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
 
-import hcmute.tlcn.vtc.model.dto.vendor.request.ProductRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.request.ProductRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.vendor.IProductShopService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;

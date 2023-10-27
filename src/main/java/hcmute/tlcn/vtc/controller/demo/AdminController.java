@@ -1,5 +1,5 @@
 package hcmute.tlcn.vtc.controller.demo;
-import hcmute.tlcn.vtc.model.dto.user.request.ChangePasswordRequest;
+import hcmute.tlcn.vtc.model.data.user.request.ChangePasswordRequest;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

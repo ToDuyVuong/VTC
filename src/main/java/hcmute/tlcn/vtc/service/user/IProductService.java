@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.user;
 
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.model.entity.Product;
 
 public interface IProductService {

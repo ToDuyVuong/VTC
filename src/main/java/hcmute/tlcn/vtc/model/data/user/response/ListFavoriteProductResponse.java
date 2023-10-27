@@ -1,0 +1,24 @@
+package hcmute.tlcn.vtc.model.data.user.response;
+
+import hcmute.tlcn.vtc.model.data.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.data.dto.FavoriteProductDTO;
+import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
+import lombok.*;
+
+import java.util.List;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class ListFavoriteProductResponse extends ResponseAbstract {
+
+    int count;
+
+    private CustomerDTO customerDTO;
+
+    private List<FavoriteProductDTO> favoriteProductDTOs;
+
+
+}

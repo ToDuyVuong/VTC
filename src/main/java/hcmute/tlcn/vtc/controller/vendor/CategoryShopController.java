@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
-import hcmute.tlcn.vtc.model.dto.admin.response.AllCategoryAdminResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.request.CategoryShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListCategoryShopResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.CategoryShopResponse;
+import hcmute.tlcn.vtc.model.data.admin.response.AllCategoryAdminResponse;
+import hcmute.tlcn.vtc.model.data.vendor.request.CategoryShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListCategoryShopResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.CategoryShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.admin.ICategoryAdminService;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;

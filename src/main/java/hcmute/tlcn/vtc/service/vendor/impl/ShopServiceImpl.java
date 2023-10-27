@@ -1,10 +1,10 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
-import hcmute.tlcn.vtc.model.dto.CustomerDTO;
-import hcmute.tlcn.vtc.model.dto.ShopDTO;
-import hcmute.tlcn.vtc.model.dto.vendor.request.UpdateShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.request.RegisterShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ShopResponse;
+import hcmute.tlcn.vtc.model.data.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.data.dto.ShopDTO;
+import hcmute.tlcn.vtc.model.data.vendor.request.UpdateShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.request.RegisterShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.ShopResponse;
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.model.entity.Shop;
 import hcmute.tlcn.vtc.model.extra.Role;

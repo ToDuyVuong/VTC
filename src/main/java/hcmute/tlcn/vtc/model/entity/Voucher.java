@@ -61,4 +61,8 @@ public class Voucher {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 }

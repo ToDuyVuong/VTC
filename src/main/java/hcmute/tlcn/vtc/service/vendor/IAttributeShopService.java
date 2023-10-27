@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.vendor;
 
-import hcmute.tlcn.vtc.model.dto.vendor.request.AttributeRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.AttributeResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListAttributeResponse;
+import hcmute.tlcn.vtc.model.data.vendor.request.AttributeRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.AttributeResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListAttributeResponse;
 import hcmute.tlcn.vtc.model.entity.Attribute;
 
 import java.util.List;

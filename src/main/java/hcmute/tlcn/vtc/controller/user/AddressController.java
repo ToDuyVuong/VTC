@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.controller.user;
 
-import hcmute.tlcn.vtc.model.dto.user.request.AddressRequest;
-import hcmute.tlcn.vtc.model.dto.user.request.AddressStatusRequest;
-import hcmute.tlcn.vtc.model.dto.user.response.AddressResponse;
-import hcmute.tlcn.vtc.model.dto.user.response.ListAddressResponse;
+import hcmute.tlcn.vtc.model.data.user.request.AddressRequest;
+import hcmute.tlcn.vtc.model.data.user.request.AddressStatusRequest;
+import hcmute.tlcn.vtc.model.data.user.response.AddressResponse;
+import hcmute.tlcn.vtc.model.data.user.response.ListAddressResponse;
 import hcmute.tlcn.vtc.service.user.IAddressService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

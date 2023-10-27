@@ -1,0 +1,15 @@
+package hcmute.tlcn.vtc.model.data.vendor.response;
+
+import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
+import hcmute.tlcn.vtc.model.data.dto.ShopDTO;
+import lombok.*;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class ShopResponse extends ResponseAbstract {
+
+    private ShopDTO shopDTO;
+}

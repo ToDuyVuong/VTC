@@ -1,9 +1,8 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.dto.ProductDTO;
-import hcmute.tlcn.vtc.model.dto.ProductVariantDTO;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListProductResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.data.dto.ProductDTO;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.model.entity.Product;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.ProductRepository;

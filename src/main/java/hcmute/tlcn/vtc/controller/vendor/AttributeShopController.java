@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
 
-import hcmute.tlcn.vtc.model.dto.vendor.request.AttributeRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.AttributeResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListAttributeResponse;
+import hcmute.tlcn.vtc.model.data.vendor.request.AttributeRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.AttributeResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListAttributeResponse;
 import hcmute.tlcn.vtc.service.vendor.IAttributeShopService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

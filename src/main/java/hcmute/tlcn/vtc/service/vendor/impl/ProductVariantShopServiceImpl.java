@@ -1,11 +1,10 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
-import hcmute.tlcn.vtc.model.dto.vendor.request.ProductVariantRequest;
+import hcmute.tlcn.vtc.model.data.vendor.request.ProductVariantRequest;
 import hcmute.tlcn.vtc.model.entity.Attribute;
 import hcmute.tlcn.vtc.model.entity.ProductVariant;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.*;
-import hcmute.tlcn.vtc.service.user.impl.CustomerServiceImpl;
 import hcmute.tlcn.vtc.service.vendor.IAttributeShopService;
 import hcmute.tlcn.vtc.service.vendor.IProductVariantShopService;
 import lombok.RequiredArgsConstructor;

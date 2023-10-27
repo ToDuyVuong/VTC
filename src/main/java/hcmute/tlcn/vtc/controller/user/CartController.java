@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.controller.user;
 
-import hcmute.tlcn.vtc.model.dto.user.request.CartRequest;
-import hcmute.tlcn.vtc.model.dto.user.response.CartResponse;
-import hcmute.tlcn.vtc.model.dto.user.response.ListCartResponse;
+import hcmute.tlcn.vtc.model.data.user.request.CartRequest;
+import hcmute.tlcn.vtc.model.data.user.response.CartResponse;
+import hcmute.tlcn.vtc.model.data.user.response.ListCartResponse;
 import hcmute.tlcn.vtc.service.user.ICartService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;

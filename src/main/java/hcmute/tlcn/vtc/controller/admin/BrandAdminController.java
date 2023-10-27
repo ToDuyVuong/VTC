@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.controller.admin;
 
-import hcmute.tlcn.vtc.model.dto.admin.request.BrandAdminRequest;
-import hcmute.tlcn.vtc.model.dto.admin.response.AllBrandAdminResponse;
-import hcmute.tlcn.vtc.model.dto.admin.response.BrandAdminResponse;
+import hcmute.tlcn.vtc.model.data.admin.request.BrandAdminRequest;
+import hcmute.tlcn.vtc.model.data.admin.response.AllBrandAdminResponse;
+import hcmute.tlcn.vtc.model.data.admin.response.BrandAdminResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.admin.IBrandAdminService;
 import jakarta.servlet.http.HttpServletRequest;

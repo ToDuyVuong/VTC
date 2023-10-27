@@ -2,16 +2,20 @@ package hcmute.tlcn.vtc.repository;
 
 import hcmute.tlcn.vtc.model.entity.Shop;
 import hcmute.tlcn.vtc.model.entity.Voucher;
+import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
     boolean existsByCodeAndShopShopId(String code, Long shopId);
+
+    boolean existsByCodeAndShopNull(String code);
 
     Optional<Voucher> findByCode(String code);
 
@@ -25,6 +29,7 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
 
     Optional<List<Voucher>> findAllByShopAndStatusNot(Shop shop, Status status);
+
     Optional<List<Voucher>> findAllByShopAndStatus(Shop shop, Status status);
 
     Optional<List<Voucher>> findAllByShopAndStatusNotAndType(Shop shop, Status status, VoucherType type);

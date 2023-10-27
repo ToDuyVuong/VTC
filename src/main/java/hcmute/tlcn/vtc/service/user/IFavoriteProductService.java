@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.user;
 
-import hcmute.tlcn.vtc.model.dto.user.response.FavoriteProductResponse;
-import hcmute.tlcn.vtc.model.dto.user.response.ListFavoriteProductResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.data.user.response.FavoriteProductResponse;
+import hcmute.tlcn.vtc.model.data.user.response.ListFavoriteProductResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface IFavoriteProductService {

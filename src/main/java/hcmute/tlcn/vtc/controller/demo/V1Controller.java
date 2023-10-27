@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.controller.demo;
 
-import hcmute.tlcn.vtc.model.dto.user.request.ProfileCustomerRequest;
-import hcmute.tlcn.vtc.model.dto.user.response.ProfileCustomerResponse;
+import hcmute.tlcn.vtc.model.data.user.request.ProfileCustomerRequest;
+import hcmute.tlcn.vtc.model.data.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;

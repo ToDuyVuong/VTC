@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.vendor;
 
-import hcmute.tlcn.vtc.model.dto.vendor.request.CategoryShopRequest;
-import hcmute.tlcn.vtc.model.dto.vendor.response.ListCategoryShopResponse;
-import hcmute.tlcn.vtc.model.dto.vendor.response.CategoryShopResponse;
+import hcmute.tlcn.vtc.model.data.vendor.request.CategoryShopRequest;
+import hcmute.tlcn.vtc.model.data.vendor.response.ListCategoryShopResponse;
+import hcmute.tlcn.vtc.model.data.vendor.response.CategoryShopResponse;
 import hcmute.tlcn.vtc.model.entity.Category;
 import hcmute.tlcn.vtc.model.extra.Status;
 
