@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.dto;
+package hcmute.tlcn.vtc.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

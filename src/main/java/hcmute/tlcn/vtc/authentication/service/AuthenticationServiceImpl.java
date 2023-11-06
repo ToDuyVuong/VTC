@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.authentication.service;
 
 import hcmute.tlcn.vtc.authentication.response.LogoutResponse;
 import hcmute.tlcn.vtc.authentication.response.RefreshTokenResponse;
-import hcmute.tlcn.vtc.model.data.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.dto.CustomerDTO;
 import hcmute.tlcn.vtc.model.entity.Token;
 import hcmute.tlcn.vtc.model.extra.TokenType;
 import hcmute.tlcn.vtc.repository.TokenRepository;

@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.guest.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.CategoryDTO;
-import hcmute.tlcn.vtc.model.data.dto.ProductDTO;
-import hcmute.tlcn.vtc.model.data.dto.ShopDTO;
+import hcmute.tlcn.vtc.model.dto.CategoryDTO;
+import hcmute.tlcn.vtc.model.dto.ProductDTO;
+import hcmute.tlcn.vtc.model.dto.ShopDTO;
 import hcmute.tlcn.vtc.model.data.guest.ShopDetailResponse;
 import hcmute.tlcn.vtc.model.entity.Category;
 import hcmute.tlcn.vtc.model.entity.Product;

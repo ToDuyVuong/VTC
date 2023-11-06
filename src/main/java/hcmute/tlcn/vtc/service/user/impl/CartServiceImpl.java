@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.CartDTO;
-import hcmute.tlcn.vtc.model.data.dto.ListCartByShopDTO;
+import hcmute.tlcn.vtc.model.dto.CartDTO;
+import hcmute.tlcn.vtc.model.dto.ListCartByShopDTO;
 import hcmute.tlcn.vtc.model.data.user.request.CartRequest;
 import hcmute.tlcn.vtc.model.data.user.response.CartResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListCartResponse;

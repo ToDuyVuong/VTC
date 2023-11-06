@@ -19,23 +19,12 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
 
-    private int quantity;
-
-    private float price;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    private LocalDateTime createAt;
-
-    private LocalDateTime updateAt;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    // @JsonIgnore
     private Order order;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
 }

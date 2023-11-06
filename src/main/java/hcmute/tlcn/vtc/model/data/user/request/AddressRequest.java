@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.model.data.user.request;
 
-import hcmute.tlcn.vtc.model.data.dto.AddressDTO;
+import hcmute.tlcn.vtc.model.dto.AddressDTO;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 

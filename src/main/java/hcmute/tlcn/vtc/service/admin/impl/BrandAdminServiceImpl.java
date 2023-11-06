@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.admin.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.BrandDTO;
+import hcmute.tlcn.vtc.model.dto.BrandDTO;
 import hcmute.tlcn.vtc.model.data.admin.request.BrandAdminRequest;
 import hcmute.tlcn.vtc.model.data.admin.response.AllBrandAdminResponse;
 import hcmute.tlcn.vtc.model.data.admin.response.BrandAdminResponse;

@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.ProductDTO;
-import hcmute.tlcn.vtc.model.data.dto.ProductVariantDTO;
+import hcmute.tlcn.vtc.model.dto.ProductDTO;
+import hcmute.tlcn.vtc.model.dto.ProductVariantDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;

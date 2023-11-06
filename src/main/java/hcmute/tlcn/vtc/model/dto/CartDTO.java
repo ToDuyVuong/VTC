@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.dto;
+package hcmute.tlcn.vtc.model.dto;
 
 import hcmute.tlcn.vtc.model.entity.Cart;
 import lombok.*;
@@ -37,7 +37,7 @@ public class CartDTO {
         cartDTO.setQuantity(cart.getQuantity());
         cartDTO.setProductId(productDTO.getProductId());
         cartDTO.setProductName(productDTO.getName());
-        cartDTO.setProductVariantDTO(ProductVariantDTO.mapEntityToDTO(cart.getProductVariant()));
+        cartDTO.setProductVariantDTO(ProductVariantDTO.convertEntityToDTO(cart.getProductVariant()));
         cartDTO.setUpdateAt(cart.getUpdateAt());
 
         return cartDTO;
@@ -51,7 +51,7 @@ public class CartDTO {
             cartDTO.setCartId(cart.getCartId());
             cartDTO.setQuantity(cart.getQuantity());
             cartDTO.setUpdateAt(cart.getUpdateAt());
-            cartDTO.setProductVariantDTO(ProductVariantDTO.mapEntityToDTO(cart.getProductVariant()));
+            cartDTO.setProductVariantDTO(ProductVariantDTO.convertEntityToDTO(cart.getProductVariant()));
 
             cartDTO.setProductId(cart.getProductVariant().getProduct().getProductId());
             cartDTO.setProductName(cart.getProductVariant().getProduct().getName());

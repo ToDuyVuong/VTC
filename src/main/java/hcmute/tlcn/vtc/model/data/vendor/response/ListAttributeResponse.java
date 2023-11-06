@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.model.data.vendor.response;
 
 
-import hcmute.tlcn.vtc.model.data.dto.AttributeDTO;
+import hcmute.tlcn.vtc.model.dto.AttributeDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
 import lombok.*;
 

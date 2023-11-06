@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.admin.impl;
 
 import hcmute.tlcn.vtc.model.data.admin.response.ListVoucherAdminResponse;
-import hcmute.tlcn.vtc.model.data.dto.VoucherDTO;
+import hcmute.tlcn.vtc.model.dto.VoucherDTO;
 import hcmute.tlcn.vtc.model.data.admin.request.VoucherAdminRequest;
 import hcmute.tlcn.vtc.model.data.admin.response.VoucherAdminResponse;
 import hcmute.tlcn.vtc.model.entity.Customer;

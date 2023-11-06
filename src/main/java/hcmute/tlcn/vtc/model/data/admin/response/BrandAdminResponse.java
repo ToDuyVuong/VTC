@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.model.data.admin.response;
 
-import hcmute.tlcn.vtc.model.data.dto.BrandDTO;
+import hcmute.tlcn.vtc.model.dto.BrandDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
 import lombok.*;
 

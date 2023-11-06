@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.AddressDTO;
-import hcmute.tlcn.vtc.model.data.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.dto.AddressDTO;
+import hcmute.tlcn.vtc.model.dto.CustomerDTO;
 import hcmute.tlcn.vtc.model.data.user.request.AddressRequest;
 import hcmute.tlcn.vtc.model.data.user.request.AddressStatusRequest;
 import hcmute.tlcn.vtc.model.data.user.response.AddressResponse;

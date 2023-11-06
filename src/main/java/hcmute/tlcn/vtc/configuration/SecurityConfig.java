@@ -52,6 +52,8 @@ public class SecurityConfig {
             "/api/followed-shop/**",
             "/api/shop-detail/**",
             "/api/cart/**",
+            "/api/order/**",
+
 //            "/api/payment/**",
 
 

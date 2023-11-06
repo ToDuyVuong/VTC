@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.dto.CustomerDTO;
 import hcmute.tlcn.vtc.model.data.user.request.ChangePasswordRequest;
 import hcmute.tlcn.vtc.model.data.user.request.ForgotPasswordRequest;
 import hcmute.tlcn.vtc.model.data.user.request.ProfileCustomerRequest;

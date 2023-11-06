@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.MailDTO;
+import hcmute.tlcn.vtc.model.dto.MailDTO;
 import hcmute.tlcn.vtc.model.data.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.service.user.ICustomerService;

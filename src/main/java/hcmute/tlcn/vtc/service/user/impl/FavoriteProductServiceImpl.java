@@ -1,9 +1,9 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.CustomerDTO;
-import hcmute.tlcn.vtc.model.data.dto.FavoriteProductDTO;
-import hcmute.tlcn.vtc.model.data.dto.ProductDTO;
-import hcmute.tlcn.vtc.model.data.dto.ProductVariantDTO;
+import hcmute.tlcn.vtc.model.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.dto.FavoriteProductDTO;
+import hcmute.tlcn.vtc.model.dto.ProductDTO;
+import hcmute.tlcn.vtc.model.dto.ProductVariantDTO;
 import hcmute.tlcn.vtc.model.data.user.response.FavoriteProductResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListFavoriteProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;

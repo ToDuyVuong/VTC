@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.model.data.user.response;
 
-import hcmute.tlcn.vtc.model.data.dto.FollowedShopDTO;
+import hcmute.tlcn.vtc.model.dto.FollowedShopDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.guest.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.VoucherDTO;
+import hcmute.tlcn.vtc.model.dto.VoucherDTO;
 import hcmute.tlcn.vtc.model.data.guest.ListVoucherResponse;
 import hcmute.tlcn.vtc.model.data.guest.VoucherResponse;
 import hcmute.tlcn.vtc.model.entity.Voucher;

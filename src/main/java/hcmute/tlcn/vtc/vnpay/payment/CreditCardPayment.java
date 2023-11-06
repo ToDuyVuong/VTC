@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.vnpay.payment;
 
-import hcmute.tlcn.vtc.model.data.dto.OrderDTO;
+import hcmute.tlcn.vtc.model.dto.OrderDTO;
 
 public class CreditCardPayment implements PaymentStrategy {
     @Override

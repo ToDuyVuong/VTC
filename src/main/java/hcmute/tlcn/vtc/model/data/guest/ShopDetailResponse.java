@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.model.data.guest;
 
-import hcmute.tlcn.vtc.model.data.dto.CategoryDTO;
-import hcmute.tlcn.vtc.model.data.dto.ProductDTO;
-import hcmute.tlcn.vtc.model.data.dto.ShopDTO;
+import hcmute.tlcn.vtc.model.dto.CategoryDTO;
+import hcmute.tlcn.vtc.model.dto.ProductDTO;
+import hcmute.tlcn.vtc.model.dto.ShopDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
 import lombok.*;
 

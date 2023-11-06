@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.dto;
+package hcmute.tlcn.vtc.model.dto;
 
 import hcmute.tlcn.vtc.model.entity.FollowedShop;
 import lombok.*;

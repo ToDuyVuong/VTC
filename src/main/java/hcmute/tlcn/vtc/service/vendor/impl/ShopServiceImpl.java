@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.CustomerDTO;
-import hcmute.tlcn.vtc.model.data.dto.ShopDTO;
+import hcmute.tlcn.vtc.model.dto.CustomerDTO;
+import hcmute.tlcn.vtc.model.dto.ShopDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.UpdateShopRequest;
 import hcmute.tlcn.vtc.model.data.vendor.request.RegisterShopRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.ShopResponse;

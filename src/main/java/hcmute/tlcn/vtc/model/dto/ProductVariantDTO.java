@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.dto;
+package hcmute.tlcn.vtc.model.dto;
 
 import hcmute.tlcn.vtc.model.entity.ProductVariant;
 import hcmute.tlcn.vtc.model.extra.Status;
@@ -34,7 +34,7 @@ public class ProductVariantDTO {
 
 
 
-    public static ProductVariantDTO mapEntityToDTO(ProductVariant productVariant) {
+    public static ProductVariantDTO convertEntityToDTO(ProductVariant productVariant) {
         ProductVariantDTO productVariantDTO = new ProductVariantDTO();
         productVariantDTO.setProductVariantId(productVariant.getProductVariantId());
         productVariantDTO.setSku(productVariant.getSku());

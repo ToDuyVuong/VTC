@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.AttributeDTO;
+import hcmute.tlcn.vtc.model.dto.AttributeDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.AttributeRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.AttributeResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListAttributeResponse;

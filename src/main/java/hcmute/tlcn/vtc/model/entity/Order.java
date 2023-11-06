@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -23,6 +24,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private Date orderDate;
+
     private LocalDateTime createAt;
 
     private LocalDateTime updateAt;
@@ -35,19 +38,26 @@ public class Order {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "payment_id")
-    // private Payment payment;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<VoucherOrder> voucherOrders;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "voucher_id")
-    private Voucher voucher;
-
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private Review review;
-
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
+
+    private String note;
+
+    private String paymentMethod;
+
+    private String shippingMethod;
+
+    private int count;
+
+    private Long discount;
+
+    private String paymentTotal;
+
+
+
 
 
 

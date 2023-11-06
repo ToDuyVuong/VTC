@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.dto;
+package hcmute.tlcn.vtc.model.dto;
 
 import hcmute.tlcn.vtc.model.entity.Category;
 import hcmute.tlcn.vtc.model.extra.Status;

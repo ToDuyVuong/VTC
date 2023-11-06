@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.FollowedShopDTO;
+import hcmute.tlcn.vtc.model.dto.FollowedShopDTO;
 import hcmute.tlcn.vtc.model.data.user.response.FollowedShopResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListFollowedShopResponse;
 import hcmute.tlcn.vtc.model.entity.*;

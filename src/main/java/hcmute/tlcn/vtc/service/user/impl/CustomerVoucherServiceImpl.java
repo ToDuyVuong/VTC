@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.dto.VoucherDTO;
+import hcmute.tlcn.vtc.model.dto.VoucherDTO;
 import hcmute.tlcn.vtc.model.data.user.response.CustomerVoucherResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListCustomerVoucherResponse;
 import hcmute.tlcn.vtc.model.entity.CustomerVoucher;
