@@ -2,8 +2,11 @@ package hcmute.tlcn.vtc.shippingstrategy;
 
 public class GiaoHangHoaTocShipping implements IShipping{
     @Override
-    public long calculateShippingCost(long total) {
-        return 50000;
+    public long calculateShippingCost(Long total) {
+        if (total >= 500000) {
+            return 0;
+        }
+        return 40000;
     }
 }
 

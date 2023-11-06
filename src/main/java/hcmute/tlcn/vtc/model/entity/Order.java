@@ -30,9 +30,15 @@ public class Order {
 
     private int count;
 
+    private Long shopId;
+
+    private String shopName;
+
     private Long totalPrice;
 
     private Long discount;
+
+    private Long shippingFee;
 
     private String paymentMethod;
 
@@ -57,14 +63,6 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
-
-
-
-
-
-
-
-
 
 
 }

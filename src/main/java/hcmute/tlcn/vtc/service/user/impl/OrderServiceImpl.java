@@ -1,12 +1,19 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
+import hcmute.tlcn.vtc.model.data.user.request.CreateOrderUpdateRequest;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.model.dto.OrderDTO;
-import hcmute.tlcn.vtc.model.dto.OrderItemDTO;
 import hcmute.tlcn.vtc.model.entity.*;
 import hcmute.tlcn.vtc.model.extra.Status;
+import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.repository.OrderRepository;
+import hcmute.tlcn.vtc.service.admin.IVoucherAdminService;
 import hcmute.tlcn.vtc.service.user.*;
+import hcmute.tlcn.vtc.service.vendor.IVoucherShopService;
+import hcmute.tlcn.vtc.shippingstrategy.GiaoHangHoaTocShipping;
+import hcmute.tlcn.vtc.shippingstrategy.GiaoHangNhanhShipping;
+import hcmute.tlcn.vtc.shippingstrategy.GiaoHangTietKiemShipping;
+import hcmute.tlcn.vtc.shippingstrategy.IShipping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +37,91 @@ public class OrderServiceImpl implements IOrderService {
     private final ICustomerService customerService;
     @Autowired
     private final IAddressService addressService;
+    @Autowired
+    private final IVoucherShopService voucherShopService;
+    @Autowired
+    private final IVoucherAdminService voucherSystemService;
 
 
     @Override
     public OrderResponse createOrder(String username, List<Long> cartIds) {
-       Order order = createTemporaryOrder(username, cartIds);
+        Order order = createTemporaryOrder(username, cartIds);
         return orderResponse(username, order, "Tạo đơn hàng mới thành công.", true);
+    }
+
+
+    @Override
+    public OrderResponse createOrderUpdate(CreateOrderUpdateRequest request) {
+        Order order = createTemporaryOrderUpdate(request);
+
+
+        return orderResponse(request.getUsername(), order, "Cập nhật đơn hàng thành công.", false);
+    }
+
+
+    private Order createTemporaryOrderUpdate(CreateOrderUpdateRequest request) {
+        Order order = createTemporaryOrder(request.getUsername(), request.getCartIds());
+
+
+        if (request.getAddressId() != null) {
+            order.setAddress(addressService.getAddressByIdAndUsername(request.getAddressId(), request.getUsername()));
+        }
+
+//        order.setPaymentMethod(request.getPaymentMethod());
+
+        if (request.getShippingMethod().equals(order.getShippingMethod())) {
+            order.setShippingMethod(request.getShippingMethod());
+            order.setShippingFee( calculateShippingFee(order.getShippingMethod(), order.getTotalPrice()));
+        }
+
+        if (request.getNote().isEmpty()) {
+            order.setNote(request.getNote());
+        }
+
+        if (request.getVoucherShopId() != null) {
+            Long discount = calculateVoucher(request.getVoucherShopId(), order.getShopId(), order.getTotalPrice(), true);
+            order.setDiscount(discount+ order.getDiscount());
+        }
+
+        if (request.getVoucherSystemId() != null) {
+            Long discount = calculateVoucher(request.getVoucherSystemId(), null, order.getTotalPrice(), false);
+            order.setDiscount(discount+ order.getDiscount());
+        }
+
+        order.setPaymentTotal(order.getTotalPrice() + order.getShippingFee() - order.getDiscount());
+        order.setTotalPrice(order.getTotalPrice());
+
+        return order;
+    }
+
+    private Long calculateVoucher( Long voucherId, Long shopId, Long totalPrice, boolean isShop) {
+        Voucher voucher;
+        if (isShop) {
+            voucher = voucherShopService.checkVoucherShop(voucherId, shopId);
+        } else {
+            voucher = voucherSystemService.checkVoucherSystem(voucherId);
+        }
+
+        if (voucher.getType().equals(VoucherType.SHIPPING)) {
+            return voucher.getDiscount();
+        }
+
+        if (voucher.getType().equals(VoucherType.PERCENTAGE_SHOP)) {
+            return voucher.getDiscount() * totalPrice / 100;
+        }
+        return voucher.getDiscount();
+    }
+
+
+
+    private Long calculateShippingFee(String shippingMethod, Long totalPrice) {
+        IShipping shippingStrategy = null;
+        if (shippingMethod.equals("GHTK")) {
+            shippingStrategy = new GiaoHangTietKiemShipping();
+        } else {
+            shippingStrategy = new GiaoHangHoaTocShipping();
+        }
+        return shippingStrategy.calculateShippingCost(totalPrice);
     }
 
     private Order createTemporaryOrder(String username, List<Long> cartIds) {
@@ -46,6 +132,13 @@ public class OrderServiceImpl implements IOrderService {
         Long totalPrice = getTotalPrice(orderItems);
         Long discount = 0L;
 
+        IShipping shippingStrategy = new GiaoHangNhanhShipping();
+        Long shippingFee = shippingStrategy.calculateShippingCost(totalPrice);
+
+        Long totalPayment = totalPrice + shippingFee - discount;
+        Long shopId = orderItems.get(0).getCart().getProductVariant().getProduct().getCategory().getShop().getShopId();
+        String shopName = orderItems.get(0).getCart().getProductVariant().getProduct().getCategory().getShop().getName();
+
         Order order = new Order();
         order.setCustomer(customer);
         order.setOrderItems(orderItems);
@@ -55,16 +148,17 @@ public class OrderServiceImpl implements IOrderService {
         order.setVoucherOrders(null);
         order.setPaymentMethod("COD");
         order.setShippingMethod("GHN");
-        order.setPaymentTotal(order.getTotalPrice());
+        order.setPaymentTotal(totalPayment);
         order.setDiscount(discount);
-        order.setPaymentTotal(totalPrice - discount);
         order.setNote(null);
         order.setOrderDate(new Date());
         order.setOrderItems(orderItems);
         order.setCount(getTotalCount(orderItems));
+        order.setShopId(shopId);
+        order.setShopName(shopName);
+        order.setShippingFee(shippingFee);
         return order;
     }
-
 
 
     private OrderResponse orderResponse(String username, Order order, String message, boolean created) {
@@ -81,7 +175,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
 
-    private Long getTotalPrice (List<OrderItem> orderItems) {
+    private Long getTotalPrice(List<OrderItem> orderItems) {
         long totalPrice = 0L;
         for (OrderItem orderItem : orderItems) {
             totalPrice += orderItem.getCart().getProductVariant().getPrice() * orderItem.getCart().getQuantity();
@@ -89,7 +183,7 @@ public class OrderServiceImpl implements IOrderService {
         return totalPrice;
     }
 
-    private int getTotalCount (List<OrderItem> orderItems) {
+    private int getTotalCount(List<OrderItem> orderItems) {
         int count = 0;
         for (OrderItem orderItem : orderItems) {
             count += orderItem.getCart().getQuantity();

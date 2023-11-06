@@ -3,6 +3,7 @@ package hcmute.tlcn.vtc.service.admin;
 import hcmute.tlcn.vtc.model.data.admin.request.VoucherAdminRequest;
 import hcmute.tlcn.vtc.model.data.admin.response.ListVoucherAdminResponse;
 import hcmute.tlcn.vtc.model.data.admin.response.VoucherAdminResponse;
+import hcmute.tlcn.vtc.model.entity.Voucher;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,4 +26,6 @@ public interface IVoucherAdminService{
 
     @Transactional
     VoucherAdminResponse updateStatusVoucherAdmin(Long voucherId, Status status, String username);
+
+    Voucher checkVoucherSystem(Long voucherId);
 }

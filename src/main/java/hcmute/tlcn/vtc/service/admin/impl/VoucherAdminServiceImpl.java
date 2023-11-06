@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -133,6 +134,28 @@ public class VoucherAdminServiceImpl implements IVoucherAdminService {
         }
     }
 
+
+    @Override
+    public Voucher checkVoucherSystem(Long voucherId) {
+        Voucher voucher = getVoucherByVoucherId(voucherId);
+
+        if(voucher.getStartDate().before(new Date())){
+            throw new IllegalArgumentException("Mã giảm giá chưa có hiệu lực!");
+        }
+        if (voucher.getEndDate().after(new Date())) {
+            throw new IllegalArgumentException("Mã giảm giá đã hết hạn!");
+        }
+
+        if (voucher.getStatus() == Status.DELETED) {
+            throw new IllegalArgumentException("Mã giảm giá đã bị xóa!");
+        }
+
+        if (voucher.getQuantityUsed().equals(voucher.getQuantity())) {
+            throw new IllegalArgumentException("Mã giảm giá đã hết lượt sử dụng!");
+        }
+
+        return voucher;
+    }
 
 
 

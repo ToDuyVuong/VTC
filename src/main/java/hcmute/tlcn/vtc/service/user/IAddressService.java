@@ -19,4 +19,6 @@ public interface IAddressService {
     ListAddressResponse getAllAddress(String username);
 
     Address getAddressActiveByUsername(String username);
+
+    Address getAddressByIdAndUsername(Long addressId, String username);
 }

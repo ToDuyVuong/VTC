@@ -27,9 +27,15 @@ public class OrderDTO {
 
     private int count;
 
+    private Long shopId;
+
+    private String shopName;
+
     private Long totalPrice;
 
     private Long discount;
+
+    private Long shippingFee;
 
     private Long paymentTotal;
 
@@ -51,11 +57,14 @@ public class OrderDTO {
         orderDTO.setPaymentMethod(order.getPaymentMethod());
         orderDTO.setShippingMethod(order.getShippingMethod());
         orderDTO.setCount(order.getCount());
+        orderDTO.setShopId(order.getShopId());
+        orderDTO.setShopName(order.getShopName());
         orderDTO.setDiscount(order.getDiscount());
         orderDTO.setPaymentTotal(order.getPaymentTotal());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setOrderDate(order.getOrderDate());
         orderDTO.setTotalPrice(order.getTotalPrice());
+        orderDTO.setShippingFee(order.getShippingFee());
 
         orderDTO.setOrderItemDTOs(OrderItemDTO.convertListEntityToListDTO(order.getOrderItems()));
         orderDTO.setAddressDTO(AddressDTO.convertEntityToDTO(order.getAddress()));

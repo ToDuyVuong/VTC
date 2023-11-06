@@ -203,6 +203,21 @@ public class AddressServiceImpl implements IAddressService {
     }
 
 
+    @Override
+    public Address getAddressByIdAndUsername(Long addressId, String username) {
+        Address address = addressRepository.findByAddressIdAndCustomerUsername(addressId, username)
+                .orElseThrow(() -> new NotFoundException("Mã địa chỉ không tồn tại."));
+        if (address == null) {
+            throw new NotFoundException("Khách hàng chưa có địa chỉ nào sẳn sàng.");
+        }
+        if (address.getStatus().equals(Status.DELETED)) {
+            throw new NotFoundException("Địa chỉ đã bị xóa.");
+        }
+
+        return address;
+    }
+
+
     private Address checkAddress(Long addressId, String username) {
 
         Address address = addressRepository.findById(addressId)

@@ -8,12 +8,14 @@ import hcmute.tlcn.vtc.model.entity.Shop;
 import hcmute.tlcn.vtc.model.entity.Voucher;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
+import hcmute.tlcn.vtc.repository.ShopRepository;
 import hcmute.tlcn.vtc.repository.VoucherRepository;
 import hcmute.tlcn.vtc.service.vendor.IVoucherShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,6 +27,8 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
 
     @Autowired
     private ShopServiceImpl shopService;
+    @Autowired
+    private ShopRepository shopRepository;
 
 
     @Override
@@ -51,7 +55,6 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
 
         return voucherShopResponse(voucher, "Lấy mã giảm giá thành công.", "ok");
     }
-
 
 
     @Override
@@ -110,8 +113,8 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
     public VoucherShopResponse updateStatusVoucher(Long voucherId, Status status, String username) {
         Voucher voucher = getVoucherByVoucherIdAndUsername(voucherId, username);
 
-        if(status != Status.ACTIVE && status != Status.INACTIVE && status != Status.DELETED && status != Status.CANCEL){
-                throw new IllegalArgumentException("Trạng thái không hợp lệ!");
+        if (status != Status.ACTIVE && status != Status.INACTIVE && status != Status.DELETED && status != Status.CANCEL) {
+            throw new IllegalArgumentException("Trạng thái không hợp lệ!");
         }
 
         if (voucher.getStatus() == Status.DELETED) {
@@ -128,6 +131,28 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
         }
     }
 
+
+    @Override
+    public Voucher checkVoucherShop(Long voucherId, Long shopId) {
+        Voucher voucher = getVoucherByVoucherIdAndShopId(voucherId, shopId);
+
+        if (voucher.getStartDate().before(new Date())) {
+            throw new IllegalArgumentException("Mã giảm giá chưa có hiệu lực!");
+        }
+        if (voucher.getEndDate().after(new Date())) {
+            throw new IllegalArgumentException("Mã giảm giá đã hết hạn!");
+        }
+
+        if (voucher.getStatus() == Status.DELETED) {
+            throw new IllegalArgumentException("Mã giảm giá đã bị xóa!");
+        }
+
+        if (voucher.getQuantityUsed().equals(voucher.getQuantity())) {
+            throw new IllegalArgumentException("Mã giảm giá đã hết lượt sử dụng!");
+        }
+
+        return voucher;
+    }
 
 
     private boolean existVoucherCodeOnShop(String code, Long shopId) {
@@ -147,6 +172,22 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
     private Voucher getVoucherByCodeAndUsername(String code, String username) {
         Shop shop = shopService.getShopByUsername(username);
         Voucher voucher = voucherRepository.findByCodeAndShopShopId(code, shop.getShopId())
+                .orElseThrow(() -> new IllegalArgumentException("Mã giảm giá không tồn tại!"));
+        if (voucher == null) {
+            throw new IllegalArgumentException("Mã giảm giá không tồn tại!");
+        }
+        if (voucher.getStatus() == Status.DELETED) {
+            throw new IllegalArgumentException("Mã giảm giá đã bị xóa!");
+        }
+
+        return voucher;
+    }
+
+
+    private Voucher getVoucherByVoucherIdAndShopId(Long voucherId, Long shopId) {
+        Shop shop = shopRepository.findById(shopId)
+                .orElseThrow(() -> new IllegalArgumentException("Cửa hàng không tồn tại!"));
+        Voucher voucher = voucherRepository.findByVoucherIdAndShopShopId(voucherId, shop.getShopId())
                 .orElseThrow(() -> new IllegalArgumentException("Mã giảm giá không tồn tại!"));
         if (voucher == null) {
             throw new IllegalArgumentException("Mã giảm giá không tồn tại!");
