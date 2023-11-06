@@ -17,6 +17,8 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     Optional<Cart> findByProductVariantProductVariantIdAndCustomerUsername(Long productVariantId, String username);
 
+    Optional<Cart> findByCustomerUsernameAndCartId(String username, Long cartId);
+
     Optional<List<Cart>> findAllByCustomerUsername(String username);
 
     Optional<Cart> findByCartIdAndCustomerUsername(Long cartId, String username);
@@ -25,5 +27,5 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     Optional<List<Cart>> findAllByCustomerUsernameAndStatusAndCartIdIn(String username, Status status, List<Long> cartIds);
 
-    Optional<List<Cart>>findAllByCustomerUsernameAndProductVariantProductCategoryShopShopIdAndStatus(String username, Long shopId, Status status);
+    Optional<List<Cart>> findAllByCustomerUsernameAndProductVariantProductCategoryShopShopIdAndStatus(String username, Long shopId, Status status);
 }

@@ -157,6 +157,27 @@ public class CartServiceImpl implements ICartService {
         return getListCartResponse(username, carts, "Lấy danh sách giỏ hàng theo danh sách mã giỏ hàng thành công.");
     }
 
+    @Override
+    public List<Cart> getListCartByUsernameAndIds(String username, List<Long> cartIds) {
+        List<Cart> carts = cartRepository.findAllByCustomerUsernameAndStatusAndCartIdIn(username, Status.CART, cartIds)
+                .orElseThrow(() -> new NotFoundException("Giỏ hàng trống."));
+
+
+        return carts;
+    }
+
+
+    @Override
+    public Cart getCartByUserNameAndId(String username, Long cartId) {
+        Cart cart = cartRepository.findByCustomerUsernameAndCartId(username, cartId)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy giỏ hàng."));
+        if(cart == null){
+            throw new NotFoundException("Không tìm thấy giỏ hàng.");
+        }
+
+
+        return cart;
+    }
 
     @Override
     @Transactional

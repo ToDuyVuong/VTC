@@ -25,10 +25,10 @@ public class VoucherOrderDTO {
 
     public static VoucherOrderDTO convertEntityToDTO(VoucherOrder voucherOrder){
         VoucherOrderDTO voucherOrderDTO = new VoucherOrderDTO();
-        voucherOrderDTO.setVoucherOrderId(voucherOrder.getVoucherOrderId());
+//        voucherOrderDTO.setVoucherOrderId(voucherOrder.getVoucherOrderId());
         voucherOrderDTO.setVoucherId(voucherOrder.getVoucher().getVoucherId());
         voucherOrderDTO.setVoucherName(voucherOrder.getVoucher().getName());
-        voucherOrderDTO.setOrderId(voucherOrder.getOrder().getOrderId());
+//        voucherOrderDTO.setOrderId(voucherOrder.getOrder().getOrderId());
         return voucherOrderDTO;
 
     }

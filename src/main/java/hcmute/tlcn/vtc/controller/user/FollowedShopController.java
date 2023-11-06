@@ -25,7 +25,6 @@ public class FollowedShopController {
             throw new IllegalArgumentException("Mã cửa hàng không được để trống!");
         }
         String username = (String) request.getAttribute("username");
-
         FollowedShopResponse response = followedShopService.addNewFollowedShop(shopId, username);
         return ResponseEntity.ok(response);
     }

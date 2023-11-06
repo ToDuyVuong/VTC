@@ -26,6 +26,20 @@ public class Order {
 
     private Date orderDate;
 
+    private String note;
+
+    private int count;
+
+    private Long totalPrice;
+
+    private Long discount;
+
+    private String paymentMethod;
+
+    private Long paymentTotal;
+
+    private String shippingMethod;
+
     private LocalDateTime createAt;
 
     private LocalDateTime updateAt;
@@ -44,17 +58,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
-    private String note;
 
-    private String paymentMethod;
-
-    private String shippingMethod;
-
-    private int count;
-
-    private Long discount;
-
-    private String paymentTotal;
 
 
 

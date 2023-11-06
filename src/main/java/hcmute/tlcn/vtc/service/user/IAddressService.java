@@ -4,6 +4,7 @@ import hcmute.tlcn.vtc.model.data.user.request.AddressRequest;
 import hcmute.tlcn.vtc.model.data.user.request.AddressStatusRequest;
 import hcmute.tlcn.vtc.model.data.user.response.AddressResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListAddressResponse;
+import hcmute.tlcn.vtc.model.entity.Address;
 
 public interface IAddressService {
     AddressResponse addNewAddress(AddressRequest request);
@@ -16,4 +17,6 @@ public interface IAddressService {
     AddressResponse updateStatusAddress(AddressStatusRequest request);
 
     ListAddressResponse getAllAddress(String username);
+
+    Address getAddressActiveByUsername(String username);
 }

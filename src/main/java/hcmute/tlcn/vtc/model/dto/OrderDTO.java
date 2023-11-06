@@ -27,9 +27,11 @@ public class OrderDTO {
 
     private int count;
 
+    private Long totalPrice;
+
     private Long discount;
 
-    private String paymentTotal;
+    private Long paymentTotal;
 
     private Status status;
 
@@ -42,9 +44,9 @@ public class OrderDTO {
     private Date orderDate;
 
 
-    public static OrderDTO convertEntityToDTO(Order order) {
+    public static OrderDTO convertEntityToDTOCreate(Order order) {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setOrderId(order.getOrderId());
+//        orderDTO.setOrderId(order.getOrderId());
         orderDTO.setNote(order.getNote());
         orderDTO.setPaymentMethod(order.getPaymentMethod());
         orderDTO.setShippingMethod(order.getShippingMethod());
@@ -53,6 +55,7 @@ public class OrderDTO {
         orderDTO.setPaymentTotal(order.getPaymentTotal());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setOrderDate(order.getOrderDate());
+        orderDTO.setTotalPrice(order.getTotalPrice());
 
         orderDTO.setOrderItemDTOs(OrderItemDTO.convertListEntityToListDTO(order.getOrderItems()));
         orderDTO.setAddressDTO(AddressDTO.convertEntityToDTO(order.getAddress()));

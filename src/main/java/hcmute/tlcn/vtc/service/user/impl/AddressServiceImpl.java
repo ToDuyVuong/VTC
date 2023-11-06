@@ -190,6 +190,19 @@ public class AddressServiceImpl implements IAddressService {
         return response;
     }
 
+
+    @Override
+    public Address getAddressActiveByUsername(String username) {
+        Address address = addressRepository.findFirstByCustomerUsernameAndStatus(username, Status.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("Khách hàng chưa có địa chỉ nào."));
+        if (address == null) {
+            throw new NotFoundException("Khách hàng chưa có địa chỉ nào sẳn sàng.");
+        }
+
+        return address;
+    }
+
+
     private Address checkAddress(Long addressId, String username) {
 
         Address address = addressRepository.findById(addressId)
@@ -205,6 +218,8 @@ public class AddressServiceImpl implements IAddressService {
 
         return address;
     }
+
+
 
     private String setMessageUpdateStatus(Status status, String fullName) {
         if (status.equals(Status.DELETED)) {
