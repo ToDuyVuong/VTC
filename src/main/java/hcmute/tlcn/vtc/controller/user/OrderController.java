@@ -32,11 +32,12 @@ public class OrderController {
     }
 
     @GetMapping("/create-update")
-    public ResponseEntity<OrderResponse> createOrderUpdate(@RequestBody CreateOrderUpdateRequest request,
+    public ResponseEntity<OrderResponse> createOrderUpdate(CreateOrderUpdateRequest request,
                                                            HttpServletRequest requestHttp) {
 
         String username = (String) requestHttp.getAttribute("username");
         request.setUsername(username);
+//        System.out.println(request);
         request.validate();
         return ResponseEntity.ok(orderService.createOrderUpdate(request));
 

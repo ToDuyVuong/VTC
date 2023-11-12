@@ -88,8 +88,8 @@ public class VoucherShopRequest {
         if (this.startDate.after(this.endDate)) {
             throw new IllegalArgumentException("Ngày bắt đầu không được sau ngày kết thúc");
         }
-        if(this.startDate.before(new Date())){
-            throw new IllegalArgumentException("Ngày bắt đầu không được trước ngày hiện tại");
+        if(this.startDate.after(new Date())){
+            throw new IllegalArgumentException("Ngày bắt đầu không được sau ngày hiện tại");
         }
         if(this.endDate.equals(this.startDate)){
             throw new IllegalArgumentException("Ngày bắt đầu không được trùng ngày kết thúc");

@@ -164,4 +164,13 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Xem danh sách mã giảm giá đã lưu.
 
 
+- Đặt hàng:
+  - Tạo đơn hàng tạm thời với mã giỏ hàng.
+  - Cập nhật đơn hàng tạm thời với:
+    - Thông tin địa chỉ nhận hàng.
+    - Thông tin mã giảm giá.
+    - Thông tin phương thức thanh toán.
+    - Thông tin phương thức vận chuyển.
+    - Thông tin ghi chú.
+ 
  

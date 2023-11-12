@@ -26,19 +26,19 @@ public class CreateOrderUpdateRequest {
             throw new IllegalArgumentException("Giỏ hàng không được để trống!");
         }
 
-        if (paymentMethod == null || paymentMethod.isEmpty()) {
-            throw new IllegalArgumentException("Phương thức thanh toán không được để trống!");
-        }
-        if (!paymentMethod.equals("COD") ){
-            throw new IllegalArgumentException("Phương thức thanh toán không hợp lệ! Hiện tại chỉ hỗ trợ COD.");
-        }
-
-        if (shippingMethod == null || shippingMethod.isEmpty()) {
-            throw new IllegalArgumentException("Phương thức vận chuyển không được để trống!");
-        }
-        if (!shippingMethod.equals("GHN") && !shippingMethod.equals("GHTK") && !shippingMethod.equals("EXPRESS")) {
-            throw new IllegalArgumentException("Phương thức vận chuyển không hợp lệ! Hiện tại chỉ hỗ trợ GHN, GHTK và EXPRESS.");
-        }
+//        if (paymentMethod == null || paymentMethod.isEmpty()) {
+//            throw new IllegalArgumentException("Phương thức thanh toán không được để trống!");
+//        }
+//        if (!paymentMethod.equals("COD") ){
+//            throw new IllegalArgumentException("Phương thức thanh toán không hợp lệ! Hiện tại chỉ hỗ trợ COD.");
+//        }
+//
+//        if (shippingMethod == null || shippingMethod.isEmpty()) {
+//            throw new IllegalArgumentException("Phương thức vận chuyển không được để trống!");
+//        }
+//        if (!shippingMethod.equals("GHN") && !shippingMethod.equals("GHTK") && !shippingMethod.equals("EXPRESS")) {
+//            throw new IllegalArgumentException("Phương thức vận chuyển không hợp lệ! Hiện tại chỉ hỗ trợ GHN, GHTK và EXPRESS.");
+//        }
     }
 
 }

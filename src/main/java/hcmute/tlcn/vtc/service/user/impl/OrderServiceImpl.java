@@ -63,7 +63,7 @@ public class OrderServiceImpl implements IOrderService {
         Order order = createTemporaryOrder(request.getUsername(), request.getCartIds());
 
 
-        if (request.getAddressId() != null) {
+        if (request.getAddressId() != null && request.getAddressId().equals(order.getAddress().getAddressId())) {
             order.setAddress(addressService.getAddressByIdAndUsername(request.getAddressId(), request.getUsername()));
         }
 
@@ -74,18 +74,19 @@ public class OrderServiceImpl implements IOrderService {
             order.setShippingFee( calculateShippingFee(order.getShippingMethod(), order.getTotalPrice()));
         }
 
-        if (request.getNote().isEmpty()) {
+        if (!request.getNote().isEmpty()) {
             order.setNote(request.getNote());
         }
 
         if (request.getVoucherShopId() != null) {
+
             Long discount = calculateVoucher(request.getVoucherShopId(), order.getShopId(), order.getTotalPrice(), true);
-            order.setDiscount(discount+ order.getDiscount());
+            order.setDiscount(order.getDiscount() + discount);
         }
 
         if (request.getVoucherSystemId() != null) {
             Long discount = calculateVoucher(request.getVoucherSystemId(), null, order.getTotalPrice(), false);
-            order.setDiscount(discount+ order.getDiscount());
+            order.setDiscount(order.getDiscount() + discount);
         }
 
         order.setPaymentTotal(order.getTotalPrice() + order.getShippingFee() - order.getDiscount());
@@ -125,7 +126,11 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     private Order createTemporaryOrder(String username, List<Long> cartIds) {
+
         Customer customer = customerService.getCustomerByUsername(username);
+
+        checkListCartSameShop(username, cartIds);
+
         List<OrderItem> orderItems = orderItemService.createOrderItems(username, cartIds);
         Address address = addressService.getAddressActiveByUsername(username);
 
@@ -189,6 +194,13 @@ public class OrderServiceImpl implements IOrderService {
             count += orderItem.getCart().getQuantity();
         }
         return count;
+    }
+
+    private void checkListCartSameShop(String username, List<Long> cartIds) {
+        boolean check = cartService.checkCartsSameShop(username, cartIds);
+        if(!check){
+            throw new IllegalArgumentException("Các sản phẩm không thuộc cùng một cửa hàng.");
+        }
     }
 
 

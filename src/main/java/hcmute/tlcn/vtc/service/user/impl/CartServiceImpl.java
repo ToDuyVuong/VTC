@@ -202,6 +202,28 @@ public class CartServiceImpl implements ICartService {
         }
     }
 
+
+    @Override
+    public boolean checkCartsSameShop(String username, List<Long> cartIds){
+
+       List<Cart> carts  = getListCartByUsernameAndIds(username, cartIds);
+
+        if (!carts.isEmpty()) {
+            // Kiểm tra xem số lượng cửa hàng (shop) khác nhau trong danh sách các cart
+            long distinctShopCount = carts.stream()
+                    .map(cart -> cart.getProductVariant().getProduct().getCategory().getShop().getShopId())
+                    .distinct()
+                    .count();
+
+            // Nếu có nhiều hơn một cửa hàng, nghĩa là các cart không thuộc cùng một shop
+            return distinctShopCount <= 1;
+        }
+
+        // Nếu danh sách cart trống, hoặc không tìm thấy, bạn có thể xử lý tùy theo yêu cầu của mình
+        return false;
+    }
+
+
     private ListCartResponse getListCartResponse(String username, List<Cart> carts, String message) {
         ListCartResponse response = new ListCartResponse();
         response.setListCartByShopDTOs(ListCartByShopDTO.convertToListDTOByShop(carts));

@@ -28,4 +28,6 @@ public interface ICartService {
 
     @Transactional
     ListCartResponse deleteCartByShopId(Long shopId, String username);
+
+    boolean checkCartsSameShop(String username, List<Long> cartIds);
 }

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -139,10 +140,26 @@ public class VoucherAdminServiceImpl implements IVoucherAdminService {
     public Voucher checkVoucherSystem(Long voucherId) {
         Voucher voucher = getVoucherByVoucherId(voucherId);
 
-        if(voucher.getStartDate().before(new Date())){
+//        if(voucher.getStartDate().before(new Date())){
+//            throw new IllegalArgumentException("Mã giảm giá chưa có hiệu lực!");
+//        }
+//        if (voucher.getEndDate().after(new Date())) {
+//            throw new IllegalArgumentException("Mã giảm giá đã hết hạn!");
+//        }
+
+        Instant now = Instant.now(); // Sử dụng Instant thay vì Date
+        Instant voucherStartDate = voucher.getStartDate().toInstant(); // Chuyển startDate của voucher thành Instant
+        Instant voucherEndDate = voucher.getEndDate().toInstant();
+
+
+        if (voucherStartDate.isAfter(now)) { // So sánh theo Instant
+            System.out.println("Voucher start date: " + voucher.getStartDate());
+            System.out.println("start date: " + Date.from(now)); // Chuyển Instant về Date nếu cần
             throw new IllegalArgumentException("Mã giảm giá chưa có hiệu lực!");
         }
-        if (voucher.getEndDate().after(new Date())) {
+
+
+        if (voucherEndDate.isBefore(now)) {
             throw new IllegalArgumentException("Mã giảm giá đã hết hạn!");
         }
 
