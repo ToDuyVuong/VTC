@@ -43,8 +43,8 @@ public class CartServiceImpl implements ICartService {
     @Override
     @Transactional
     public CartResponse addNewCart(CartRequest request) {
-        if (cartRepository.existsByProductVariantProductVariantIdAndCustomerUsername(
-                request.getProductVariantId(), request.getUsername())) {
+        if (cartRepository.existsByProductVariantProductVariantIdAndCustomerUsernameAndStatus(
+                request.getProductVariantId(), request.getUsername(), Status.CART)) {
             return updateCart(request);
         }
 
@@ -58,6 +58,7 @@ public class CartServiceImpl implements ICartService {
         cart.setCreateAt(LocalDateTime.now());
         cart.setUpdateAt(LocalDateTime.now());
         cart.setStatus(Status.CART);
+        cart.setCartId(null);
 
         try {
             Cart saveCart = cartRepository.save(cart);
@@ -243,7 +244,7 @@ public class CartServiceImpl implements ICartService {
 
         if (productVariant.getStatus() == Status.DELETED ||
                 productVariant.getProduct().getStatus() == Status.DELETED) {
-            throw new IllegalArgumentException("Sản phẩm đã bị xóa.");
+            throw new IllegalArgumentException("Sản phẩm đã bị xóa. " + productVariant.getProduct().getProductId());
         }
 
         if (productVariant.getQuantity() <= 0) {

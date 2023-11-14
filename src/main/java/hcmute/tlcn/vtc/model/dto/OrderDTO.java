@@ -52,7 +52,9 @@ public class OrderDTO {
 
     public static OrderDTO convertEntityToDTOCreate(Order order) {
         OrderDTO orderDTO = new OrderDTO();
-//        orderDTO.setOrderId(order.getOrderId());
+        if (order.getOrderId() != null) {
+            orderDTO.setOrderId(order.getOrderId());
+        }
         orderDTO.setNote(order.getNote());
         orderDTO.setPaymentMethod(order.getPaymentMethod());
         orderDTO.setShippingMethod(order.getShippingMethod());

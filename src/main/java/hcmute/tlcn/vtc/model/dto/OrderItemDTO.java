@@ -33,8 +33,11 @@ public class OrderItemDTO {
     public static OrderItemDTO convertEntityToDTO(OrderItem orderItem){
         ProductVariantDTO productVariantDTO = ProductVariantDTO.convertEntityToDTO(orderItem.getCart().getProductVariant());
         OrderItemDTO orderItemDTO = new OrderItemDTO();
-//        orderItemDTO.setOrderItemId(orderItem.getOrderItemId());
-//        orderItemDTO.setOrderId(orderItem.getOrder().getOrderId());
+        if (orderItem.getOrderItemId() != null){
+            orderItemDTO.setOrderItemId(orderItem.getOrderItemId());
+            orderItemDTO.setOrderId(orderItem.getOrder().getOrderId());
+        }
+
         orderItemDTO.setCartId(orderItem.getCart().getCartId());
         orderItemDTO.setProductVariantDTO(productVariantDTO);
         orderItemDTO.setQuantity(orderItem.getCart().getQuantity());

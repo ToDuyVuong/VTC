@@ -6,6 +6,8 @@ import hcmute.tlcn.vtc.model.dto.OrderDTO;
 import hcmute.tlcn.vtc.model.entity.*;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
+import hcmute.tlcn.vtc.repository.CartRepository;
+import hcmute.tlcn.vtc.repository.OrderItemRepository;
 import hcmute.tlcn.vtc.repository.OrderRepository;
 import hcmute.tlcn.vtc.service.admin.IVoucherAdminService;
 import hcmute.tlcn.vtc.service.user.*;
@@ -17,7 +19,9 @@ import hcmute.tlcn.vtc.shippingstrategy.IShipping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +45,10 @@ public class OrderServiceImpl implements IOrderService {
     private final IVoucherShopService voucherShopService;
     @Autowired
     private final IVoucherAdminService voucherSystemService;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
 
     @Override
@@ -59,6 +67,52 @@ public class OrderServiceImpl implements IOrderService {
     }
 
 
+    @Transactional
+    @Override
+    public OrderResponse saveOrder(CreateOrderUpdateRequest request) {
+        Order order = createTemporaryOrderUpdate(request);
+
+
+        // Sau này nếu có nhiều hình thước thanh toán sẻ sử lý ở đây.
+        switch (order.getPaymentMethod()) {
+            case "COD":
+                order.setStatus(Status.PENDING);
+                break;
+            default:
+                order.setStatus(Status.PENDING);
+                break;
+        }
+
+        order.setCreateAt(LocalDateTime.now());
+        order.setUpdateAt(LocalDateTime.now());
+
+        try {
+            Order save = orderRepository.save(order);
+
+            if (request.getVoucherShopId() != null) {
+                VoucherOrder voucherOrder = voucherOrderService.saveVoucherOrder(request.getVoucherShopId(), save, true);
+                save.setVoucherOrders(List.of(voucherOrder));
+            }
+
+            if (request.getVoucherSystemId() != null) {
+                VoucherOrder voucherOrder = voucherOrderService.saveVoucherOrder(request.getVoucherSystemId(), save, false);
+                if (save.getVoucherOrders() != null) {
+                    save.getVoucherOrders().add(voucherOrder);
+                } else {
+                    save.setVoucherOrders(List.of(voucherOrder));
+                }
+            }
+
+            List<OrderItem> orderItems = orderItemService.saveOrderItem(save);
+            save.setOrderItems(orderItems);
+
+            return orderResponse(request.getUsername(), save, "Đặt hàng thành công.", false);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Đặt hàng thất bại!");
+        }
+    }
+
+
     private Order createTemporaryOrderUpdate(CreateOrderUpdateRequest request) {
         Order order = createTemporaryOrder(request.getUsername(), request.getCartIds());
 
@@ -71,7 +125,7 @@ public class OrderServiceImpl implements IOrderService {
 
         if (request.getShippingMethod().equals(order.getShippingMethod())) {
             order.setShippingMethod(request.getShippingMethod());
-            order.setShippingFee( calculateShippingFee(order.getShippingMethod(), order.getTotalPrice()));
+            order.setShippingFee(calculateShippingFee(order.getShippingMethod(), order.getTotalPrice()));
         }
 
         if (!request.getNote().isEmpty()) {
@@ -79,13 +133,12 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         if (request.getVoucherShopId() != null) {
-
-            Long discount = calculateVoucher(request.getVoucherShopId(), order.getShopId(), order.getTotalPrice(), true);
+            Long discount = voucherOrderService.calculateVoucher(request.getVoucherShopId(), order.getShopId(), order.getTotalPrice(), true);
             order.setDiscount(order.getDiscount() + discount);
         }
 
         if (request.getVoucherSystemId() != null) {
-            Long discount = calculateVoucher(request.getVoucherSystemId(), null, order.getTotalPrice(), false);
+            Long discount = voucherOrderService.calculateVoucher(request.getVoucherSystemId(), null, order.getTotalPrice(), false);
             order.setDiscount(order.getDiscount() + discount);
         }
 
@@ -95,24 +148,23 @@ public class OrderServiceImpl implements IOrderService {
         return order;
     }
 
-    private Long calculateVoucher( Long voucherId, Long shopId, Long totalPrice, boolean isShop) {
-        Voucher voucher;
-        if (isShop) {
-            voucher = voucherShopService.checkVoucherShop(voucherId, shopId);
-        } else {
-            voucher = voucherSystemService.checkVoucherSystem(voucherId);
-        }
-
-        if (voucher.getType().equals(VoucherType.SHIPPING)) {
-            return voucher.getDiscount();
-        }
-
-        if (voucher.getType().equals(VoucherType.PERCENTAGE_SHOP)) {
-            return voucher.getDiscount() * totalPrice / 100;
-        }
-        return voucher.getDiscount();
-    }
-
+//    private Long calculateVoucher(Long voucherId, Long shopId, Long totalPrice, boolean isShop) {
+//        Voucher voucher;
+//        if (isShop) {
+//            voucher = voucherShopService.checkVoucherShop(voucherId, shopId);
+//        } else {
+//            voucher = voucherSystemService.checkVoucherSystem(voucherId);
+//        }
+//
+//        if (voucher.getType().equals(VoucherType.SHIPPING)) {
+//            return voucher.getDiscount();
+//        }
+//
+//        if (voucher.getType().equals(VoucherType.PERCENTAGE_SHOP)) {
+//            return voucher.getDiscount() * totalPrice / 100;
+//        }
+//        return voucher.getDiscount();
+//    }
 
 
     private Long calculateShippingFee(String shippingMethod, Long totalPrice) {
@@ -198,7 +250,7 @@ public class OrderServiceImpl implements IOrderService {
 
     private void checkListCartSameShop(String username, List<Long> cartIds) {
         boolean check = cartService.checkCartsSameShop(username, cartIds);
-        if(!check){
+        if (!check) {
             throw new IllegalArgumentException("Các sản phẩm không thuộc cùng một cửa hàng.");
         }
     }

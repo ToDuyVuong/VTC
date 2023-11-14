@@ -43,4 +43,20 @@ public class OrderController {
 
 
     }
+
+
+
+    // Chưa test -  vừa tạo song logic
+    // Thieeus vodecer
+    // Chưa sử lý được, nếu đã đặt hàng product thì them cart mới không bị trùng
+    @PostMapping("/save")
+    public ResponseEntity<OrderResponse> saveOrder(@RequestBody CreateOrderUpdateRequest request,
+                                                    HttpServletRequest requestHttp) {
+
+        String username = (String) requestHttp.getAttribute("username");
+        request.setUsername(username);
+        request.validate();
+        return ResponseEntity.ok(orderService.saveOrder(request));
+    }
+
 }

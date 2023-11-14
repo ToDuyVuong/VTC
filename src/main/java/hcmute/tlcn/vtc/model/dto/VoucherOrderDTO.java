@@ -23,24 +23,26 @@ public class VoucherOrderDTO {
 
     private Long orderId;
 
-    public static VoucherOrderDTO convertEntityToDTO(VoucherOrder voucherOrder){
+    public static VoucherOrderDTO convertEntityToDTO(VoucherOrder voucherOrder) {
         VoucherOrderDTO voucherOrderDTO = new VoucherOrderDTO();
-//        voucherOrderDTO.setVoucherOrderId(voucherOrder.getVoucherOrderId());
+        if (voucherOrder.getVoucherOrderId() != null) {
+            voucherOrderDTO.setVoucherOrderId(voucherOrder.getVoucherOrderId());
+            voucherOrderDTO.setOrderId(voucherOrder.getOrder().getOrderId());
+        }
         voucherOrderDTO.setVoucherId(voucherOrder.getVoucher().getVoucherId());
         voucherOrderDTO.setVoucherName(voucherOrder.getVoucher().getName());
-//        voucherOrderDTO.setOrderId(voucherOrder.getOrder().getOrderId());
         return voucherOrderDTO;
 
     }
 
-    public static List<VoucherOrderDTO> convertListEntityToListDTO(List<VoucherOrder> voucherOrders){
-        if (voucherOrders == null){
+    public static List<VoucherOrderDTO> convertListEntityToListDTO(List<VoucherOrder> voucherOrders) {
+        if (voucherOrders == null) {
             return null;
         }
 
         List<VoucherOrderDTO> voucherOrderDTOs = new ArrayList<>();
-        for (VoucherOrder voucherOrder : voucherOrders){
-            VoucherOrderDTO voucherOrderDTO =convertEntityToDTO(voucherOrder);
+        for (VoucherOrder voucherOrder : voucherOrders) {
+            VoucherOrderDTO voucherOrderDTO = convertEntityToDTO(voucherOrder);
             voucherOrderDTOs.add(voucherOrderDTO);
         }
         return voucherOrderDTOs;
