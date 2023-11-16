@@ -120,6 +120,17 @@ public class OrderServiceImpl implements IOrderService {
         return listOrderResponse(orders, "Lấy danh sách đơn hàng thành công.");
     }
 
+
+    @Override
+    public OrderResponse getOrderDetail(String username, Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đơn hàng!"));
+        if (!order.getCustomer().getUsername().equals(username)) {
+            throw new IllegalArgumentException("Không tìm thấy đơn hàng!");
+        }
+        return orderResponse(username, order, "Lấy chi tiết đơn hàng thành công.", true);
+    }
+
     private Order createTemporaryOrderUpdate(CreateOrderUpdateRequest request) {
         Order order = createTemporaryOrder(request.getUsername(), request.getCartIds());
 

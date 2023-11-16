@@ -16,4 +16,6 @@ public interface IOrderService {
     OrderResponse saveOrder(CreateOrderUpdateRequest request);
 
     ListOrderResponse getOrders(String username);
+
+    OrderResponse getOrderDetail(String username, Long orderId);
 }

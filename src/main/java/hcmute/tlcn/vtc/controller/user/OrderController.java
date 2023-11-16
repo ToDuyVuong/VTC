@@ -65,4 +65,10 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrders(username));
     }
 
+    @GetMapping("/detail/{orderId}")
+    public ResponseEntity<OrderResponse> getOrderDetail(@PathVariable Long orderId,
+                                                        HttpServletRequest requestHttp){
+        String username = (String) requestHttp.getAttribute("username");
+        return ResponseEntity.ok(orderService.getOrderDetail(username, orderId));
+    }
 }
