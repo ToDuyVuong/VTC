@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.controller.user;
 
 import hcmute.tlcn.vtc.model.data.user.request.CreateOrderUpdateRequest;
+import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.service.user.IOrderService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
@@ -46,9 +47,7 @@ public class OrderController {
 
 
 
-    // Chưa test -  vừa tạo song logic
-    // Thieeus vodecer
-    // Chưa sử lý được, nếu đã đặt hàng product thì them cart mới không bị trùng
+
     @PostMapping("/save")
     public ResponseEntity<OrderResponse> saveOrder(@RequestBody CreateOrderUpdateRequest request,
                                                     HttpServletRequest requestHttp) {
@@ -57,6 +56,13 @@ public class OrderController {
         request.setUsername(username);
         request.validate();
         return ResponseEntity.ok(orderService.saveOrder(request));
+    }
+
+
+    @GetMapping("/list")
+    public ResponseEntity<ListOrderResponse> getOrders(HttpServletRequest requestHttp){
+        String username = (String) requestHttp.getAttribute("username");
+        return ResponseEntity.ok(orderService.getOrders(username));
     }
 
 }

@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +51,16 @@ public class OrderDTO {
 
     private Date orderDate;
 
+    public static List<OrderDTO> convertListEntityToDTOs(List<Order> orders) {
+        List<OrderDTO> orderDTOs = new ArrayList<>();
+        for (Order order : orders) {
+            orderDTOs.add(convertEntityToDTOCreate(order));
+        }
+
+        orderDTOs.sort(Comparator.comparing(OrderDTO::getOrderDate, Comparator.reverseOrder()));
+
+        return orderDTOs;
+    }
 
     public static OrderDTO convertEntityToDTOCreate(Order order) {
         OrderDTO orderDTO = new OrderDTO();

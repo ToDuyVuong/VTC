@@ -1,11 +1,11 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
 import hcmute.tlcn.vtc.model.data.user.request.CreateOrderUpdateRequest;
+import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.model.dto.OrderDTO;
 import hcmute.tlcn.vtc.model.entity.*;
 import hcmute.tlcn.vtc.model.extra.Status;
-import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.repository.CartRepository;
 import hcmute.tlcn.vtc.repository.OrderItemRepository;
 import hcmute.tlcn.vtc.repository.OrderRepository;
@@ -112,6 +112,13 @@ public class OrderServiceImpl implements IOrderService {
         }
     }
 
+
+    @Override
+    public ListOrderResponse getOrders(String username) {
+        List<Order> orders = orderRepository.findAllByCustomerUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đơn hàng!"));
+        return listOrderResponse(orders, "Lấy danh sách đơn hàng thành công.");
+    }
 
     private Order createTemporaryOrderUpdate(CreateOrderUpdateRequest request) {
         Order order = createTemporaryOrder(request.getUsername(), request.getCartIds());
@@ -228,6 +235,18 @@ public class OrderServiceImpl implements IOrderService {
         response.setMessage(message);
         response.setStatus(created ? "ok" : "success");
         response.setCode(200);
+        return response;
+    }
+
+
+    public ListOrderResponse listOrderResponse(List<Order> orders, String message) {
+        List<OrderDTO> orderDTOs = OrderDTO.convertListEntityToDTOs(orders);
+        ListOrderResponse response = new ListOrderResponse();
+        response.setOrderDTOs(orderDTOs);
+        response.setMessage(message);
+        response.setStatus("ok");
+        response.setCode(200);
+        response.setCount(orders.size());
         return response;
     }
 

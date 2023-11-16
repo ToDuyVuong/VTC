@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.service.user;
 
 import hcmute.tlcn.vtc.model.data.user.request.CreateOrderUpdateRequest;
+import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,4 +14,6 @@ public interface IOrderService {
 
     @Transactional
     OrderResponse saveOrder(CreateOrderUpdateRequest request);
+
+    ListOrderResponse getOrders(String username);
 }
