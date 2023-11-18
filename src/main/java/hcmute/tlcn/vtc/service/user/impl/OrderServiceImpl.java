@@ -117,7 +117,18 @@ public class OrderServiceImpl implements IOrderService {
     public ListOrderResponse getOrders(String username) {
         List<Order> orders = orderRepository.findAllByCustomerUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đơn hàng!"));
-        return listOrderResponse(orders, "Lấy danh sách đơn hàng thành công.");
+        return listOrderResponse(orders, "Lấy danh sách đơn hàng thành công.", username);
+    }
+
+
+    @Override
+    public ListOrderResponse getOrdersByStatus(String username, Status status) {
+        List<Order> orders = orderRepository.findAllByCustomerUsernameAndStatus(username, status)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đơn hàng!"));
+
+        String message = messageByOrderStatus(status);
+
+        return listOrderResponse(orders, message, username);
     }
 
 
@@ -129,6 +140,35 @@ public class OrderServiceImpl implements IOrderService {
             throw new IllegalArgumentException("Không tìm thấy đơn hàng!");
         }
         return orderResponse(username, order, "Lấy chi tiết đơn hàng thành công.", true);
+    }
+
+    @Override
+    @Transactional
+    public OrderResponse cancelOrder(String username, Long orderId) {
+        Order order = orderRepository.findByOrderIdAndStatus(orderId, Status.PENDING)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đơn hàng!"));
+        if (order == null || !order.getCustomer().getUsername().equals(username)) {
+            throw new IllegalArgumentException("Không tìm thấy đơn hàng!");
+        }
+
+        order.setStatus(Status.CANCEL);
+        order.setUpdateAt(LocalDateTime.now());
+        try {
+            Order save = orderRepository.save(order);
+
+            if (save.getVoucherOrders() != null) {
+                for (VoucherOrder voucherOrder : save.getVoucherOrders()) {
+                    voucherOrderService.cancelVoucherOrder(voucherOrder.getVoucherOrderId());
+                }
+            }
+
+            List<OrderItem> orderItems = orderItemService.cancelOrderItem(save);
+            save.setOrderItems(orderItems);
+
+            return orderResponse(username, save, "Hủy đơn hàng thành công.", false);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Hủy đơn hàng thất bại!");
+        }
     }
 
     private Order createTemporaryOrderUpdate(CreateOrderUpdateRequest request) {
@@ -166,23 +206,34 @@ public class OrderServiceImpl implements IOrderService {
         return order;
     }
 
-//    private Long calculateVoucher(Long voucherId, Long shopId, Long totalPrice, boolean isShop) {
-//        Voucher voucher;
-//        if (isShop) {
-//            voucher = voucherShopService.checkVoucherShop(voucherId, shopId);
-//        } else {
-//            voucher = voucherSystemService.checkVoucherSystem(voucherId);
-//        }
-//
-//        if (voucher.getType().equals(VoucherType.SHIPPING)) {
-//            return voucher.getDiscount();
-//        }
-//
-//        if (voucher.getType().equals(VoucherType.PERCENTAGE_SHOP)) {
-//            return voucher.getDiscount() * totalPrice / 100;
-//        }
-//        return voucher.getDiscount();
-//    }
+    private String messageByOrderStatus(Status status) {
+        String message;
+        switch (status) {
+            case PENDING:
+                message = "Lấy danh sách đơn hàng đang chờ xử lý thành công.";
+                break;
+            case PROCESSING:
+                message = "Lấy danh sách đơn hàng đang xử lý thành công.";
+                break;
+            case SHIPPING:
+                message = "Lấy danh sách đơn hàng đang giao thành công.";
+                break;
+            case COMPLETED:
+                message = "Lấy danh sách đơn hàng đã giao thành công.";
+                break;
+            case CANCEL:
+                message = "Lấy danh sách đơn hàng đã hủy thành công.";
+                break;
+            case CART:
+                message = "Lấy danh sách giỏ hàng thành công.";
+                break;
+            default:
+                message = "Lấy danh sách đơn hàng thành công.";
+                break;
+        }
+
+        return message;
+    }
 
 
     private Long calculateShippingFee(String shippingMethod, Long totalPrice) {
@@ -250,10 +301,11 @@ public class OrderServiceImpl implements IOrderService {
     }
 
 
-    public ListOrderResponse listOrderResponse(List<Order> orders, String message) {
+    public ListOrderResponse listOrderResponse(List<Order> orders, String message, String username) {
         List<OrderDTO> orderDTOs = OrderDTO.convertListEntityToDTOs(orders);
         ListOrderResponse response = new ListOrderResponse();
         response.setOrderDTOs(orderDTOs);
+        response.setUsername(username);
         response.setMessage(message);
         response.setStatus("ok");
         response.setCode(200);

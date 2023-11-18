@@ -11,4 +11,7 @@ public interface IOrderItemService {
 
     @Transactional
     List<OrderItem> saveOrderItem(Order order);
+
+    @Transactional
+    List<OrderItem> cancelOrderItem(Order order);
 }

@@ -3,6 +3,7 @@ package hcmute.tlcn.vtc.controller.user;
 import hcmute.tlcn.vtc.model.data.user.request.CreateOrderUpdateRequest;
 import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
+import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.user.IOrderService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,10 +66,24 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrders(username));
     }
 
+    @GetMapping("/list/{status}")
+    public ResponseEntity<ListOrderResponse> getOrdersByStatus(@PathVariable Status status,
+                                                               HttpServletRequest requestHttp){
+        String username = (String) requestHttp.getAttribute("username");
+        return ResponseEntity.ok(orderService.getOrdersByStatus(username, status));
+    }
+
     @GetMapping("/detail/{orderId}")
     public ResponseEntity<OrderResponse> getOrderDetail(@PathVariable Long orderId,
                                                         HttpServletRequest requestHttp){
         String username = (String) requestHttp.getAttribute("username");
         return ResponseEntity.ok(orderService.getOrderDetail(username, orderId));
+    }
+
+    @PostMapping("/cancel/{orderId}")
+    public ResponseEntity<OrderResponse> cancelOrder(@PathVariable Long orderId,
+                                                      HttpServletRequest requestHttp){
+        String username = (String) requestHttp.getAttribute("username");
+        return ResponseEntity.ok(orderService.cancelOrder(username, orderId));
     }
 }

@@ -5,6 +5,7 @@ import hcmute.tlcn.vtc.model.entity.Voucher;
 import hcmute.tlcn.vtc.model.entity.VoucherOrder;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.repository.VoucherOrderRepository;
+import hcmute.tlcn.vtc.repository.VoucherRepository;
 import hcmute.tlcn.vtc.service.admin.impl.VoucherAdminServiceImpl;
 import hcmute.tlcn.vtc.service.user.IVoucherOrderService;
 import hcmute.tlcn.vtc.service.vendor.impl.VoucherShopServiceImpl;
@@ -19,6 +20,8 @@ public class VoucherOrderServiceImpl implements IVoucherOrderService {
 
     @Autowired
     private final VoucherOrderRepository voucherOrderRepository;
+    @Autowired
+    private final VoucherRepository voucherRepository;
     @Autowired
     private final VoucherShopServiceImpl voucherShopService;
     @Autowired
@@ -39,11 +42,50 @@ public class VoucherOrderServiceImpl implements IVoucherOrderService {
         voucherOrder.setVoucher(voucher);
         voucherOrder.setOrder(order);
         try {
+            voucher.setQuantityUsed(voucher.getQuantityUsed() + 1);
+            voucherRepository.save(voucher);
             return voucherOrderRepository.save(voucherOrder);
         } catch (Exception e) {
             throw new IllegalArgumentException("Thêm mới mã giảm giá thất bại!");
         }
     }
+
+    @Transactional
+    @Override
+    public VoucherOrder cancelVoucherOrder(Long voucherOrderId) {
+        VoucherOrder voucherOrder = voucherOrderRepository.findById(voucherOrderId)
+                .orElseThrow(() -> new IllegalArgumentException("Mã giảm giá không tồn tại!"));
+
+        Voucher voucher = voucherOrder.getVoucher();
+        voucher.setQuantityUsed(voucher.getQuantityUsed() - 1);
+        try {
+            voucherRepository.save(voucher);
+            return voucherOrder;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật mã giảm giá thất bại!");
+        }
+    }
+
+/*    @Transactional
+    @Override
+    public VoucherOrder cancelVoucherOrder(Long voucherOrderId, boolean isShop) {
+        VoucherOrder voucherOrder = voucherOrderRepository.findById(voucherOrderId)
+                .orElseThrow(() -> new IllegalArgumentException("Mã giảm giá không tồn tại!"));
+
+        Voucher voucher;
+        if (isShop) {
+            voucher = voucherShopService.checkVoucherShop(voucherOrder.getVoucher().getVoucherId(), voucherOrder.getOrder().getShopId());
+        }else {
+            voucher = voucherSystemService.checkVoucherSystem(voucherOrder.getVoucher().getVoucherId());
+        }
+        voucher.setQuantityUsed(voucher.getQuantityUsed() - 1);
+        try {
+            voucherRepository.save(voucher);
+            return voucherOrder;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật mã giảm giá thất bại!");
+        }
+    }*/
 
 
     @Override

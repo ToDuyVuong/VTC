@@ -104,6 +104,30 @@ public class OrderItemServiceImpl implements IOrderItemService {
 
         return orderItems;
     }
+
+
+    @Transactional
+    @Override
+    public List<OrderItem> cancelOrderItem(Order order) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (OrderItem orderItem : order.getOrderItems()) {
+            Cart cart = orderItem.getCart();
+            cart.setStatus(Status.CANCEL);
+            try {
+
+                ProductVariant productVariant = cart.getProductVariant();
+                productVariant.setQuantity(productVariant.getQuantity() + cart.getQuantity());
+                productVariantRepository.save(productVariant);
+
+                 cartRepository.save(cart);
+                 orderItems.add(orderItem);
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Cập nhật trạng thái giỏ hàng thất bại!");
+            }
+
+        }
+        return orderItems;
+    }
 }
 
 

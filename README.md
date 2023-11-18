@@ -172,5 +172,10 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Thông tin phương thức thanh toán.
     - Thông tin phương thức vận chuyển.
     - Thông tin ghi chú.
+  - Đặt hàng với đơn hàng tạm thời.
+  - Xem danh sách đơn hàng đã đặt.
+  - Xem danh sách đơn theo trạng thái.
+  - Xem chi tiết đơn hàng đã đặt.
+  - Hủy đơn hàng đã đặt.
  
  

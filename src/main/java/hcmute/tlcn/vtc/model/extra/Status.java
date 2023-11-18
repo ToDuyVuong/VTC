@@ -22,7 +22,9 @@ public enum Status {
     PAID("Paid"),
     UNPAID("Unpaid"),
     CART("Cart"),
-    ORDER("Order");
+    ORDER("Order"),
+    SHIPPING("Shipping"),
+    COMPLETED("Completed");
 
 
     private final String value;
