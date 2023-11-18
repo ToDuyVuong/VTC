@@ -171,6 +171,39 @@ public class OrderServiceImpl implements IOrderService {
         }
     }
 
+
+    @Override
+    public String messageByOrderStatus(Status status) {
+        String message;
+        switch (status) {
+            case PENDING:
+                message = "Lấy danh sách đơn hàng đang chờ xử lý thành công.";
+                break;
+            case PROCESSING:
+                message = "Lấy danh sách đơn hàng đang xử lý thành công.";
+                break;
+            case SHIPPING:
+                message = "Lấy danh sách đơn hàng đang giao thành công.";
+                break;
+            case COMPLETED:
+                message = "Lấy danh sách đơn hàng đã giao thành công.";
+                break;
+            case CANCEL:
+                message = "Lấy danh sách đơn hàng đã hủy thành công.";
+                break;
+            case CART:
+                message = "Lấy danh sách giỏ hàng thành công.";
+                break;
+            default:
+                message = "Lấy danh sách đơn hàng thành công.";
+                break;
+        }
+
+        return message;
+    }
+
+
+
     private Order createTemporaryOrderUpdate(CreateOrderUpdateRequest request) {
         Order order = createTemporaryOrder(request.getUsername(), request.getCartIds());
 
@@ -206,34 +239,7 @@ public class OrderServiceImpl implements IOrderService {
         return order;
     }
 
-    private String messageByOrderStatus(Status status) {
-        String message;
-        switch (status) {
-            case PENDING:
-                message = "Lấy danh sách đơn hàng đang chờ xử lý thành công.";
-                break;
-            case PROCESSING:
-                message = "Lấy danh sách đơn hàng đang xử lý thành công.";
-                break;
-            case SHIPPING:
-                message = "Lấy danh sách đơn hàng đang giao thành công.";
-                break;
-            case COMPLETED:
-                message = "Lấy danh sách đơn hàng đã giao thành công.";
-                break;
-            case CANCEL:
-                message = "Lấy danh sách đơn hàng đã hủy thành công.";
-                break;
-            case CART:
-                message = "Lấy danh sách giỏ hàng thành công.";
-                break;
-            default:
-                message = "Lấy danh sách đơn hàng thành công.";
-                break;
-        }
 
-        return message;
-    }
 
 
     private Long calculateShippingFee(String shippingMethod, Long totalPrice) {

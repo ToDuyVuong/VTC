@@ -24,4 +24,6 @@ public interface IOrderService {
 
     @Transactional
     OrderResponse cancelOrder(String username, Long orderId);
+
+    String messageByOrderStatus(Status status);
 }

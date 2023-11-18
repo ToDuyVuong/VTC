@@ -164,7 +164,7 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Xem danh sách mã giảm giá đã lưu.
 
 
-- Đặt hàng:
+- Quản lý đơn hàng của customer:
   - Tạo đơn hàng tạm thời với mã giỏ hàng.
   - Cập nhật đơn hàng tạm thời với:
     - Thông tin địa chỉ nhận hàng.
@@ -178,4 +178,5 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
   - Xem chi tiết đơn hàng đã đặt.
   - Hủy đơn hàng đã đặt.
  
- 
+- Quản lý đơn hàng của vender:
+  - Xem danh sách đơn hàng theo trạng thái.

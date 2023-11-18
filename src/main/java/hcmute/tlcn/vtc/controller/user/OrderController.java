@@ -66,7 +66,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrders(username));
     }
 
-    @GetMapping("/list/{status}")
+    @GetMapping("/list/status/{status}")
     public ResponseEntity<ListOrderResponse> getOrdersByStatus(@PathVariable Status status,
                                                                HttpServletRequest requestHttp){
         String username = (String) requestHttp.getAttribute("username");
