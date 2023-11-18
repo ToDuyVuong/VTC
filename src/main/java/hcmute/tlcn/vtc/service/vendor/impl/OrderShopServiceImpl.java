@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -74,6 +76,86 @@ public class OrderShopServiceImpl implements IOrderShopService {
         return listOrderResponse(orders, message, username);
     }
 
+
+    @Override
+    public ListOrderResponse getOrdersOnSameDay(String username, Date orderDate) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        Date startOfDay = startOfDay(orderDate);
+        Date endOfDay = endOfDay(orderDate);
+
+
+        List<Order> orders = orderRepository.findAllByShopIdAndOrderDateBetween(shop.getShopId(), startOfDay, endOfDay)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+
+        return listOrderResponse(orders, "Lấy danh sách đơn hàng trong cùng ngày thành công.", username);
+    }
+
+    @Override
+    public ListOrderResponse getOrdersOnSameDayByStatus(String username, Date orderDate, Status status) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        Date startOfDay = startOfDay(orderDate);
+        Date endOfDay = endOfDay(orderDate);
+
+        List<Order> orders = orderRepository.findAllByShopIdAndOrderDateBetweenAndStatus(shop.getShopId(), startOfDay, endOfDay, status)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+
+        String message = orderService.messageByOrderStatus(status);
+
+        return listOrderResponse(orders, message, username);
+    }
+
+
+    @Override
+    public ListOrderResponse getOrdersBetweenDate(String username, Date startOrderDate, Date endOrderDate) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        Date startOfDay = startOfDay(startOrderDate);
+        Date endOfDay = endOfDay(endOrderDate);
+
+        List<Order> orders = orderRepository.findAllByShopIdAndOrderDateBetween(shop.getShopId(), startOfDay, endOfDay)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+
+        return listOrderResponse(orders, "Lấy danh sách đơn hàng trong khoảng thời gian thành công.", username);
+    }
+
+
+    @Override
+    public ListOrderResponse getOrdersBetweenDateByStatus(String username, Date startOrderDate, Date endOrderDate, Status status) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        Date startOfDay = startOfDay(startOrderDate);
+        Date endOfDay = endOfDay(endOrderDate);
+
+        List<Order> orders = orderRepository.findAllByShopIdAndOrderDateBetweenAndStatus(shop.getShopId(), startOfDay, endOfDay, status)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+
+        String message = orderService.messageByOrderStatus(status);
+
+        return listOrderResponse(orders, message, username);
+    }
+
+
+    private Date startOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    private Date endOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
 
 
     private OrderResponse orderResponse(String username, Order order, String message, boolean created) {
