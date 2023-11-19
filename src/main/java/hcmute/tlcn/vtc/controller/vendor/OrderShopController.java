@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
 import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
+import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.vendor.IOrderShopService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
@@ -42,7 +43,7 @@ public class OrderShopController {
 
     @GetMapping("/list/on-same-day")
     public ResponseEntity<ListOrderResponse> getOrdersOnSameDate(HttpServletRequest httpServletRequest,
-                                                             @RequestParam String dateString) {
+                                                                 @RequestParam String dateString) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             Date date = dateFormat.parse(dateString);
@@ -50,15 +51,15 @@ public class OrderShopController {
             String username = (String) httpServletRequest.getAttribute("username");
             return ResponseEntity.ok(orderShopService.getOrdersOnSameDay(username, date));
         } catch (ParseException e) {
-            throw  new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
+            throw new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
         }
     }
 
 
     @GetMapping("/list/between-date")
     public ResponseEntity<ListOrderResponse> getOrdersBetweenDate(HttpServletRequest httpServletRequest,
-                                                             @RequestParam String startDateString,
-                                                             @RequestParam String endDateString) {
+                                                                  @RequestParam String startDateString,
+                                                                  @RequestParam String endDateString) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             Date startDate = dateFormat.parse(startDateString);
@@ -77,15 +78,15 @@ public class OrderShopController {
             String username = (String) httpServletRequest.getAttribute("username");
             return ResponseEntity.ok(orderShopService.getOrdersBetweenDate(username, startDate, endDate));
         } catch (ParseException e) {
-            throw  new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
+            throw new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
         }
     }
 
 
     @GetMapping("/list/on-same-day/status/{status}")
     public ResponseEntity<ListOrderResponse> getOrdersOnSameDateByStatus(HttpServletRequest httpServletRequest,
-                                                                     @RequestParam String dateString,
-                                                                     @PathVariable Status status) {
+                                                                         @RequestParam String dateString,
+                                                                         @PathVariable Status status) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             Date date = dateFormat.parse(dateString);
@@ -93,16 +94,16 @@ public class OrderShopController {
             String username = (String) httpServletRequest.getAttribute("username");
             return ResponseEntity.ok(orderShopService.getOrdersOnSameDayByStatus(username, date, status));
         } catch (ParseException e) {
-            throw  new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
+            throw new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
         }
     }
 
 
     @GetMapping("/list/between-date/status/{status}")
     public ResponseEntity<ListOrderResponse> getOrdersBetweenDateByStatus(HttpServletRequest httpServletRequest,
-                                                                     @RequestParam String startDateString,
-                                                                     @RequestParam String endDateString,
-                                                                     @PathVariable Status status) {
+                                                                          @RequestParam String startDateString,
+                                                                          @RequestParam String endDateString,
+                                                                          @PathVariable Status status) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             Date startDate = dateFormat.parse(startDateString);
@@ -121,10 +122,33 @@ public class OrderShopController {
             String username = (String) httpServletRequest.getAttribute("username");
             return ResponseEntity.ok(orderShopService.getOrdersBetweenDateByStatus(username, startDate, endDate, status));
         } catch (ParseException e) {
-            throw  new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
+            throw new IllegalArgumentException("Ngày không đúng định dạng! Định dạng ngày là dd-MM-yyyy");
         }
     }
 
+
+    @GetMapping("/detail/{orderId}")
+    public ResponseEntity<OrderResponse> getOrderById(HttpServletRequest httpServletRequest, @PathVariable Long orderId) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(orderShopService.getOrderById(username, orderId));
+    }
+
+
+
+    @PatchMapping("/update/status/{orderId}")
+    public ResponseEntity<OrderResponse> updateStatusOrder(HttpServletRequest httpServletRequest,
+                                                           @PathVariable Long orderId,
+                                                           @RequestParam Status status) {
+        if (orderId == null) {
+            throw new NotFoundException("Mã đơn hàng không được để trống!");
+        }
+        if (status == null) {
+            throw new NotFoundException("Trạng thái đơn hàng không được để trống!");
+        }
+
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(orderShopService.updateStatusOrder(username, orderId, status));
+    }
 
 
 }

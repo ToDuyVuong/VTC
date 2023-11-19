@@ -12,19 +12,18 @@ public enum Status {
     DELETED("Deleted"),
     PENDING("Pending"),
     CANCEL("Cancel"),
-    SUCCESS("Success"),
-    FAIL("Fail"),
     WAITING("Waiting"),
+    DELIVERED("Delivered"),
     PROCESSING("Processing"),
-    FINISHED("Finished"),
-    REFUND("Refund"),
-    REFUNDED("Refunded"),
-    PAID("Paid"),
-    UNPAID("Unpaid"),
+    RETURNED("Returned"),
+    SHIPPING("Shipping"),
+    SHIPPED("Shipped"),
     CART("Cart"),
     ORDER("Order"),
-    SHIPPING("Shipping"),
-    COMPLETED("Completed");
+    COMPLETED("Completed"),
+    REFUNDED("Refunded"),
+    PAID("Paid"),
+    UNPAID("Unpaid");
 
 
     private final String value;

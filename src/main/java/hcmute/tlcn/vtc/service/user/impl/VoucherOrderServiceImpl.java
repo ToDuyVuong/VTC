@@ -58,6 +58,7 @@ public class VoucherOrderServiceImpl implements IVoucherOrderService {
 
         Voucher voucher = voucherOrder.getVoucher();
         voucher.setQuantityUsed(voucher.getQuantityUsed() - 1);
+
         try {
             voucherRepository.save(voucher);
             return voucherOrder;

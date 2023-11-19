@@ -4,13 +4,16 @@ import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.model.dto.OrderDTO;
 import hcmute.tlcn.vtc.model.entity.Order;
+import hcmute.tlcn.vtc.model.entity.OrderItem;
 import hcmute.tlcn.vtc.model.entity.Shop;
+import hcmute.tlcn.vtc.model.entity.VoucherOrder;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CartRepository;
 import hcmute.tlcn.vtc.repository.OrderItemRepository;
 import hcmute.tlcn.vtc.repository.OrderRepository;
 import hcmute.tlcn.vtc.service.admin.IVoucherAdminService;
 import hcmute.tlcn.vtc.service.user.*;
+import hcmute.tlcn.vtc.service.vendor.IOrderItemShopService;
 import hcmute.tlcn.vtc.service.vendor.IOrderShopService;
 import hcmute.tlcn.vtc.service.vendor.IShopService;
 import hcmute.tlcn.vtc.service.vendor.IVoucherShopService;
@@ -19,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +55,8 @@ public class OrderShopServiceImpl implements IOrderShopService {
     private final IShopService shopService;
     @Autowired
     private final IOrderService orderService;
+    @Autowired
+    private final IOrderItemShopService orderItemShopService;
 
 
     @Override
@@ -135,6 +141,106 @@ public class OrderShopServiceImpl implements IOrderShopService {
 
         return listOrderResponse(orders, message, username);
     }
+
+
+    @Override
+    public OrderResponse getOrderById(String username, Long orderId) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+
+        if (!order.getShopId().equals(shop.getShopId())) {
+            throw new NotFoundException("Không tìm thấy đơn hàng nào!");
+        }
+
+        return orderResponse(username, order, "Lấy đơn hàng thành công!", true);
+    }
+
+
+    @Override
+    public OrderResponse updateStatusOrder(String username, Long orderId, Status status) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        Order order = orderRepository.findById(orderId)
+         .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+        if (!order.getShopId().equals(shop.getShopId())) {
+            throw new NotFoundException("Không tìm thấy đơn hàng nào!");
+        }
+        checkStatus(order,status);
+
+        order.setStatus(status);
+        order.setUpdateAt(LocalDateTime.now());
+
+        try {
+            Order save = orderRepository.save(order);
+            if (status.equals(Status.CANCEL)) {
+                if (save.getVoucherOrders() != null) {
+                    for (VoucherOrder voucherOrder : save.getVoucherOrders()) {
+                        voucherOrderService.cancelVoucherOrder(voucherOrder.getVoucherOrderId());
+                    }
+                }
+                List<OrderItem> orderItems = orderItemService.cancelOrderItem(save);
+                save.setOrderItems(orderItems);
+            }else {
+
+                List<OrderItem> orderItems = orderItemShopService.updateStatusOrderItemByShop(save, status);
+                save.setOrderItems(orderItems);
+            }
+
+            String message = messageUpdateStatusOrder(status);
+
+            return orderResponse(username, save, message, false);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cập nhật trạng thái đơn hàng thất bại! " + e.getMessage());
+        }
+
+    }
+
+
+    private String messageUpdateStatusOrder(Status status) {
+        switch (status) {
+            case CANCEL:
+                return "Hủy đơn hàng thành công!";
+            case COMPLETED:
+                return "Giao đơn hàng thành công!";
+            case RETURNED:
+                return "Trả đơn hàng thành công!";
+            case REFUNDED:
+                return "Hoàn tiền đơn hàng thành công!";
+            default:
+                return "Cập nhật trạng thái đơn hàng thành công!";
+        }
+    }
+
+private void checkStatus(Order order,Status status){
+
+    if (order.getStatus().equals(Status.CANCEL)) {
+        throw new IllegalArgumentException("Đơn hàng đã bị hủy!");
+    }
+    if (order.getStatus().equals(Status.COMPLETED)) {
+        throw new IllegalArgumentException("Đơn hàng đã được giao!");
+    }
+    if (order.getStatus().equals(Status.RETURNED)) {
+        throw new IllegalArgumentException("Đơn hàng đã được trả!");
+    }
+    if (order.getStatus().equals(Status.REFUNDED)) {
+        throw new IllegalArgumentException("Đơn hàng đã được hoàn tiền!");
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
     private Date startOfDay(Date date) {

@@ -60,6 +60,7 @@ public class OrderItemServiceImpl implements IOrderItemService {
         List<OrderItem> orderItems = new ArrayList<>();
         for (OrderItem orderItem : order.getOrderItems()) {
             Cart cart = orderItem.getCart();
+
             if (cart.getProductVariant().getStatus() == Status.DELETED ||
                     cart.getProductVariant().getProduct().getStatus() == Status.DELETED) {
                 throw new IllegalArgumentException("Sản phẩm đã bị xóa!");
@@ -67,6 +68,7 @@ public class OrderItemServiceImpl implements IOrderItemService {
 
 
             cart.setStatus(Status.ORDER);
+            cart.setUpdateAt(order.getUpdateAt());
             try {
                 cartRepository.save(cart);
             } catch (Exception e) {
@@ -113,6 +115,7 @@ public class OrderItemServiceImpl implements IOrderItemService {
         for (OrderItem orderItem : order.getOrderItems()) {
             Cart cart = orderItem.getCart();
             cart.setStatus(Status.CANCEL);
+            cart.setUpdateAt(order.getUpdateAt());
             try {
 
                 ProductVariant productVariant = cart.getProductVariant();
