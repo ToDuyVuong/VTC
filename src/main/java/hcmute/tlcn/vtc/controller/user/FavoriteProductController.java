@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/favorite-product")
+@RequestMapping("/api/customer/favorite-product")
 @RequiredArgsConstructor
 public class FavoriteProductController {
 

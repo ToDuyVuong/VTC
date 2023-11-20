@@ -41,14 +41,6 @@ public class OrderServiceImpl implements IOrderService {
     private final ICustomerService customerService;
     @Autowired
     private final IAddressService addressService;
-    @Autowired
-    private final IVoucherShopService voucherShopService;
-    @Autowired
-    private final IVoucherAdminService voucherSystemService;
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-    @Autowired
-    private CartRepository cartRepository;
 
 
     @Override

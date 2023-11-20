@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/followed-shop")
+@RequestMapping("/api/customer/followed-shop")
 @RequiredArgsConstructor
 public class FollowedShopController {
 
