@@ -17,6 +17,7 @@ import hcmute.tlcn.vtc.service.vendor.IVoucherShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -49,6 +50,7 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
 
 
     @Override
+    @Transactional
     public ReviewResponse addNewReview(ReviewRequest request, String username) {
         checkOrderItemAndRoleReviewAndStatus(request.getOrderItemId(), username);
 
@@ -76,6 +78,7 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
 
 
     @Override
+    @Transactional
     public ReviewResponse deleteReview(Long reviewId, String username) {
         Review review = checkDeleteReview(reviewId, username);
 
