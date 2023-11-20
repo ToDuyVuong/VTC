@@ -1,7 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
 import hcmute.tlcn.vtc.model.data.user.request.ReviewRequest;
-import hcmute.tlcn.vtc.model.data.user.response.ListReviewResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ReviewResponse;
 import hcmute.tlcn.vtc.model.dto.ReviewDTO;
 import hcmute.tlcn.vtc.model.entity.OrderItem;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -50,11 +48,6 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
     private CartRepository cartRepository;
 
 
-
-
-
-
-
     @Override
     public ReviewResponse addNewReview(ReviewRequest request, String username) {
         checkOrderItemAndRoleReviewAndStatus(request.getOrderItemId(), username);
@@ -82,8 +75,33 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
     }
 
 
+    @Override
+    public ReviewResponse deleteReview(Long reviewId, String username) {
+        Review review = checkDeleteReview(reviewId, username);
 
+        try {
+            review.setStatus(Status.INACTIVE);
+            review.setUpdateAt(LocalDateTime.now());
+            reviewRepository.save(review);
+            return reviewResponse(review, username, "Xóa đánh giá thành công!", true);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Xóa đánh giá thất bại!");
+        }
+    }
 
+    private Review checkDeleteReview(Long reviewId, String username) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại!"));
+
+        if (!review.getCustomer().getUsername().equals(username)) {
+            throw new IllegalArgumentException("Bạn không có quyền xóa đánh giá này!");
+        }
+
+        if (review.getStatus() == Status.INACTIVE) {
+            throw new IllegalArgumentException("Đánh giá này đã bị xóa!");
+        }
+        return review;
+    }
 
 
     private void checkOrderItem(Long orderItemId) {
@@ -93,12 +111,6 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
     }
 
     private void checkRoleReview(Long orderItemId, String username) {
-
-        OrderItem orderItem = orderItemRepository.findById(orderItemId)
-                .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không tồn tại!"));
-
-        System.out.println("orderItem: " +  orderItem.getCart().getCustomer().getUsername() + " " + username);
-
         if (!orderItemRepository.existsByOrderItemIdAndCartCustomerUsername(orderItemId, username)) {
             throw new IllegalArgumentException("Bạn không có quyền đánh giá sản phẩm này!");
         }
@@ -119,28 +131,29 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
     }
 
 
-    private ReviewResponse reviewResponse (Review review, String username, String message, boolean created){
+    private ReviewResponse reviewResponse(Review review, String username, String message, boolean created) {
         ReviewResponse reviewResponse = new ReviewResponse();
         reviewResponse.setReviewDTO(ReviewDTO.convertEntityToDTO(review));
         reviewResponse.setUsername(username);
         reviewResponse.setMessage(message);
+        reviewResponse.setProductId(review.getProduct().getProductId());
         reviewResponse.setStatus(created ? "ok" : "success");
         reviewResponse.setCode(200);
 
         return reviewResponse;
     }
 
-    private ListReviewResponse listReviewResponse (List<Review> reviews, Long productId, String username, String message, boolean created){
-        ListReviewResponse listReviewResponse = new ListReviewResponse();
-        listReviewResponse.setReviewDTOs(ReviewDTO.convertEntitiesToDTOs(reviews));
-        listReviewResponse.setCount(reviews.size());
-        listReviewResponse.setProductId(productId);
-        listReviewResponse.setUsername(username);
-        listReviewResponse.setMessage(message);
-        listReviewResponse.setStatus(created ? "ok" : "success");
-        listReviewResponse.setCode(200);
-
-        return listReviewResponse;
-    }
+//    private ListReviewResponse listReviewResponse (List<Review> reviews, Long productId, String username, String message, boolean created){
+//        ListReviewResponse listReviewResponse = new ListReviewResponse();
+//        listReviewResponse.setReviewDTOs(ReviewDTO.convertEntitiesToDTOs(reviews));
+//        listReviewResponse.setCount(reviews.size());
+//        listReviewResponse.setProductId(productId);
+//        listReviewResponse.setUsername(username);
+//        listReviewResponse.setMessage(message);
+//        listReviewResponse.setStatus(created ? "ok" : "success");
+//        listReviewResponse.setCode(200);
+//
+//        return listReviewResponse;
+//    }
 
 }

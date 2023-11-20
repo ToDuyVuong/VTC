@@ -25,4 +25,19 @@ public class ReviewController {
         }
         return ResponseEntity.ok(reviewService.getReviewsByProductId(productId));
     }
+
+    @GetMapping("/product/{productId}/rating/{rating}")
+    public ResponseEntity<ListReviewResponse> getReviewsByProductIdAndRating(@PathVariable Long productId, @PathVariable int rating) {
+        if (productId == null) {
+            throw new IllegalArgumentException("Mã sản phẩm không được để trống!");
+        }
+        if (rating < 1 || rating > 5) {
+            throw new IllegalArgumentException("Xếp hạng không hợp lệ!");
+        }
+        return ResponseEntity.ok(reviewService.getReviewsByProductIdAndRating(productId, rating));
+    }
+
+
+
+
 }

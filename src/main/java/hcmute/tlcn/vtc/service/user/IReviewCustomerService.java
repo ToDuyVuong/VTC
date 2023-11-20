@@ -5,4 +5,6 @@ import hcmute.tlcn.vtc.model.data.user.response.ReviewResponse;
 
 public interface IReviewCustomerService {
     ReviewResponse addNewReview(ReviewRequest request, String username);
+
+    ReviewResponse deleteReview(Long reviewId, String username);
 }

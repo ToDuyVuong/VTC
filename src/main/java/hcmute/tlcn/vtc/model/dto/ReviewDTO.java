@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -30,8 +33,14 @@ public class ReviewDTO {
 
     private Long orderItemId;
 
+    private Date createdAt;
+
 
     public static ReviewDTO convertEntityToDTO(Review review) {
+
+
+
+
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setReviewId(review.getReviewId());
         reviewDTO.setContent(review.getContent());
@@ -39,6 +48,7 @@ public class ReviewDTO {
         reviewDTO.setStatus(review.getStatus());
         reviewDTO.setUsername(review.getCustomer().getUsername());
         reviewDTO.setOrderItemId(review.getOrderItem().getOrderItemId());
+        reviewDTO.setCreatedAt(Date.from(review.getCreateAt().atZone(ZoneId.systemDefault()).toInstant()));
         return reviewDTO;
     }
 
@@ -48,6 +58,7 @@ public class ReviewDTO {
         for (Review review : reviews) {
             reviewDTOs.add(convertEntityToDTO(review));
         }
+        reviewDTOs.sort(Comparator.comparing(ReviewDTO::getCreatedAt).reversed());
         return reviewDTOs;
     }
 

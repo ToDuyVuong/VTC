@@ -29,6 +29,16 @@ public class ReviewServiceImpl implements IReviewService {
         return listReviewResponse(reviews,"Lấy danh sách đánh giá thành công!", productId);
     }
 
+
+    @Override
+    public ListReviewResponse getReviewsByProductIdAndRating(Long productId, int rating) {
+
+        List<Review> reviews = reviewRepository.findAllByProductProductIdAndRatingAndStatus(productId, rating, Status.ACTIVE)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đánh giá nào!"));
+
+        return listReviewResponse(reviews,"Lấy danh sách đánh giá theo xếp hạng thành công!", productId);
+    }
+
     private long averageRating(List<Review> reviews){
         long sum = 0;
         for (Review review : reviews){

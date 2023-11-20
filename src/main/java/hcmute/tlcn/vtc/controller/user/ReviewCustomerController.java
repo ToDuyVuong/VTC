@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/customer/review")
@@ -26,5 +23,15 @@ public class ReviewCustomerController {
         String username = (String) request.getAttribute("username");
         reviewRequest.validate();
         return ResponseEntity.ok(reviewService.addNewReview(reviewRequest, username));
+    }
+
+    @PatchMapping("/delete/{reviewId}")
+    public ResponseEntity<ReviewResponse> deleteReview(@PathVariable Long reviewId,
+                                                       HttpServletRequest request) {
+        if (reviewId == null) {
+            throw new IllegalArgumentException("Mã đánh giá không được để trống!");
+        }
+        String username = (String) request.getAttribute("username");
+        return ResponseEntity.ok(reviewService.deleteReview(reviewId, username));
     }
 }

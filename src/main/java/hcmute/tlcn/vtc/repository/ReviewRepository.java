@@ -23,6 +23,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Optional<List<Review>> findAllByProductProductId(Long productId);
 
-    Optional<List<Review>> findAllByRatingAndStatus(int rating, Status status);
+    Optional<List<Review>> findAllByProductProductIdAndRatingAndStatus(Long productId, int rating, Status status);
 
 }
