@@ -30,6 +30,7 @@ public class Brand {
 
     private String origin;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     private LocalDateTime createAt;

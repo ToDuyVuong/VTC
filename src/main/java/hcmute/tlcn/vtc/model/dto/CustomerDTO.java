@@ -2,6 +2,7 @@ package hcmute.tlcn.vtc.model.dto;
 
 import hcmute.tlcn.vtc.model.entity.Customer;
 import hcmute.tlcn.vtc.model.extra.Role;
+import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,9 @@ public class CustomerDTO {
 
     private Date birthday;
 
+
+    private Status status;
+
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
@@ -42,6 +46,7 @@ public class CustomerDTO {
         customerDTO.setFullName(customer.getFullName());
         customerDTO.setBirthday(customer.getBirthday());
         customerDTO.setRoles(customer.getRoles());
+        customerDTO.setStatus(customer.getStatus());
         return customerDTO;
     }
 

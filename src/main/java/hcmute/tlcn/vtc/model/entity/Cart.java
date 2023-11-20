@@ -25,6 +25,7 @@ public class Cart {
 
     private LocalDateTime updateAt;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)

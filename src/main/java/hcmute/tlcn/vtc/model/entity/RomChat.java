@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.model.entity;
 
+import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,5 +22,8 @@ public class RomChat {
 
     @Column(nullable = false)
     private String receiver;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
 }

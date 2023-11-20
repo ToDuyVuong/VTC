@@ -29,6 +29,7 @@ public class Address {
 
     private String phone;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     private LocalDateTime createAt;

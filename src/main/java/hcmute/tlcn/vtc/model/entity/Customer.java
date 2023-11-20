@@ -2,6 +2,7 @@ package hcmute.tlcn.vtc.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hcmute.tlcn.vtc.model.extra.Role;
+import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,6 +36,9 @@ public class Customer implements UserDetails {
     private String fullName;
 
     private Date birthday;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     private LocalDateTime createAt;
 

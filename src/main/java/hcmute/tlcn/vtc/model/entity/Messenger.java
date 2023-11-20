@@ -21,6 +21,7 @@ public class Messenger {
 
     private String content;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     private String time;

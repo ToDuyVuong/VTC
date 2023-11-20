@@ -4,6 +4,7 @@ import hcmute.tlcn.vtc.authentication.response.LogoutResponse;
 import hcmute.tlcn.vtc.authentication.response.RefreshTokenResponse;
 import hcmute.tlcn.vtc.model.dto.CustomerDTO;
 import hcmute.tlcn.vtc.model.entity.Token;
+import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.TokenType;
 import hcmute.tlcn.vtc.repository.TokenRepository;
 import hcmute.tlcn.vtc.authentication.request.LoginRequest;
@@ -76,6 +77,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
         customer.setCreateAt(LocalDateTime.now());
         customer.setUpdateAt(LocalDateTime.now());
+        customer.setStatus(Status.ACTIVE);
 
         var saveCustomer = customerRepository.save(customer);
         RegisterResponse registerResponse = modelMapper.map(saveCustomer, RegisterResponse.class);

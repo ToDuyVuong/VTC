@@ -32,20 +32,19 @@ public class Review {
 
     private LocalDateTime updateAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
     @OneToMany(mappedBy = "review")
-    @JsonIgnore
     private List<Comment> comments;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Order order;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_item_id")
+    private OrderItem orderItem;
 
 }
