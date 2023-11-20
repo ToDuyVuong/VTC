@@ -25,6 +25,8 @@ public class ReviewDTO {
 
     private int rating;
 
+    private String image;
+
     private Status status;
 
     private String username;
@@ -46,6 +48,7 @@ public class ReviewDTO {
         reviewDTO.setContent(review.getContent());
         reviewDTO.setRating(review.getRating());
         reviewDTO.setStatus(review.getStatus());
+        reviewDTO.setImage(review.getImage());
         reviewDTO.setUsername(review.getCustomer().getUsername());
         reviewDTO.setOrderItemId(review.getOrderItem().getOrderItemId());
         reviewDTO.setCreatedAt(Date.from(review.getCreateAt().atZone(ZoneId.systemDefault()).toInstant()));

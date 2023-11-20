@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.guest.impl;
 
-import hcmute.tlcn.vtc.model.data.user.response.ListReviewResponse;
+import hcmute.tlcn.vtc.model.data.guest.ListReviewResponse;
 import hcmute.tlcn.vtc.model.dto.ReviewDTO;
 import hcmute.tlcn.vtc.model.entity.Review;
 import hcmute.tlcn.vtc.model.extra.Status;
@@ -26,7 +26,7 @@ public class ReviewServiceImpl implements IReviewService {
         List<Review> reviews = reviewRepository.findAllByProductProductIdAndStatus(productId, Status.ACTIVE)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đánh giá nào!"));
 
-        return listReviewResponse(reviews,"Lấy danh sách đánh giá thành công!", productId);
+        return listReviewResponse(reviews, "Lấy danh sách đánh giá thành công!", productId);
     }
 
 
@@ -36,18 +36,28 @@ public class ReviewServiceImpl implements IReviewService {
         List<Review> reviews = reviewRepository.findAllByProductProductIdAndRatingAndStatus(productId, rating, Status.ACTIVE)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đánh giá nào!"));
 
-        return listReviewResponse(reviews,"Lấy danh sách đánh giá theo xếp hạng thành công!", productId);
+        return listReviewResponse(reviews, "Lấy danh sách đánh giá theo xếp hạng thành công!", productId);
     }
 
-    private long averageRating(List<Review> reviews){
+    @Override
+    public ListReviewResponse getReviewsByProductIdAndImageNotNull(Long productId) {
+
+        List<Review> reviews = reviewRepository.findAllByProductProductIdAndImageNotNull(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đánh giá nào!"));
+
+        return listReviewResponse(reviews, "Lấy danh sách đánh giá có hình ảnh thành công!", productId);
+    }
+
+
+    private long averageRating(List<Review> reviews) {
         long sum = 0;
-        for (Review review : reviews){
+        for (Review review : reviews) {
             sum += review.getRating();
         }
-        return !reviews.isEmpty()  ? sum / reviews.size() : 0;
+        return !reviews.isEmpty() ? sum / reviews.size() : 0;
     }
 
-    private ListReviewResponse listReviewResponse (List<Review> reviews, String message, Long productId){
+    private ListReviewResponse listReviewResponse(List<Review> reviews, String message, Long productId) {
         ListReviewResponse listReviewResponse = new ListReviewResponse();
         listReviewResponse.setReviewDTOs(ReviewDTO.convertEntitiesToDTOs(reviews));
         listReviewResponse.setCount(reviews.size());

@@ -16,6 +16,8 @@ public class ReviewRequest {
 
     private Long orderItemId;
 
+    private String image;
+
     public void validate() {
 
         if (content == null || content.isEmpty()) {
@@ -25,7 +27,6 @@ public class ReviewRequest {
         if (rating < 1 || rating > 5) {
             throw new IllegalArgumentException("Đánh giá không hợp lệ.");
         }
-
 
         if (orderItemId == null) {
             throw new IllegalArgumentException("Đơn hàng không được để trống.");

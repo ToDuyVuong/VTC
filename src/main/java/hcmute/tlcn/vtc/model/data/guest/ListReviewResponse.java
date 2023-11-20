@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.user.response;
+package hcmute.tlcn.vtc.model.data.guest;
 
 import hcmute.tlcn.vtc.model.dto.ReviewDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;
@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ListReviewResponse extends ResponseAbstract {
 
-    private String username;
     private int count;
     private Long productId;
     private long averageRating;

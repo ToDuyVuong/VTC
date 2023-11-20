@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.controller.guest;
 
-import hcmute.tlcn.vtc.model.data.user.response.ListReviewResponse;
+import hcmute.tlcn.vtc.model.data.guest.ListReviewResponse;
 import hcmute.tlcn.vtc.service.guest.IReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,14 @@ public class ReviewController {
             throw new IllegalArgumentException("Xếp hạng không hợp lệ!");
         }
         return ResponseEntity.ok(reviewService.getReviewsByProductIdAndRating(productId, rating));
+    }
+
+    @GetMapping("/product/{productId}/image")
+    public ResponseEntity<ListReviewResponse> getReviewsByProductIdAndImageNotNull(@PathVariable Long productId) {
+        if (productId == null) {
+            throw new IllegalArgumentException("Mã sản phẩm không được để trống!");
+        }
+        return ResponseEntity.ok(reviewService.getReviewsByProductIdAndImageNotNull(productId));
     }
 
 

@@ -25,6 +25,8 @@ public class Review {
 
     private int rating;
 
+    private String image;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
