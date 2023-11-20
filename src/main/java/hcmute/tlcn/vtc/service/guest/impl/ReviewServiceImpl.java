@@ -1,11 +1,16 @@
 package hcmute.tlcn.vtc.service.guest.impl;
 
 import hcmute.tlcn.vtc.model.data.guest.ListReviewResponse;
+import hcmute.tlcn.vtc.model.data.user.response.ReviewResponse;
+import hcmute.tlcn.vtc.model.dto.CommentDTO;
 import hcmute.tlcn.vtc.model.dto.ReviewDTO;
+import hcmute.tlcn.vtc.model.entity.Comment;
 import hcmute.tlcn.vtc.model.entity.Review;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.ReviewRepository;
+import hcmute.tlcn.vtc.service.guest.ICommentService;
 import hcmute.tlcn.vtc.service.guest.IReviewService;
+import hcmute.tlcn.vtc.service.user.IReviewCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +23,29 @@ public class ReviewServiceImpl implements IReviewService {
 
     @Autowired
     private final ReviewRepository reviewRepository;
+    @Autowired
+    private final IReviewCustomerService reviewCustomerService;
+    @Autowired
+    private final ICommentService commentService;
+
+
+    @Override
+    public ReviewResponse getReviewDetailById(Long reviewId) {
+        Review review = reviewCustomerService.checkReview(reviewId);
+//        List<CommentDTO> commentDTOs = commentService.getListCommentDTO(reviewId);
+//
+//        ReviewDTO reviewDTO = ReviewDTO.convertEntityToDTO(review);
+//        reviewDTO.setCommentDTOs(commentDTOs);
+
+        ReviewResponse reviewResponse = new ReviewResponse();
+        reviewResponse.setReviewDTO( ReviewDTO.convertEntityToDTO(review));
+        reviewResponse.setProductId(review.getProduct().getProductId());
+        reviewResponse.setMessage("Lấy thông tin đánh giá thành công.");
+        reviewResponse.setStatus("OK");
+        reviewResponse.setCode(200);
+
+        return reviewResponse;
+    }
 
 
     @Override

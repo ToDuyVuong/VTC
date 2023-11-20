@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.service.user;
 
+import hcmute.tlcn.vtc.model.data.guest.ListCommentResponse;
 import hcmute.tlcn.vtc.model.data.user.request.CommentRequest;
 import hcmute.tlcn.vtc.model.data.user.response.CommentResponse;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,4 +10,6 @@ public interface ICommentCustomerService {
 
     @Transactional
     CommentResponse deleteComment(Long commentId, String username);
+
+
 }

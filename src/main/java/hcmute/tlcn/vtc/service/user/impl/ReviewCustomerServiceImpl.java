@@ -92,19 +92,47 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
         }
     }
 
-    private Review checkDeleteReview(Long reviewId, String username) {
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại!"));
 
-        if (!review.getCustomer().getUsername().equals(username)) {
-            throw new IllegalArgumentException("Bạn không có quyền xóa đánh giá này!");
+    @Override
+    public Review checkReviewRole(Long reviewId, String username, boolean isShop) {
+        Review review = reviewRepository.findByReviewIdAndStatus(reviewId, Status.ACTIVE)
+                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
+
+        if (isShop) {
+            if (!review.getProduct().getCategory().getShop().getCustomer().getUsername().equals(username)) {
+                throw new IllegalArgumentException("Bạn không phải chủ cửa hàng. Bạn không có quyền trả lời đánh giá này.");
+            }
+        } else {
+            if (!review.getCustomer().getUsername().equals(username)) {
+                throw new IllegalArgumentException("Bạn không phải chủ đánh giá. Bạn không có quyền trả lời đánh giá này.");
+            }
         }
 
+        return review;
+    }
+
+
+
+    @Override
+    public Review checkReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại!"));
         if (review.getStatus() == Status.INACTIVE) {
             throw new IllegalArgumentException("Đánh giá này đã bị xóa!");
         }
+
         return review;
     }
+
+    private Review checkDeleteReview(Long reviewId, String username) {
+        Review review = checkReview(reviewId);
+        if (!review.getCustomer().getUsername().equals(username)) {
+            throw new IllegalArgumentException("Bạn không có quyền xóa đánh giá này!");
+        }
+        return review;
+    }
+
+
 
 
     private void checkOrderItem(Long orderItemId) {

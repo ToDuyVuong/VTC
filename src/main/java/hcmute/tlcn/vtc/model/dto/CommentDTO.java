@@ -47,8 +47,14 @@ public class CommentDTO {
 
     public static List<CommentDTO> convertEntitiesToDTOs(List<Comment> comments) {
         List<CommentDTO> commentDTOs = new ArrayList<>();
-        comments.forEach(comment -> commentDTOs.add(convertEntityToDTO(comment)));
+//        comments.forEach(comment -> commentDTOs.add(convertEntityToDTO(comment)));
+        for (Comment comment : comments) {
+            if (comment.getStatus() == Status.ACTIVE) {
+                commentDTOs.add(convertEntityToDTO(comment));
+            }
+        }
         commentDTOs.sort(Comparator.comparing(CommentDTO::getCreateDate));
+
         return commentDTOs;
     }
 

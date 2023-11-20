@@ -12,6 +12,7 @@ import hcmute.tlcn.vtc.repository.CommentRepository;
 import hcmute.tlcn.vtc.repository.ReviewRepository;
 import hcmute.tlcn.vtc.service.user.ICommentCustomerService;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
+import hcmute.tlcn.vtc.service.user.IReviewCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,15 @@ public class CommentCustomerServiceImpl implements ICommentCustomerService {
     private CommentRepository commentRepository;
     @Autowired
     private ICustomerService customerService;
+    @Autowired
+    private final IReviewCustomerService reviewCustomerService;
 
 
     @Override
     @Transactional
     public CommentResponse addNewComment(CommentRequest request) {
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
-        Review review = checkReview(request.getReviewId(), request.getUsername(), request.isShop());
+        Review review = reviewCustomerService.checkReviewRole(request.getReviewId(), request.getUsername(), request.isShop());
         String shopName = request.isShop() ? review.getProduct().getCategory().getShop().getName() : "";
 
         Comment comment = new Comment();
@@ -51,7 +54,7 @@ public class CommentCustomerServiceImpl implements ICommentCustomerService {
             commentRepository.save(comment);
             return commentResponse(comment, request.getReviewId(), request.getUsername(), "Bình luận thành công vào đánh giá thành công.");
         } catch (Exception e) {
-            throw new IllegalArgumentException("Bình luận thất bại." );
+            throw new IllegalArgumentException("Bình luận thất bại.");
         }
     }
 
@@ -66,9 +69,12 @@ public class CommentCustomerServiceImpl implements ICommentCustomerService {
             commentRepository.save(comment);
             return commentResponse(comment, comment.getReview().getReviewId(), username, "Xóa bình luận thành công.");
         } catch (Exception e) {
-            throw new IllegalArgumentException("Xóa bình luận thất bại."+ e.getMessage());
+            throw new IllegalArgumentException("Xóa bình luận thất bại." + e.getMessage());
         }
     }
+
+
+
 
 
     private Comment checkComment(Long commentId, String username) {
@@ -87,22 +93,7 @@ public class CommentCustomerServiceImpl implements ICommentCustomerService {
     }
 
 
-    private Review checkReview(Long reviewId, String username, boolean isShop) {
-        Review review = reviewRepository.findByReviewIdAndStatus(reviewId, Status.ACTIVE)
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
 
-        if (isShop) {
-            if (!review.getProduct().getCategory().getShop().getCustomer().getUsername().equals(username)) {
-                throw new IllegalArgumentException("Bạn không phải chủ cửa hàng. Bạn không có quyền trả lời đánh giá này.");
-            }
-        } else {
-            if (!review.getCustomer().getUsername().equals(username)) {
-                throw new IllegalArgumentException("Bạn không phải chủ đánh giá. Bạn không có quyền trả lời đánh giá này.");
-            }
-        }
-
-        return review;
-    }
 
 
     private CommentResponse commentResponse(Comment comment, Long reviewId, String username, String message) {
@@ -117,15 +108,5 @@ public class CommentCustomerServiceImpl implements ICommentCustomerService {
     }
 
 
-    private ListCommentResponse listCommentResponse(List<Comment> comments, Long reviewId) {
-        ListCommentResponse response = new ListCommentResponse();
-        response.setCommentDTOs(CommentDTO.convertEntitiesToDTOs(comments));
-        response.setCount(comments.size());
-        response.setReviewId(reviewId);
-        response.setMessage("Lấy danh sách bình luận của đánh giá thành công.");
-        response.setCode(200);
-        response.setStatus("OK");
-        return response;
-    }
 
 }

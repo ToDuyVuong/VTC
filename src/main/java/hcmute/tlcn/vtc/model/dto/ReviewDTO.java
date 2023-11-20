@@ -31,11 +31,13 @@ public class ReviewDTO {
 
     private String username;
 
-    private List<Long> commentIds;
-
     private Long orderItemId;
 
     private Date createdAt;
+
+    private int countComment;
+
+    private List<CommentDTO> commentDTOs;
 
 
     public static ReviewDTO convertEntityToDTO(Review review) {
@@ -52,6 +54,12 @@ public class ReviewDTO {
         reviewDTO.setUsername(review.getCustomer().getUsername());
         reviewDTO.setOrderItemId(review.getOrderItem().getOrderItemId());
         reviewDTO.setCreatedAt(Date.from(review.getCreateAt().atZone(ZoneId.systemDefault()).toInstant()));
+        if (review.getComments() != null) {
+            reviewDTO.setCommentDTOs(CommentDTO.convertEntitiesToDTOs(review.getComments()));
+        }
+        reviewDTO.setCountComment(reviewDTO.getCommentDTOs().size());
+
+
         return reviewDTO;
     }
 

@@ -42,7 +42,7 @@ public class Review {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "review" , fetch = FetchType.EAGER)
     private List<Comment> comments;
 
     @OneToOne(fetch = FetchType.EAGER)
