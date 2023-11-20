@@ -15,6 +15,8 @@ public class ListReviewResponse extends ResponseAbstract {
 
     private String username;
     private int count;
+    private Long productId;
+    private long averageRating;
     private List<ReviewDTO> reviewDTOs;
 
 }

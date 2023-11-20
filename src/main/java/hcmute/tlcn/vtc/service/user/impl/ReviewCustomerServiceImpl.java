@@ -130,10 +130,11 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
         return reviewResponse;
     }
 
-    private ListReviewResponse listReviewResponse (List<Review> reviews, String username, String message, boolean created){
+    private ListReviewResponse listReviewResponse (List<Review> reviews, Long productId, String username, String message, boolean created){
         ListReviewResponse listReviewResponse = new ListReviewResponse();
         listReviewResponse.setReviewDTOs(ReviewDTO.convertEntitiesToDTOs(reviews));
         listReviewResponse.setCount(reviews.size());
+        listReviewResponse.setProductId(productId);
         listReviewResponse.setUsername(username);
         listReviewResponse.setMessage(message);
         listReviewResponse.setStatus(created ? "ok" : "success");

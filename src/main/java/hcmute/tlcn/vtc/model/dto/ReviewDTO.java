@@ -26,8 +26,6 @@ public class ReviewDTO {
 
     private String username;
 
-    private Long productId;
-
     private List<Long> commentIds;
 
     private Long orderItemId;
@@ -40,7 +38,6 @@ public class ReviewDTO {
         reviewDTO.setRating(review.getRating());
         reviewDTO.setStatus(review.getStatus());
         reviewDTO.setUsername(review.getCustomer().getUsername());
-        reviewDTO.setProductId(review.getProduct().getProductId());
         reviewDTO.setOrderItemId(review.getOrderItem().getOrderItemId());
         return reviewDTO;
     }

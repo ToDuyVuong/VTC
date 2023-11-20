@@ -12,7 +12,7 @@ import lombok.*;
 public class ReviewResponse extends ResponseAbstract {
 
     private String username;
-
+    private Long productId;
     private ReviewDTO reviewDTO;
 
 
