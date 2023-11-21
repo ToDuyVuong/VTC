@@ -178,5 +178,24 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
   - Xem chi tiết đơn hàng đã đặt.
   - Hủy đơn hàng đã đặt.
  
+
 - Quản lý đơn hàng của vender:
   - Xem danh sách đơn hàng theo trạng thái.
+  - Xem chi tiết đơn hàng đã đặt.
+  - Cập nhật trạng thái đơn hàng.
+  - Xem danh sách đơn hàng theo thời gian.
+  - Xem danh sách đơn hàng theo thời gian và trạng thái.
+
+
+- Quản lý đánh giá của customer:
+  - Thêm đánh giá.
+  - Xóa đánh giá.
+
+
+- Quản lý đánh giá:
+  - Xem danh sách đánh giá theo sản phẩm.
+
+
+- Quản lý bình luận:
+  - Thêm bình luận.
+  - Xóa bình luận.

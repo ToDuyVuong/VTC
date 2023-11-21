@@ -42,9 +42,6 @@ public class ReviewDTO {
 
     public static ReviewDTO convertEntityToDTO(Review review) {
 
-
-
-
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setReviewId(review.getReviewId());
         reviewDTO.setContent(review.getContent());
@@ -58,7 +55,6 @@ public class ReviewDTO {
             reviewDTO.setCommentDTOs(CommentDTO.convertEntitiesToDTOs(review.getComments()));
         }
         reviewDTO.setCountComment(reviewDTO.getCommentDTOs().size());
-
 
         return reviewDTO;
     }
