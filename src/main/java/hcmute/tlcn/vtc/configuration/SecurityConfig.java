@@ -31,9 +31,10 @@ public class SecurityConfig {
             "/api/voucher/**",
             "/api/review/**",
             "/api/comment/**",
+            "/api/chat/**",
+
 
             "/api/payment/**",
-
 
 
             "/v2/api-docs",

@@ -4,6 +4,8 @@ import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -25,5 +27,7 @@ public class RomChat {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private LocalDateTime createdAt;
 
 }
