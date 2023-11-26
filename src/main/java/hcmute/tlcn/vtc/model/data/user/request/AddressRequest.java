@@ -55,5 +55,16 @@ public class AddressRequest {
         if (addressDTO.getStatus() == null || Status.isValidStatus(String.valueOf(addressDTO.getStatus()))) {
             throw new IllegalArgumentException("Trạng thái không hợp lệ.");
         }
+
+        trim();
+    }
+
+    public void trim() {
+        this.username = this.username.trim();
+        this.addressDTO.setProvince(this.addressDTO.getProvince().trim());
+        this.addressDTO.setDistrict(this.addressDTO.getDistrict().trim());
+        this.addressDTO.setFullAddress(this.addressDTO.getFullAddress().trim());
+        this.addressDTO.setFullName(this.addressDTO.getFullName().trim());
+        this.addressDTO.setPhone(this.addressDTO.getPhone().trim());
     }
 }

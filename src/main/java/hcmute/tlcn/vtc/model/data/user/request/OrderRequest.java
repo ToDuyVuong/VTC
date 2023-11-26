@@ -51,6 +51,15 @@ public class OrderRequest {
                 !request.getShippingMethod().equals("EXPRESS")) {
             throw new IllegalArgumentException("Phương thức vận chuyển không hợp lệ! Hiện tại chỉ hỗ trợ GHN, GHTK, EXPRESS");
         }
+
+        request.trim();
+    }
+
+    public void trim() {
+        this.username = this.username.trim();
+        this.note = this.note.trim();
+        this.paymentMethod = this.paymentMethod.trim();
+        this.shippingMethod = this.shippingMethod.trim();
     }
 
 

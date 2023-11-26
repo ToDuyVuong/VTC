@@ -34,5 +34,12 @@ public class AddressStatusRequest {
         if (Status.isValidStatus(String.valueOf(status))) {
             throw new IllegalArgumentException("Trạng thái không hợp lệ.");
         }
+
+        trim();
+    }
+
+    public void trim() {
+        this.username = this.username.trim();
+        this.addressId = this.addressId.trim();
     }
 }

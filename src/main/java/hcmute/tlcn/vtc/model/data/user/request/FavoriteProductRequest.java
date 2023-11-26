@@ -32,4 +32,6 @@ public class FavoriteProductRequest {
             throw new IllegalArgumentException("Mã sản phẩm yêu thích không được để trống!");
         }
     }
+
+
 }

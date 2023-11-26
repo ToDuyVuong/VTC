@@ -32,5 +32,10 @@ public class ReviewRequest {
             throw new IllegalArgumentException("Đơn hàng không được để trống.");
         }
 
+        this.content = this.content.trim();
+        this.image = this.image.trim();
+
     }
+
+
 }

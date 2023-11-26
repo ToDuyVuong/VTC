@@ -73,6 +73,18 @@ public class UpdateShopRequest {
             throw new IllegalArgumentException("Số điện thoại không hợp lệ.");
         }
 
+        trim();
+    }
+
+    public void trim() {
+        this.name = this.name.trim();
+        this.address = this.address.trim();
+        this.phone = this.phone.trim();
+        this.email = this.email.trim();
+        this.description = this.description.trim();
+        this.openTime = this.openTime.trim();
+        this.closeTime = this.closeTime.trim();
+        this.username = this.username.trim();
     }
 
 }

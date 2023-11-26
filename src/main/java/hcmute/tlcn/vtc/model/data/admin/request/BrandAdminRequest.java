@@ -50,6 +50,7 @@ public class BrandAdminRequest {
             throw new IllegalArgumentException("Tên đăng nhập không được để trống!");
         }
 
+        trim();
 
     }
 
@@ -57,5 +58,14 @@ public class BrandAdminRequest {
         if (this.brandId == null || this.brandId == 0) {
             throw new IllegalArgumentException("Mã thương hiệu không hợp lệ!");
         }
+    }
+
+    public void trim() {
+        this.name = this.name.trim();
+        this.description = this.description.trim();
+        this.information = this.information.trim();
+        this.origin = this.origin.trim();
+        this.image = this.image.trim();
+        this.username = this.username.trim();
     }
 }

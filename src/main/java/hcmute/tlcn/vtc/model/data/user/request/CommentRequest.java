@@ -29,5 +29,8 @@ public class CommentRequest {
             throw new IllegalArgumentException("Mã review không được để trống.");
         }
 
+        this.content = this.content.trim();
     }
+
+
 }

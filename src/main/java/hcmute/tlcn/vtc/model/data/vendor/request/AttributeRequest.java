@@ -28,6 +28,8 @@ public class AttributeRequest {
         if (this.username == null || this.username.isEmpty()) {
             throw new IllegalArgumentException("Tên đăng nhập không được để trống!");
         }
+
+        trim();
     }
 
     public void validateUpdate() {
@@ -36,5 +38,11 @@ public class AttributeRequest {
         }
 
         validate();
+    }
+
+    public void trim() {
+        this.name = this.name.trim();
+        this.value = this.value.trim();
+        this.username = this.username.trim();
     }
 }

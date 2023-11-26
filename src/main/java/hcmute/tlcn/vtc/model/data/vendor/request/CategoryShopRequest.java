@@ -32,6 +32,8 @@ public class CategoryShopRequest {
         if (this.parentId == null) {
             throw new IllegalArgumentException("Mã danh mục cha không được để trống!");
         }
+
+        trim();
     }
 
 
@@ -41,6 +43,13 @@ public class CategoryShopRequest {
         }
 
         validate();
+    }
+
+    public void trim() {
+        this.name = this.name.trim();
+        this.description = this.description.trim();
+        this.image = this.image.trim();
+        this.username = this.username.trim();
     }
 
 

@@ -51,7 +51,16 @@ public class RegisterRequest {
             throw new IllegalArgumentException("Ngày sinh không được để trống.");
         }
 
+        trim();
+
     }
+    public void trim() {
+        this.username = this.username.trim();
+        this.password = this.password.trim();
+        this.email = this.email.trim();
+        this.fullName = this.fullName.trim();
+    }
+
 
 
 

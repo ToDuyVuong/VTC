@@ -26,5 +26,13 @@ public class CategoryAdminRequest {
         if (this.image == null || this.image.isEmpty()) {
             throw new IllegalArgumentException("Hình ảnh danh mục không được để trống!");
         }
+
+        trim();
+    }
+
+    public void trim() {
+        this.name = this.name.trim();
+        this.description = this.description.trim();
+        this.image = this.image.trim();
     }
 }

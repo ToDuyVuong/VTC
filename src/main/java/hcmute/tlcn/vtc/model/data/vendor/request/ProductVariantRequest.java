@@ -46,6 +46,8 @@ public class ProductVariantRequest {
         if (containsDuplicate(attributeIds)) {
             throw new IllegalArgumentException("Có mã thuộc tính trùng lặp trong danh sách thuộc tính!");
         }
+
+        trim();
     }
 
     public void validateUpdate() {
@@ -65,5 +67,10 @@ public class ProductVariantRequest {
             }
         }
         return false;
+    }
+
+    public void trim() {
+        this.sku = this.sku.trim();
+        this.image = this.image.trim();
     }
 }

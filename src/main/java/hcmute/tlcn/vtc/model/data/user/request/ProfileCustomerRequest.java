@@ -41,7 +41,14 @@ public class ProfileCustomerRequest {
             throw new IllegalArgumentException("Ngày sinh không được để trống.");
         }
 
+        trim();
 
 
+    }
+
+    public void trim() {
+        this.username = this.username.trim();
+        this.email = this.email.trim();
+        this.fullName = this.fullName.trim();
     }
 }

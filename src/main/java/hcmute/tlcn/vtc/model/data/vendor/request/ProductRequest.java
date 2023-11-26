@@ -56,6 +56,8 @@ public class ProductRequest {
                 variantRequest.validate();
             }
         }
+
+        trim();
     }
 
     public void validateUpdate() {
@@ -74,6 +76,14 @@ public class ProductRequest {
         if (field == null || field.isEmpty()) {
             throw new IllegalArgumentException(errorMessage);
         }
+    }
+
+    public void trim() {
+        this.name = this.name.trim();
+        this.image = this.image.trim();
+        this.description = this.description.trim();
+        this.information = this.information.trim();
+        this.username = this.username.trim();
     }
 
 }

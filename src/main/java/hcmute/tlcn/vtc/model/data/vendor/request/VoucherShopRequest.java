@@ -112,6 +112,8 @@ public class VoucherShopRequest {
         if(this.type.equals("money") && this.discount > this.maxDiscount){
             throw new IllegalArgumentException("Giá trị giảm giá không được lớn hơn giá trị giảm giá tối đa");
         }
+
+        trim();
     }
 
     public void validateUpdate() {
@@ -169,6 +171,14 @@ public class VoucherShopRequest {
         } else {
             return VoucherType.AMOUNT_SHOP;
         }
+    }
+
+    public void trim() {
+        this.code = this.code.trim();
+        this.name = this.name.trim();
+        this.description = this.description.trim();
+        this.type = this.type.trim();
+        this.username = this.username.trim();
     }
 
 

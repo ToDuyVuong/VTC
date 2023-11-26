@@ -22,5 +22,11 @@ public class LoginRequest {
             throw new IllegalArgumentException("Mật khẩu không được để trống.");
         }
 
+        trim();
+    }
+
+    public void trim() {
+        this.username = this.username.trim();
+        this.password = this.password.trim();
     }
 }

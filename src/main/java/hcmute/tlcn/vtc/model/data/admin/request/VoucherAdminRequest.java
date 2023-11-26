@@ -95,6 +95,8 @@ public class VoucherAdminRequest {
             throw new IllegalArgumentException("Ngày bắt đầu không được trùng ngày kết thúc");
         }
 
+        trim();
+
     }
 
     public void validateCreate() {
@@ -170,6 +172,14 @@ public class VoucherAdminRequest {
         }else {
             return VoucherType.SHIPPING;
         }
+    }
+
+    public void trim() {
+        this.code = this.code.trim();
+        this.name = this.name.trim();
+        this.description = this.description.trim();
+        this.type = this.type.trim();
+        this.username = this.username.trim();
     }
 
 

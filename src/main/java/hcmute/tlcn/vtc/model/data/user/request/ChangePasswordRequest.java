@@ -25,5 +25,13 @@ public class ChangePasswordRequest {
         if (newPassword == null || newPassword.isEmpty()) {
             throw new IllegalArgumentException("Mật khẩu mới không được để trống.");
         }
+
+        trim();
+    }
+
+    public void trim() {
+        this.username = this.username.trim();
+        this.oldPassword = this.oldPassword.trim();
+        this.newPassword = this.newPassword.trim();
     }
 }
