@@ -11,22 +11,30 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class StatisticsRequest {
 
-    private Date dateStart;
-    private Date dateEnd;
+    private Date startDate;
+    private Date endDate;
     private String username;
 
     public void validate() {
-        if (this.dateStart == null) {
-            throw new IllegalArgumentException("Ngày bắt đầu không được để trống!");
+        if (startDate == null) {
+            throw new IllegalArgumentException("Ngày bắt đầu không được để trống.");
         }
 
-        if (this.dateEnd == null) {
-            throw new IllegalArgumentException("Ngày kết thúc không được để trống!");
+        if (endDate == null) {
+            throw new IllegalArgumentException("Ngày kết thúc không được để trống.");
         }
 
-        if(this.dateStart.after(this.dateEnd)) {
-            throw new IllegalArgumentException("Ngày bắt đầu không được lớn hơn ngày kết thúc!");
+        if (startDate.after(endDate)) {
+            throw new IllegalArgumentException("Ngày bắt đầu không được lớn hơn ngày kết thúc.");
         }
+
+        //khoảng thời gian trong vòng 30 ngày
+        if (endDate.getTime() - startDate.getTime() > 2592000000L) {
+            throw new IllegalArgumentException("Khoảng thời gian không được lớn hơn 30 ngày.");
+        }
+
     }
+
+
 
 }

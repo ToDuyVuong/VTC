@@ -22,7 +22,6 @@ public class Order {
     private Long orderId;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('PENDING', 'ACTIVE', 'INACTIVE', 'DELETED', 'CANCEL', 'WAITING', 'DELIVERED', 'PROCESSING', 'RETURNED', 'SHIPPING', 'SHIPPED', 'CART', 'ORDER', 'COMPLETED', 'REFUNDED', 'PAID', 'UNPAID')")
     private Status status;
 
     private Date orderDate;

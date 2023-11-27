@@ -25,4 +25,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<List<Order>> findAllByShopIdAndOrderDateBetweenAndStatus(Long shopId, Date startOrderDate, Date endOrderDate, Status status);
 
 
+    int countAllByShopIdAndStatusAndOrderDateBetween(Long shopId, Status status, Date startDate, Date endDate);
+
+
+    Optional<List<Order>> findAllByShopIdAndStatusAndOrderDateBetween(Long shopId, Status status, Date startDate, Date endDate);
+
+
 }

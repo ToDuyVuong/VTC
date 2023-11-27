@@ -15,7 +15,7 @@ import java.util.List;
 public class StatisticsResponse extends ResponseAbstract {
 
     private int count;
-    private int countOrder;
+    private int totalOrder;
     private String username;
     private Date dateStart;
     private Date dateEnd;

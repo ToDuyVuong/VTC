@@ -13,7 +13,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class StatisticsDTO {
 
-    private Double totalMoney;
+    private Long totalMoney;
     private int totalOrder;
     private int totalProduct;
     private Date date;
