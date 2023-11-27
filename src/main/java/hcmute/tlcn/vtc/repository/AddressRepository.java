@@ -17,4 +17,8 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     Optional<Address> findFirstByCustomerUsernameAndStatus(String username, Status status);
 
     Optional<Address> findByAddressIdAndCustomerUsername(Long addressId, String username);
+
+    Optional<List<Address>> findAllByCustomerAndStatus(Customer customer, Status status);
+
+    Optional<List<Address>> findAllByCustomerAndStatusAndAddressIdNot(Customer customer, Status status, Long addressId);
 }

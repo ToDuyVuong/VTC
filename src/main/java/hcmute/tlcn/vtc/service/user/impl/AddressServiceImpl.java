@@ -51,6 +51,9 @@ public class AddressServiceImpl implements IAddressService {
         try {
             Address addressSave = addressRepository.save(address);
 
+            updateStatusInActiveWithAddress(customer, addressSave.getAddressId(), addressSave.getUpdateAt());
+
+
             AddressDTO addressDTOSave = modelMapper.map(addressSave, AddressDTO.class);
             CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
 
@@ -140,6 +143,7 @@ public class AddressServiceImpl implements IAddressService {
         if (address.getCustomer().getCustomerId().equals(customer.getCustomerId())) {
             address.setUpdateAt(LocalDateTime.now());
             address.setStatus(request.getStatus());
+            checkStatus(request, address, customer, addressId);
 
             try {
                 addressRepository.save(address);
@@ -231,9 +235,24 @@ public class AddressServiceImpl implements IAddressService {
             throw new IllegalArgumentException("Địa chỉ đã bị xóa.");
         }
 
+
         return address;
     }
 
+
+    @Transactional
+    public void checkStatus(AddressStatusRequest request, Address address, Customer customer, Long addressId) {
+        if (request.getStatus().equals(Status.DELETED)) {
+            address.setStatus(Status.DELETED);
+        } else if (request.getStatus().equals(Status.ACTIVE)) {
+            updateStatusInActiveWithAddress(customer, addressId, address.getUpdateAt());
+            address.setStatus(Status.ACTIVE);
+        } else if (request.getStatus().equals(Status.INACTIVE)) {
+            address.setStatus(Status.INACTIVE);
+        } else {
+            throw new IllegalArgumentException("Trạng thái không hợp lệ.");
+        }
+    }
 
 
     private String setMessageUpdateStatus(Status status, String fullName) {
@@ -241,6 +260,26 @@ public class AddressServiceImpl implements IAddressService {
             return "Xóa địa chỉ của khách hàng: " + fullName + " thành công.";
         }
         return "Cập nhật trạng thái địa chỉ của khách hàng: " + fullName + " thành công.";
+
+    }
+
+    @Transactional
+    public void updateStatusInActiveWithAddress(Customer customer, Long addressId, LocalDateTime updateAt) {
+
+        List<Address> addresses = addressRepository.findAllByCustomerAndStatusAndAddressIdNot(customer, Status.ACTIVE, addressId)
+                .orElseThrow(() -> new NotFoundException("Khách hàng chưa có địa chỉ nào."));
+
+        if (addresses != null && addresses.size() > 0) {
+            for (Address address : addresses) {
+                address.setStatus(Status.INACTIVE);
+                address.setUpdateAt(updateAt);
+                try {
+                    addressRepository.save(address);
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("Cập nhật trạng thái địa chỉ mới thất bại.");
+                }
+            }
+        }
 
     }
 
