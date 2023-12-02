@@ -103,6 +103,7 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Xem danh sách sản phẩm mới nhất.
     - Tim kiếm sản phẩm theo tên.
     - Xem danh sách sản phẩm theo giá.
+    - Tính số yêu thích của sản phẩm.
 
 
 - Yêu thích sản phẩm:
@@ -116,6 +117,7 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
     - Thêm cửa hàng vào danh sách theo dõi.
     - Xem danh sách cửa hàng theo dõi.
     - Xóa cửa hàng khỏi danh sách theo dõi.
+    - Tính số theo dõi của cửa hàng.
 
 
 - Xem cửa hàng:
@@ -199,3 +201,9 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
 - Quản lý bình luận:
   - Thêm bình luận.
   - Xóa bình luận.
+  - Tính số bình luận của sản phẩm.
+  - Tính điểm đánh giá của sản phẩm.
+
+
+- Thống kê doanh thu từ quyền vender:
+  - Xem doanh thu theo thời gian.

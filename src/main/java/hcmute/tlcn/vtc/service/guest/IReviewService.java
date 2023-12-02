@@ -11,4 +11,8 @@ public interface IReviewService {
     ListReviewResponse getReviewsByProductIdAndRating(Long productId, int rating);
 
     ListReviewResponse getReviewsByProductIdAndImageNotNull(Long productId);
+
+    int countReviewByProductId(Long productId);
+
+    float countAverageRatingByProductId(Long productId);
 }

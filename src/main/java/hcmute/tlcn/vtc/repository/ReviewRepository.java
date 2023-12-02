@@ -29,4 +29,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Optional<List<Review>> findAllByProductProductIdAndRatingAndStatus(Long productId, int rating, Status status);
 
+    int countByProductProductId(Long productId);
+
+    float countAverageRatingByProductProductId(Long productId);
 }

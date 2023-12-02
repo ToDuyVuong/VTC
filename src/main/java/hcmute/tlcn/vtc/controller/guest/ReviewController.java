@@ -55,6 +55,22 @@ public class ReviewController {
     }
 
 
+    @GetMapping("/count/{productId}")
+    public ResponseEntity<Integer> countReviewByProductId(@PathVariable Long productId) {
+        if (productId == null) {
+            throw new IllegalArgumentException("Mã sản phẩm không được để trống!");
+        }
+        return ResponseEntity.ok(reviewService.countReviewByProductId(productId));
+    }
+
+    @GetMapping("/avg-rating/{productId}")
+    public ResponseEntity<Float> getAvgRatingByProductId(@PathVariable Long productId) {
+        if (productId == null) {
+            throw new IllegalArgumentException("Mã sản phẩm không được để trống!");
+        }
+        return ResponseEntity.ok(reviewService.countAverageRatingByProductId(productId));
+    }
+
 
 
 }

@@ -118,7 +118,6 @@ public class ProductShopServiceImpl implements IProductShopService {
         List<Product> products = productRepository
                 .findAllByCategoryShopShopIdAndStatus(shop.getShopId(), Status.ACTIVE)
                 .orElseThrow(() -> new NotFoundException("Cửa hàng không có sản phẩm đang bán!"));
-
         return getListProductResponseSort(products,
                 "Lấy danh sách sản phẩm đang bán trong cửa hàng thành công.",
                 true);

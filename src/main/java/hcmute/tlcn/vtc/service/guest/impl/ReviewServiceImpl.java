@@ -74,6 +74,16 @@ public class ReviewServiceImpl implements IReviewService {
         return listReviewResponse(reviews, "Lấy danh sách đánh giá có hình ảnh thành công!", productId);
     }
 
+    @Override
+    public int countReviewByProductId(Long productId) {
+        return reviewRepository.countByProductProductId(productId);
+    }
+
+    @Override
+    public float countAverageRatingByProductId(Long productId) {
+        return reviewRepository.countAverageRatingByProductProductId(productId);
+    }
+
 
     private long averageRating(List<Review> reviews) {
         long sum = 0;
@@ -95,5 +105,7 @@ public class ReviewServiceImpl implements IReviewService {
 
         return listReviewResponse;
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.controller.guest;
 
 import hcmute.tlcn.vtc.model.data.guest.ShopDetailResponse;
+import hcmute.tlcn.vtc.service.guest.IFollowedGuestService;
 import hcmute.tlcn.vtc.service.guest.IShopDetailService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ public class ShopDetailController {
 
     @Autowired
     private IShopDetailService shopDetailService;
+    @Autowired
+    private IFollowedGuestService followedGuestService;
 
     @GetMapping("/shop/{shopId}")
     public ResponseEntity<ShopDetailResponse> getShopDetailByShopId(@PathVariable Long shopId,
@@ -27,5 +30,13 @@ public class ShopDetailController {
         }
         String username = (String) request.getAttribute("username");
         return ResponseEntity.ok(shopDetailService.getShopDetailByShopId(shopId, username));
+    }
+
+    @GetMapping("/count-followed/{shopId}")
+    public ResponseEntity<Integer> countFollowedShop(@PathVariable Long shopId) {
+        if (shopId == null) {
+            throw new IllegalArgumentException("Mã cửa hàng không được để trống!");
+        }
+        return ResponseEntity.ok(followedGuestService.countFollowedShop(shopId));
     }
 }

@@ -2,6 +2,7 @@ package hcmute.tlcn.vtc.controller.guest;
 
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.service.guest.IFavoriteProductGuestService;
 import hcmute.tlcn.vtc.service.guest.IProductService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+    @Autowired
+    private IFavoriteProductGuestService favoriteProductGuestService;
 
     @GetMapping("/detail/{productId}")
     public ResponseEntity<ProductResponse> getProductDetail(@PathVariable Long productId) {
@@ -137,6 +140,14 @@ public class ProductController {
         if (minPrice >= maxPrice) {
             throw new IllegalArgumentException("Giá sản phẩm tối thiểu phải nhỏ hơn hoặc bằng giá sản phẩm tối đa!");
         }
+    }
+
+    @GetMapping("/count-favorite/{productId}")
+    public ResponseEntity<Integer> countFavoriteProduct(@PathVariable Long productId) {
+        if (productId == null) {
+            throw new NotFoundException("Mã sản phẩm không được để trống!");
+        }
+        return ResponseEntity.ok(favoriteProductGuestService.countFavoriteProduct(productId));
     }
 
 }
