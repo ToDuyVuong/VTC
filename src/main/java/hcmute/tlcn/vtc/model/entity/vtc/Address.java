@@ -23,6 +23,8 @@ public class Address {
 
     private String district;
 
+    private String ward;
+
     private String fullAddress;
 
     private String fullName;

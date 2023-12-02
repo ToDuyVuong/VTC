@@ -42,7 +42,7 @@ public class AddressServiceImpl implements IAddressService {
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
 
         AddressDTO addressDTO = request.getAddressDTO();
-        Address address = modelMapper.map(addressDTO, Address.class);
+        Address address = AddressDTO.convertDTOToEntity(addressDTO);
         address.setCustomer(customer);
         address.setCreateAt(LocalDateTime.now());
         address.setUpdateAt(LocalDateTime.now());
@@ -84,8 +84,8 @@ public class AddressServiceImpl implements IAddressService {
         Long id = Long.valueOf(addressId);
         Address address = checkAddress(id, username);
 
-        AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
-        CustomerDTO customerDTO = modelMapper.map(address.getCustomer(), CustomerDTO.class);
+        AddressDTO addressDTO = AddressDTO.convertEntityToDTO(address);
+        CustomerDTO customerDTO = CustomerDTO.convertEntityToDTO(address.getCustomer());
 
         AddressResponse response = new AddressResponse();
         response.setAddressDTO(addressDTO);
@@ -108,6 +108,7 @@ public class AddressServiceImpl implements IAddressService {
         Address address = checkAddress(addressDTO.getAddressId(), request.getUsername());
         address.setProvince(addressDTO.getProvince());
         address.setDistrict(addressDTO.getDistrict());
+        address.setWard(addressDTO.getWard());
         address.setFullAddress(addressDTO.getFullAddress());
         address.setFullName(addressDTO.getFullName());
         address.setPhone(addressDTO.getPhone());
@@ -117,7 +118,7 @@ public class AddressServiceImpl implements IAddressService {
         try {
             addressRepository.save(address);
 
-            CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+            CustomerDTO customerDTO = CustomerDTO.convertEntityToDTO(customer);
             AddressResponse response = new AddressResponse();
             response.setAddressDTO(addressDTO);
             response.setCustomerDTO(customerDTO);
@@ -149,8 +150,8 @@ public class AddressServiceImpl implements IAddressService {
                 addressRepository.save(address);
 
                 String message = setMessageUpdateStatus(request.getStatus(), customer.getFullName());
-                AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
-                CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+                AddressDTO addressDTO = AddressDTO.convertEntityToDTO(address);
+                CustomerDTO customerDTO = CustomerDTO.convertEntityToDTO(customer);
                 AddressResponse response = new AddressResponse();
                 response.setCustomerDTO(customerDTO);
                 response.setAddressDTO(addressDTO);
@@ -177,7 +178,7 @@ public class AddressServiceImpl implements IAddressService {
         Customer customer = customerService.getCustomerByUsername(username);
         List<Address> addresses = addressRepository.findAllByCustomerAndStatusNot(customer, Status.DELETED)
                 .orElseThrow(() -> new NotFoundException("Khách hàng chưa có địa chỉ nào."));
-        CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+        CustomerDTO customerDTO = CustomerDTO.convertEntityToDTO(customer);
 
         addresses.sort(Comparator.comparing(Address::getStatus,
                 Comparator.comparingInt(s -> s == Status.ACTIVE ? 0 : (s == Status.INACTIVE ? 1 : 2))));

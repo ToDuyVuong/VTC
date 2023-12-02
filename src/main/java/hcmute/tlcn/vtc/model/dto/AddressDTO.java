@@ -21,6 +21,8 @@ public class AddressDTO {
 
     private String district;
 
+    private String ward;
+
     private String fullAddress;
 
     private String fullName;
@@ -29,40 +31,6 @@ public class AddressDTO {
 
     private Status status;
 
-
-//    public void validate () {
-//        if (province == null || province.isEmpty()) {
-//            throw new IllegalArgumentException("Tỉnh/Thành phố không được để trống.");
-//        }
-//
-//        if (district == null || district.isEmpty()) {
-//            throw new IllegalArgumentException("Quận/Huyện không được để trống.");
-//        }
-//
-//        if (fullAddress == null || fullAddress.isEmpty()) {
-//            throw new IllegalArgumentException("Địa chỉ không được để trống.");
-//        }
-//
-//        if (fullName == null || fullName.isEmpty()) {
-//            throw new IllegalArgumentException("Họ tên không được để trống.");
-//        }
-//
-//        if (phone == null || phone.isEmpty()) {
-//            throw new IllegalArgumentException("Số điện thoại không được để trống.");
-//        }
-//
-//        if(phone.length() < 9 || phone.length() > 11){
-//            throw new IllegalArgumentException("Số điện thoại không hợp lệ.");
-//        }
-//
-//        if (!Pattern.matches("[0-9]+", phone)) {
-//            throw new IllegalArgumentException("Số điện thoại chỉ được chứa ký tự số.");
-//        }
-//
-//        if (status == null) {
-//            throw new IllegalArgumentException("Trạng thái không được để trống.");
-//        }
-//    }
 
 
 //    public static Address convertToEntity(AddressDTO addressDTO) {
@@ -75,6 +43,7 @@ public class AddressDTO {
         addressDTO.setAddressId(address.getAddressId());
         addressDTO.setProvince(address.getProvince());
         addressDTO.setDistrict(address.getDistrict());
+        addressDTO.setWard(address.getWard());
         addressDTO.setFullAddress(address.getFullAddress());
         addressDTO.setFullName(address.getFullName());
         addressDTO.setPhone(address.getPhone());
@@ -86,12 +55,24 @@ public class AddressDTO {
     public static List<AddressDTO> convertToListDTO(List<Address> addresses) {
         List<AddressDTO> addressDTOs = new ArrayList<>();
         for (Address address : addresses) {
-//            ModelMapper modelMapper = new ModelMapper();
-//            AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
             AddressDTO addressDTO = convertEntityToDTO(address);
             addressDTOs.add(addressDTO);
         }
+
         return addressDTOs;
+    }
+
+    public static Address convertDTOToEntity(AddressDTO addressDTO) {
+        Address address = new Address();
+        address.setAddressId(addressDTO.getAddressId());
+        address.setProvince(addressDTO.getProvince());
+        address.setDistrict(addressDTO.getDistrict());
+        address.setWard(addressDTO.getWard());
+        address.setFullAddress(addressDTO.getFullAddress());
+        address.setFullName(addressDTO.getFullName());
+        address.setPhone(addressDTO.getPhone());
+        address.setStatus(addressDTO.getStatus());
+        return address;
     }
 
 

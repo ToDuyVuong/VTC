@@ -32,6 +32,10 @@ public class AddressRequest {
             throw new IllegalArgumentException("Quận/Huyện không được để trống.");
         }
 
+        if (addressDTO.getWard() == null || addressDTO.getWard().isEmpty()) {
+            throw new IllegalArgumentException("Phường/Xã không được để trống.");
+        }
+
         if (addressDTO.getFullAddress() == null || addressDTO.getFullAddress().isEmpty()) {
             throw new IllegalArgumentException("Địa chỉ không được để trống.");
         }
