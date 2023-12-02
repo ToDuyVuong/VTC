@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.entity;
+package hcmute.tlcn.vtc.model.entity.vtc;
 
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
@@ -13,20 +13,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ProductVariant {
+public class Review {
 
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productVariantId;
+    private Long reviewId;
 
-    private String sku;
+    private String content;
+
+    private int rating;
 
     private String image;
-
-    private Long price;
-
-    private int quantity;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -35,14 +33,19 @@ public class ProductVariant {
 
     private LocalDateTime updateAt;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "product_variant_attribute", joinColumns =
-    @JoinColumn(name = "product_variant_id", nullable = true), inverseJoinColumns =
-    @JoinColumn(name = "attribute_id", nullable = true))
-    private List<Attribute> attributes;
+    @OneToMany(mappedBy = "review" , fetch = FetchType.EAGER)
+    private List<Comment> comments;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_item_id")
+    private OrderItem orderItem;
 
 }

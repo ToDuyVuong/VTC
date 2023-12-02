@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.entity.*;
+import hcmute.tlcn.vtc.model.entity.vtc.*;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CartRepository;
 import hcmute.tlcn.vtc.repository.OrderItemRepository;

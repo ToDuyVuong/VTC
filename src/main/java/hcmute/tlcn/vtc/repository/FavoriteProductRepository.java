@@ -1,10 +1,8 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Customer;
-import hcmute.tlcn.vtc.model.entity.FavoriteProduct;
-import hcmute.tlcn.vtc.model.entity.Product;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
+import hcmute.tlcn.vtc.model.entity.vtc.FavoriteProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

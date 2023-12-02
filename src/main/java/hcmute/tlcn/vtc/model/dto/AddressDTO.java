@@ -1,13 +1,11 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.Address;
+import hcmute.tlcn.vtc.model.entity.vtc.Address;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 
 @Getter

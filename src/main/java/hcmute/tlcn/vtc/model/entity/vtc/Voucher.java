@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.entity;
+package hcmute.tlcn.vtc.model.entity.vtc;
 
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
@@ -7,7 +7,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter

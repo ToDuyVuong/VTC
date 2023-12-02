@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.service.guest;
 
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
-import hcmute.tlcn.vtc.model.entity.Product;
+import hcmute.tlcn.vtc.model.entity.vtc.Product;
 
 public interface IProductService {
     ProductResponse getProductDetail(Long productId);

@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.service.guest.impl;
 
 import hcmute.tlcn.vtc.model.data.guest.ListCommentResponse;
 import hcmute.tlcn.vtc.model.dto.CommentDTO;
-import hcmute.tlcn.vtc.model.entity.Comment;
+import hcmute.tlcn.vtc.model.entity.vtc.Comment;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CommentRepository;
 import hcmute.tlcn.vtc.repository.ReviewRepository;

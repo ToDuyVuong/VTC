@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user;
 
-import hcmute.tlcn.vtc.model.entity.RomChat;
+import hcmute.tlcn.vtc.model.entity.vtc.RomChat;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface IRomChatService {

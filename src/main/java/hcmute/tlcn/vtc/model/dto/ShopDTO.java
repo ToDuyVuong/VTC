@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.Shop;
+import hcmute.tlcn.vtc.model.entity.vtc.Shop;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 

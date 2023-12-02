@@ -4,7 +4,7 @@ import hcmute.tlcn.vtc.model.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
-import hcmute.tlcn.vtc.model.entity.Product;
+import hcmute.tlcn.vtc.model.entity.vtc.Product;
 import hcmute.tlcn.vtc.model.extra.Status;
 import org.springframework.transaction.annotation.Transactional;
 

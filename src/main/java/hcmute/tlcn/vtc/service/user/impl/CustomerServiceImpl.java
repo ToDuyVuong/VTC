@@ -6,7 +6,7 @@ import hcmute.tlcn.vtc.model.data.user.request.ForgotPasswordRequest;
 import hcmute.tlcn.vtc.model.data.user.request.ProfileCustomerRequest;
 import hcmute.tlcn.vtc.model.data.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ProfileCustomerResponse;
-import hcmute.tlcn.vtc.model.entity.Customer;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.service.user.IOtpService;

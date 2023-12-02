@@ -1,11 +1,9 @@
-package hcmute.tlcn.vtc.model.entity;
+package hcmute.tlcn.vtc.model.entity.vtc;
 
-import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter

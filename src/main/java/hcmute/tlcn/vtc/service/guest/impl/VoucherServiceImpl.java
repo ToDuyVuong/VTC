@@ -3,7 +3,7 @@ package hcmute.tlcn.vtc.service.guest.impl;
 import hcmute.tlcn.vtc.model.dto.VoucherDTO;
 import hcmute.tlcn.vtc.model.data.guest.ListVoucherResponse;
 import hcmute.tlcn.vtc.model.data.guest.VoucherResponse;
-import hcmute.tlcn.vtc.model.entity.Voucher;
+import hcmute.tlcn.vtc.model.entity.vtc.Voucher;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.repository.VoucherRepository;

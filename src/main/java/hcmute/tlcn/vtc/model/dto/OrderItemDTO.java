@@ -1,7 +1,6 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.OrderItem;
-import hcmute.tlcn.vtc.model.entity.VoucherOrder;
+import hcmute.tlcn.vtc.model.entity.vtc.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

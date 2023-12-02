@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
-import hcmute.tlcn.vtc.model.entity.Cart;
-import hcmute.tlcn.vtc.model.entity.Order;
-import hcmute.tlcn.vtc.model.entity.OrderItem;
+import hcmute.tlcn.vtc.model.entity.vtc.Cart;
+import hcmute.tlcn.vtc.model.entity.vtc.Order;
+import hcmute.tlcn.vtc.model.entity.vtc.OrderItem;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CartRepository;
 import hcmute.tlcn.vtc.repository.OrderItemRepository;

@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.Customer;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;

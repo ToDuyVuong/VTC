@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.entity.RomChat;
+import hcmute.tlcn.vtc.model.entity.vtc.RomChat;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.RomChatRepository;
 import hcmute.tlcn.vtc.service.user.IRomChatService;

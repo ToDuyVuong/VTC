@@ -3,7 +3,7 @@ package hcmute.tlcn.vtc.service.user;
 import hcmute.tlcn.vtc.model.data.user.request.CartRequest;
 import hcmute.tlcn.vtc.model.data.user.response.CartResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListCartResponse;
-import hcmute.tlcn.vtc.model.entity.Cart;
+import hcmute.tlcn.vtc.model.entity.vtc.Cart;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

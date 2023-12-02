@@ -1,12 +1,10 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Product;
-import hcmute.tlcn.vtc.model.entity.ProductVariant;
+import hcmute.tlcn.vtc.model.entity.vtc.ProductVariant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, Long> {

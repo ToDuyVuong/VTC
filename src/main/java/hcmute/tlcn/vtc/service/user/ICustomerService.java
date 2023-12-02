@@ -5,7 +5,7 @@ import hcmute.tlcn.vtc.model.data.user.request.ForgotPasswordRequest;
 import hcmute.tlcn.vtc.model.data.user.request.ProfileCustomerRequest;
 import hcmute.tlcn.vtc.model.data.user.response.ForgotPasswordResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ProfileCustomerResponse;
-import hcmute.tlcn.vtc.model.entity.Customer;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 
 public interface ICustomerService {
     Customer getCustomerByUsername(String username);

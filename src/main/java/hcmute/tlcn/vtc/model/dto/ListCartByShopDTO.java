@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.Cart;
-import hcmute.tlcn.vtc.model.entity.Shop;
+import hcmute.tlcn.vtc.model.entity.vtc.Cart;
+import hcmute.tlcn.vtc.model.entity.vtc.Shop;
 import lombok.*;
 
 import java.time.LocalDateTime;

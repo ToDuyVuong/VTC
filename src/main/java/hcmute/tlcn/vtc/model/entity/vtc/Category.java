@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.entity;
+package hcmute.tlcn.vtc.model.entity.vtc;
 
 import hcmute.tlcn.vtc.model.data.vendor.request.CategoryShopRequest;
 import hcmute.tlcn.vtc.model.extra.Status;

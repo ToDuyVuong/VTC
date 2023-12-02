@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.entity.Order;
-import hcmute.tlcn.vtc.model.entity.Voucher;
-import hcmute.tlcn.vtc.model.entity.VoucherOrder;
+import hcmute.tlcn.vtc.model.entity.vtc.Order;
+import hcmute.tlcn.vtc.model.entity.vtc.Voucher;
+import hcmute.tlcn.vtc.model.entity.vtc.VoucherOrder;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.repository.VoucherOrderRepository;
 import hcmute.tlcn.vtc.repository.VoucherRepository;

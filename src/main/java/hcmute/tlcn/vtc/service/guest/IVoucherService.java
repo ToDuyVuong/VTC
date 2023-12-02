@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.service.guest;
 
 import hcmute.tlcn.vtc.model.data.guest.ListVoucherResponse;
 import hcmute.tlcn.vtc.model.data.guest.VoucherResponse;
-import hcmute.tlcn.vtc.model.entity.Voucher;
+import hcmute.tlcn.vtc.model.entity.vtc.Voucher;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 
 import java.util.List;

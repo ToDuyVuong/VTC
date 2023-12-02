@@ -3,7 +3,7 @@ package hcmute.tlcn.vtc.service.guest.impl;
 import hcmute.tlcn.vtc.model.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
-import hcmute.tlcn.vtc.model.entity.Product;
+import hcmute.tlcn.vtc.model.entity.vtc.Product;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.ProductRepository;
 import hcmute.tlcn.vtc.service.guest.IProductService;

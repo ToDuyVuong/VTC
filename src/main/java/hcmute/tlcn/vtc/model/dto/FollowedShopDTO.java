@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.FollowedShop;
+import hcmute.tlcn.vtc.model.entity.vtc.FollowedShop;
 import lombok.*;
 
 import java.util.ArrayList;

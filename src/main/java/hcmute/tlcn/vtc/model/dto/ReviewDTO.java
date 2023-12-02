@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.Review;
+import hcmute.tlcn.vtc.model.entity.vtc.Review;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;

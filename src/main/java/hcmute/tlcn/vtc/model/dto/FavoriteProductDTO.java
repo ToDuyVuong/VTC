@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.model.dto;
 
-import hcmute.tlcn.vtc.model.entity.FavoriteProduct;
-import hcmute.tlcn.vtc.model.entity.Product;
-import hcmute.tlcn.vtc.model.entity.ProductVariant;
+import hcmute.tlcn.vtc.model.entity.vtc.FavoriteProduct;
+import hcmute.tlcn.vtc.model.entity.vtc.Product;
+import hcmute.tlcn.vtc.model.entity.vtc.ProductVariant;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 import org.modelmapper.ModelMapper;

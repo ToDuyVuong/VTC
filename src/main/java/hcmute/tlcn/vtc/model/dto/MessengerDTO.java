@@ -1,10 +1,8 @@
 package hcmute.tlcn.vtc.model.dto;
 
 
-import hcmute.tlcn.vtc.model.entity.Messenger;
+import hcmute.tlcn.vtc.model.entity.vtc.Messenger;
 import hcmute.tlcn.vtc.model.extra.Status;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

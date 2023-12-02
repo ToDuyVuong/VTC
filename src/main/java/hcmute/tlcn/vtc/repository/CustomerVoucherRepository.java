@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.CustomerVoucher;
+import hcmute.tlcn.vtc.model.entity.vtc.CustomerVoucher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

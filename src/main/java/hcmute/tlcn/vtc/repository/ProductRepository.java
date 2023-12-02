@@ -1,7 +1,6 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Product;
-import hcmute.tlcn.vtc.model.entity.Shop;
+import hcmute.tlcn.vtc.model.entity.vtc.Product;
 import hcmute.tlcn.vtc.model.extra.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

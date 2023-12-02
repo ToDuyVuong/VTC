@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Comment;
+import hcmute.tlcn.vtc.model.entity.vtc.Comment;
 import hcmute.tlcn.vtc.model.extra.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

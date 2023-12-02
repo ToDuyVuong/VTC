@@ -5,7 +5,7 @@ import hcmute.tlcn.vtc.model.dto.ProductVariantDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
-import hcmute.tlcn.vtc.model.entity.*;
+import hcmute.tlcn.vtc.model.entity.vtc.*;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.*;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;

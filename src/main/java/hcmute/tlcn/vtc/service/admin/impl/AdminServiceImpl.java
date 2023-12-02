@@ -2,7 +2,7 @@ package hcmute.tlcn.vtc.service.admin.impl;
 
 import hcmute.tlcn.vtc.authentication.request.RegisterRequest;
 import hcmute.tlcn.vtc.authentication.response.RegisterResponse;
-import hcmute.tlcn.vtc.model.entity.Customer;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 import hcmute.tlcn.vtc.model.extra.Role;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
 import hcmute.tlcn.vtc.service.admin.IAdminService;

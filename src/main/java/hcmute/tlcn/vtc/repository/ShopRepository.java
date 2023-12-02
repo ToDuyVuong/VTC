@@ -1,13 +1,9 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Category;
-import hcmute.tlcn.vtc.model.entity.Product;
-import hcmute.tlcn.vtc.model.entity.Shop;
-import hcmute.tlcn.vtc.model.extra.Status;
+import hcmute.tlcn.vtc.model.entity.vtc.Shop;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository

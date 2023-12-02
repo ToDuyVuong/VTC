@@ -1,8 +1,7 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Shop;
-import hcmute.tlcn.vtc.model.entity.Voucher;
-import hcmute.tlcn.vtc.model.extra.Role;
+import hcmute.tlcn.vtc.model.entity.vtc.Shop;
+import hcmute.tlcn.vtc.model.entity.vtc.Voucher;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 

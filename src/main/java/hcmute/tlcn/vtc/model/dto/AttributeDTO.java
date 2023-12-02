@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.model.dto;
 
 
-import hcmute.tlcn.vtc.model.entity.Attribute;
+import hcmute.tlcn.vtc.model.entity.vtc.Attribute;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 

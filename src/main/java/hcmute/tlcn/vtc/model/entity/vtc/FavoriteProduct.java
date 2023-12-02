@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.entity;
+package hcmute.tlcn.vtc.model.entity.vtc;
 
 import jakarta.persistence.*;
 import lombok.*;

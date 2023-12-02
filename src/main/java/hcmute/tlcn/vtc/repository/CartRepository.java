@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Cart;
+import hcmute.tlcn.vtc.model.entity.vtc.Cart;
 import hcmute.tlcn.vtc.model.extra.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.service.vendor;
 
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductVariantRequest;
-import hcmute.tlcn.vtc.model.entity.ProductVariant;
+import hcmute.tlcn.vtc.model.entity.vtc.ProductVariant;
 
 import java.util.List;
 

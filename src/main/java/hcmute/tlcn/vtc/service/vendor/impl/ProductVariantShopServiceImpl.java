@@ -1,8 +1,8 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductVariantRequest;
-import hcmute.tlcn.vtc.model.entity.Attribute;
-import hcmute.tlcn.vtc.model.entity.ProductVariant;
+import hcmute.tlcn.vtc.model.entity.vtc.Attribute;
+import hcmute.tlcn.vtc.model.entity.vtc.ProductVariant;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.*;
 import hcmute.tlcn.vtc.service.vendor.IAttributeShopService;

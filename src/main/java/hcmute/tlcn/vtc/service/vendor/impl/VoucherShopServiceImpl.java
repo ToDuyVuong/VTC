@@ -4,8 +4,8 @@ import hcmute.tlcn.vtc.model.dto.VoucherDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.VoucherShopRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListVoucherShopResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.VoucherShopResponse;
-import hcmute.tlcn.vtc.model.entity.Shop;
-import hcmute.tlcn.vtc.model.entity.Voucher;
+import hcmute.tlcn.vtc.model.entity.vtc.Shop;
+import hcmute.tlcn.vtc.model.entity.vtc.Voucher;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.model.extra.VoucherType;
 import hcmute.tlcn.vtc.repository.ShopRepository;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 

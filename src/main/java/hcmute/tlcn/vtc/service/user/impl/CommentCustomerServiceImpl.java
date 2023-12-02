@@ -1,12 +1,11 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
-import hcmute.tlcn.vtc.model.data.guest.ListCommentResponse;
 import hcmute.tlcn.vtc.model.data.user.request.CommentRequest;
 import hcmute.tlcn.vtc.model.data.user.response.CommentResponse;
 import hcmute.tlcn.vtc.model.dto.CommentDTO;
-import hcmute.tlcn.vtc.model.entity.Comment;
-import hcmute.tlcn.vtc.model.entity.Customer;
-import hcmute.tlcn.vtc.model.entity.Review;
+import hcmute.tlcn.vtc.model.entity.vtc.Comment;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
+import hcmute.tlcn.vtc.model.entity.vtc.Review;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CommentRepository;
 import hcmute.tlcn.vtc.repository.ReviewRepository;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

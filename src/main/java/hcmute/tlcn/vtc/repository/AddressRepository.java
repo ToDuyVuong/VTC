@@ -1,7 +1,7 @@
 package hcmute.tlcn.vtc.repository;
 
-import hcmute.tlcn.vtc.model.entity.Address;
-import hcmute.tlcn.vtc.model.entity.Customer;
+import hcmute.tlcn.vtc.model.entity.vtc.Address;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 import hcmute.tlcn.vtc.model.extra.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
