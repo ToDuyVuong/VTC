@@ -71,6 +71,13 @@ public class SecurityConfig {
     private static final String[] ADMIN_ROLE = {
             "/api/admin/category/**",
             "/api/admin/brand/**",
+            "/api/manager/**",
+
+
+    };
+
+    private static final String[] MANAGER_ROLE = {
+            "/api/manager/**",
     };
 
 
@@ -97,6 +104,9 @@ public class SecurityConfig {
 
                                 .requestMatchers(ADMIN_ROLE)
                                 .hasRole(Role.ADMIN.name())
+
+                                .requestMatchers(MANAGER_ROLE)
+                                .hasRole(Role.MANAGER.name())
 
                                 .anyRequest()
                                 .authenticated()

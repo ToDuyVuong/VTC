@@ -93,11 +93,12 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-        Optional<Customer> customer = customerRepository.findByUsername(loginRequest.getUsername());
+        Customer customer = customerRepository.findByUsernameAndStatus(loginRequest.getUsername(), Status.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("Tài khoản không tồn tại."));
 
-        var jwtToken = jwtService.generateToken(customer.get());
-        var refreshToken = jwtService.generateRefreshToken(customer.get());
-        saveCustomerToken(customer.get(), refreshToken);
+        var jwtToken = jwtService.generateToken(customer);
+        var refreshToken = jwtService.generateRefreshToken(customer);
+        saveCustomerToken(customer, refreshToken);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));

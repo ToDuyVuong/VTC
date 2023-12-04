@@ -221,3 +221,22 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
   - Xem danh sách sản phẩm theo giá.
   - Lọc sản phẩm theo giá. 
   - //Xem danh sách sản phẩm theo thương hiệu.
+
+
+
+- Quản lý khách hàng:
+  - Xem danh sách khách hàng theo trạng thái.
+  - Xem danh sách khách hàng theo trạng thái và sắp xếp theo tên, thời gian.
+  - Tìm kiếm khách hàng theo tên, trạng thái.
+  
+  - //Xem chi tiết khách hàng.
+  - //Xóa khách hàng.
+  -// Xem danh sách khách hàng theo thời gian.
+  - //Xem danh sách khách hàng theo thời gian và trạng thái.
+  - 
+  - //Xem danh sách khách hàng theo tên.
+  - //Xem danh sách khách hàng theo tên và trạng thái.
+  - //Xem danh sách khách hàng theo tên và thời gian.
+  - //Xem danh sách khách hàng theo tên, thời gian và trạng thái.
+  - //Xem danh sách khách hàng theo tên và thời gian.
+  - // danh sách khách hàng theo tên, thời gian và trạng thái.

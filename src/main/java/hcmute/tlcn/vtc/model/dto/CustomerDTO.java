@@ -6,8 +6,7 @@ import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -48,6 +47,15 @@ public class CustomerDTO {
         customerDTO.setRoles(customer.getRoles());
         customerDTO.setStatus(customer.getStatus());
         return customerDTO;
+    }
+
+    public static List<CustomerDTO> convertEntitiesToDTOs(List<Customer> customers) {
+        List<CustomerDTO> customerDTOs = new ArrayList<>();
+        for (Customer customer : customers) {
+            customerDTOs.add(convertEntityToDTO(customer));
+        }
+        customerDTOs.sort(Comparator.comparing(CustomerDTO::getFullName).reversed());
+        return customerDTOs;
     }
 
 

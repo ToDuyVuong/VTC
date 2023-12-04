@@ -23,7 +23,8 @@ public enum Status {
     COMPLETED("Completed"),
     REFUNDED("Refunded"),
     PAID("Paid"),
-    UNPAID("Unpaid");
+    UNPAID("Unpaid"),
+    LOCKED("Locked");
 
 
     private final String value;

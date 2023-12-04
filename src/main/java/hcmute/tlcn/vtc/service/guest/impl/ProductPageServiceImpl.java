@@ -275,8 +275,8 @@ public class ProductPageServiceImpl implements IProductPageService {
         if (size < 0) {
             throw new NotFoundException("Kích thước trang không được nhỏ hơn 0!");
         }
-        if (size > 1000) {
-            throw new NotFoundException("Kích thước trang không được lớn hơn 100!");
+        if (size > 200) {
+            throw new NotFoundException("Kích thước trang không được lớn hơn 200!");
         }
     }
 
