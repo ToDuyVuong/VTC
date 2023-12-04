@@ -16,6 +16,12 @@ public class ShopDTO {
 
     private String address;
 
+    private String province;
+
+    private String district;
+
+    private String ward;
+
     private String phone;
 
     private String email;
@@ -38,6 +44,9 @@ public class ShopDTO {
         shopDTO.setShopId(shop.getShopId());
         shopDTO.setName(shop.getName());
         shopDTO.setAddress(shop.getAddress());
+        shopDTO.setProvince(shop.getProvince());
+        shopDTO.setDistrict(shop.getDistrict());
+        shopDTO.setWard(shop.getWard());
         shopDTO.setPhone(shop.getPhone());
         shopDTO.setEmail(shop.getEmail());
         shopDTO.setAvatar(shop.getAvatar());

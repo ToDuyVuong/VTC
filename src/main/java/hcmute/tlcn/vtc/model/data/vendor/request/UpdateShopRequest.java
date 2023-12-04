@@ -16,6 +16,12 @@ public class UpdateShopRequest {
 
     private String address;
 
+    private String province;
+
+    private String district;
+
+    private String ward;
+
     private String phone;
 
     private String email;
@@ -35,6 +41,18 @@ public class UpdateShopRequest {
 
         if (this.address == null || this.address.isEmpty()) {
             throw new IllegalArgumentException("Địa chỉ cửa hàng không được để trống!");
+        }
+
+        if (this.province == null || this.province.isEmpty()) {
+            throw new IllegalArgumentException("Tỉnh/Thành phố không được để trống!");
+        }
+
+        if (this.district == null || this.district.isEmpty()) {
+            throw new IllegalArgumentException("Quận/Huyện không được để trống!");
+        }
+
+        if (this.ward == null || this.ward.isEmpty()) {
+            throw new IllegalArgumentException("Phường/Xã không được để trống!");
         }
 
         if (this.phone == null || this.phone.isEmpty()) {

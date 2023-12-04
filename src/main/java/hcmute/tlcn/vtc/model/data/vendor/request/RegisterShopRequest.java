@@ -14,6 +14,12 @@ public class RegisterShopRequest {
 
     private String address;
 
+    private String province;
+
+    private String district;
+
+    private String ward;
+
     private String phone;
 
     private String email;
@@ -39,8 +45,24 @@ public class RegisterShopRequest {
             throw new IllegalArgumentException("Địa chỉ cửa hàng không được để trống!");
         }
 
+        if (this.province == null || this.province.isEmpty()) {
+            throw new IllegalArgumentException("Tỉnh/Thành phố không được để trống!");
+        }
+
+        if (this.district == null || this.district.isEmpty()) {
+            throw new IllegalArgumentException("Quận/Huyện không được để trống!");
+        }
+
+        if (this.ward == null || this.ward.isEmpty()) {
+            throw new IllegalArgumentException("Phường/Xã không được để trống!");
+        }
+
         if (this.phone == null || this.phone.isEmpty()) {
             throw new IllegalArgumentException("Số điện thoại cửa hàng không được để trống!");
+        }
+
+        if (!Pattern.matches("[0-9]+", this.getPhone())) {
+            throw new IllegalArgumentException("Số điện thoại chỉ được chứa ký tự số.");
         }
 
         if (this.email == null || this.email.isEmpty()) {
@@ -49,10 +71,6 @@ public class RegisterShopRequest {
 
         if (!EmailValidator.isValidEmail(email)) {
             throw new IllegalArgumentException("Email không hợp lệ.");
-        }
-
-        if (this.username == null || this.username.isEmpty()) {
-            throw new IllegalArgumentException("Tài khoản không được để trống!");
         }
 
         if (this.openTime == null || this.openTime.isEmpty()) {
@@ -84,7 +102,6 @@ public class RegisterShopRequest {
         }
 
         trim();
-
     }
 
     public void trim() {

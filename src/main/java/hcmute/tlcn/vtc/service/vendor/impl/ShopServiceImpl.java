@@ -96,12 +96,14 @@ public class ShopServiceImpl implements IShopService {
     @Override
     @Transactional
     public ShopResponse updateShop(UpdateShopRequest request) {
-
         checkEmailAndPhoneAndUsernameInShop(request.getEmail(), request.getPhone(), request.getUsername());
 
         Shop shop = shopRepository.findByCustomer_Username(request.getUsername());
         shop.setName(request.getName());
         shop.setAddress(request.getAddress());
+        shop.setProvince(request.getProvince());
+        shop.setDistrict(request.getDistrict());
+        shop.setWard(request.getWard());
         shop.setPhone(request.getPhone());
         shop.setEmail(request.getEmail());
         shop.setOpenTime(request.getOpenTime());
@@ -125,14 +127,12 @@ public class ShopServiceImpl implements IShopService {
         } catch (Exception e) {
             throw new IllegalArgumentException("Cập nhật cửa hàng thất bại!");
         }
-
     }
 
 
     @Override
     @Transactional
     public ShopResponse updateStatusShop(String username, Status status) {
-
         Shop shop = getShopByUsername(username);
         shop.setStatus(status);
         shop.setUpdateAt(LocalDateTime.now());

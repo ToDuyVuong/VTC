@@ -23,6 +23,12 @@ public class Shop {
 
     private String address;
 
+    private String province;
+
+    private String district;
+
+    private String ward;
+
     private String phone;
 
     private String email;
@@ -45,12 +51,5 @@ public class Shop {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
-//    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private List<Category> categories;
-
-//    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<Category> categories;
 
 }
