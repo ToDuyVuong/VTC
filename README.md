@@ -207,3 +207,17 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
 
 - Thống kê doanh thu từ quyền vender:
   - Xem doanh thu theo thời gian.
+
+
+
+- Phân trang sản phẩm:
+  - Xem danh sách sản phẩm theo danh mục.
+  - Xem danh sách sản phẩm theo cửa hàng.
+  - Xem danh sách sản phẩm bán chạy theo cửa hàng.
+  - Xem danh sách sản phẩm mới nhất theo cửa hàng.
+  - Tim kiếm sản phẩm theo tên và lọc sản phẩm theo giá.
+  - Tim kiếm sản phẩm theo tên và lọc sản phẩm. 
+  - Xem danh sách sản phẩm theo giá theo cửa hàng.
+  - Xem danh sách sản phẩm theo giá.
+  - Lọc sản phẩm theo giá. 
+  - //Xem danh sách sản phẩm theo thương hiệu.
