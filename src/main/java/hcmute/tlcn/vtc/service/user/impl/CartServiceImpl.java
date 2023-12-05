@@ -33,11 +33,8 @@ public class CartServiceImpl implements ICartService {
     @Autowired
     private final ICustomerService customerService;
     @Autowired
-    private final IProductService productService;
-    @Autowired
     private final ProductVariantRepository productVariantRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+
 
 
     @Override

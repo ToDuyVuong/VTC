@@ -19,8 +19,6 @@ import java.util.List;
 public class CommentServiceImpl implements ICommentService {
 
     @Autowired
-    private ReviewRepository reviewRepository;
-    @Autowired
     private CommentRepository commentRepository;
     @Autowired
     private final IReviewCustomerService reviewCustomerService;
