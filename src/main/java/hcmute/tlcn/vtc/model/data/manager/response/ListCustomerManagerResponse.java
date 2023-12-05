@@ -1,4 +1,4 @@
-package hcmute.tlcn.vtc.model.data.manager;
+package hcmute.tlcn.vtc.model.data.manager.response;
 
 import hcmute.tlcn.vtc.model.dto.CustomerDTO;
 import hcmute.tlcn.vtc.model.extra.ResponseAbstract;

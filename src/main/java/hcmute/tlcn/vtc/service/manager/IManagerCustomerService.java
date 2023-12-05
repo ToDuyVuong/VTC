@@ -1,6 +1,6 @@
 package hcmute.tlcn.vtc.service.manager;
 
-import hcmute.tlcn.vtc.model.data.manager.ListCustomerManagerResponse;
+import hcmute.tlcn.vtc.model.data.manager.response.ListCustomerManagerResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 

@@ -1,11 +1,12 @@
 package hcmute.tlcn.vtc.service.manager.impl;
 
-import hcmute.tlcn.vtc.model.data.manager.ListCustomerManagerResponse;
+import hcmute.tlcn.vtc.model.data.manager.response.ListCustomerManagerResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ProfileCustomerResponse;
 import hcmute.tlcn.vtc.model.dto.CustomerDTO;
 import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CustomerRepository;
+import hcmute.tlcn.vtc.repository.manager.ManagerShopRepository;
 import hcmute.tlcn.vtc.service.manager.IManagerCustomerService;
 import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.IllegalArgumentException;
@@ -26,6 +27,7 @@ public class ManagerCustomerServiceImpl implements IManagerCustomerService {
     private ICustomerService customerService;
     @Autowired
     private CustomerRepository customerRepository;
+    private ManagerShopRepository managerShopRepository;
 
 
     @Override
