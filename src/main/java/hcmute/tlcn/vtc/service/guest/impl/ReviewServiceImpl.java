@@ -23,8 +23,6 @@ public class ReviewServiceImpl implements IReviewService {
     private final ReviewRepository reviewRepository;
     @Autowired
     private final IReviewCustomerService reviewCustomerService;
-    @Autowired
-    private final ICommentService commentService;
 
 
     @Override

@@ -8,6 +8,7 @@ import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.model.entity.vtc.*;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.*;
+import hcmute.tlcn.vtc.service.guest.IReviewService;
 import hcmute.tlcn.vtc.service.vendor.ICategoryShopService;
 import hcmute.tlcn.vtc.service.vendor.IProductShopService;
 import hcmute.tlcn.vtc.service.vendor.IProductVariantShopService;
@@ -44,6 +45,8 @@ public class ProductShopServiceImpl implements IProductShopService {
     private ProductVariantRepository productVariantRepository;
     @Autowired
     private IProductVariantShopService productVariantService;
+    @Autowired
+    private final IReviewService reviewService;
     @Autowired
     ModelMapper modelMapper;
 
@@ -104,6 +107,9 @@ public class ProductShopServiceImpl implements IProductShopService {
 
         ProductResponse productResponse = new ProductResponse();
         productResponse.setProductDTO(productDTO);
+        productResponse.setCategoryName(product.getCategory().getName());
+        productResponse.setRating(reviewService.countAverageRatingByProductId(productId));
+        productResponse.setShopName(product.getCategory().getShop().getName());
         productResponse.setStatus("ok");
         productResponse.setCode(200);
         productResponse.setMessage("Lấy thông tin chi tiết sản phẩm thành công.");

@@ -3,10 +3,13 @@ package hcmute.tlcn.vtc.service.guest.impl;
 import hcmute.tlcn.vtc.model.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
+import hcmute.tlcn.vtc.model.entity.vtc.Brand;
 import hcmute.tlcn.vtc.model.entity.vtc.Product;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.ProductRepository;
+import hcmute.tlcn.vtc.repository.ReviewRepository;
 import hcmute.tlcn.vtc.service.guest.IProductService;
+import hcmute.tlcn.vtc.service.guest.IReviewService;
 import hcmute.tlcn.vtc.service.vendor.IProductShopService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,8 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private IProductShopService productShopService;
     @Autowired
+    private final IReviewService reviewService;
+    @Autowired
     ModelMapper modelMapper;
 
     @Override
@@ -38,8 +43,12 @@ public class ProductServiceImpl implements IProductService {
 
         ProductDTO productDTO = ProductDTO.convertEntityToDTO(product);
 
+
         ProductResponse response = new ProductResponse();
+        response.setCategoryName(product.getCategory().getName());
         response.setProductDTO(productDTO);
+        response.setRating(reviewService.countAverageRatingByProductId(productId));
+        response.setShopName(product.getCategory().getShop().getName());
         response.setMessage("Lấy thông tin sản phẩm thành công!");
         response.setStatus("ok");
         response.setCode(200);

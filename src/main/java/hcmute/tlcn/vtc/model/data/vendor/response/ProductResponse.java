@@ -11,6 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 public class ProductResponse extends ResponseAbstract {
 
+    private String categoryName;
+    private String shopName;
+    private float rating;
     private ProductDTO productDTO;
 
 }

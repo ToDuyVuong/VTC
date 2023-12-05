@@ -42,19 +42,31 @@ public class ProductDTO {
 
     public static List<ProductDTO> convertToListDTO(List<Product> products) {
         List<ProductDTO> productDTOs = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
+        //ModelMapper modelMapper = new ModelMapper();
 
         for (Product product : products) {
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(product.getProductVariants()));
+            //ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            ProductDTO productDTO = convertEntityToDTO(product);
+
+           // productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(product.getProductVariants()));
             productDTOs.add(productDTO);
         }
         return productDTOs;
     }
 
     public static ProductDTO convertEntityToDTO(Product product) {
-        ModelMapper modelMapper = new ModelMapper();
-        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        //ModelMapper modelMapper = new ModelMapper();
+        //ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProductId(product.getProductId());
+        productDTO.setName(product.getName());
+        productDTO.setImage(product.getImage());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setInformation(product.getInformation());
+        productDTO.setSold(product.getSold());
+        productDTO.setStatus(product.getStatus());
+        productDTO.setCategoryId(product.getCategory().getCategoryId());
+        productDTO.setBrandId(product.getBrand().getBrandId());
         productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(product.getProductVariants()));
         return productDTO;
     }

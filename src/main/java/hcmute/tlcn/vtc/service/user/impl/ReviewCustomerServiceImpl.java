@@ -28,25 +28,10 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
     @Autowired
     private final ReviewRepository reviewRepository;
     @Autowired
-    private final OrderRepository orderRepository;
-    @Autowired
-    private final IOrderItemService orderItemService;
-    @Autowired
-    private final IVoucherOrderService voucherOrderService;
-    @Autowired
-    private final ICartService cartService;
-    @Autowired
     private final ICustomerService customerService;
     @Autowired
-    private final IAddressService addressService;
-    @Autowired
-    private final IVoucherShopService voucherShopService;
-    @Autowired
-    private final IVoucherAdminService voucherSystemService;
-    @Autowired
     private OrderItemRepository orderItemRepository;
-    @Autowired
-    private CartRepository cartRepository;
+
 
 
     @Override
