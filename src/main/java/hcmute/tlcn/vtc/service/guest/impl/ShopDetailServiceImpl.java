@@ -34,8 +34,8 @@ public class ShopDetailServiceImpl implements IShopDetailService {
     private ShopRepository shopRepository;
     @Autowired
     private FollowedShopRepository followedShopRepository;
-    @Autowired
-    ModelMapper modelMapper;
+//    @Autowired
+//    ModelMapper modelMapper;
 
 
     @Override
@@ -53,7 +53,7 @@ public class ShopDetailServiceImpl implements IShopDetailService {
             throw new NotFoundException("Không tìm thấy sản phẩm nào trong cửa hàng này!");
         }
         if (products.size() > 20) {
-            products = products.subList(products.size() -20, products.size() );
+            products = products.subList(products.size() - 20, products.size());
         }
         products.sort(Comparator.comparing(Product::getCreateAt).reversed());
 
@@ -67,7 +67,8 @@ public class ShopDetailServiceImpl implements IShopDetailService {
         boolean isFollow = followedShopRepository.existsByCustomerUsernameAndShopShopId(username, shopId);
 
         ShopDetailResponse response = new ShopDetailResponse();
-        response.setShopDTO(modelMapper.map(shop, ShopDTO.class));
+//        response.setShopDTO(modelMapper.map(shop, ShopDTO.class));
+        response.setShopDTO(ShopDTO.convertEntityToDTO(shop));
         response.setProductDTOs(ProductDTO.convertToListDTO(products));
         response.setTotalProduct(products.size());
         response.setCategoryDTOs(CategoryDTO.convertToListDTO(categories));

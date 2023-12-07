@@ -56,10 +56,13 @@ public class ShopServiceImpl implements IShopService {
         try {
             Shop save = shopRepository.save(shop);
 
-            ShopDTO shopDTO = modelMapper.map(save, ShopDTO.class);
-            customer = addRoleVendor(customer);
-            shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+            //ShopDTO shopDTO = modelMapper.map(save, ShopDTO.class);
+//            customer = addRoleVendor(customer);
 
+//            shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+
+            ShopDTO shopDTO = ShopDTO.convertEntityToDTO(save);
+            addRoleVendor(customer);
             ShopResponse shopResponse = new ShopResponse();
             shopResponse.setShopDTO(shopDTO);
             shopResponse.setCode(200);
@@ -76,11 +79,13 @@ public class ShopServiceImpl implements IShopService {
 
     @Override
     public ShopResponse getProfileShop(String username) {
-        Customer customer = customerService.getCustomerByUsername(username);
+//        Customer customer = customerService.getCustomerByUsername(username);
         Shop shop = getShopByUsername(username);
 
-        ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
-        shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+//        ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
+//        shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+        ShopDTO shopDTO = ShopDTO.convertEntityToDTO(shop);
+
 
         ShopResponse shopResponse = new ShopResponse();
         shopResponse.setShopDTO(shopDTO);
@@ -114,9 +119,12 @@ public class ShopServiceImpl implements IShopService {
         try {
             shopRepository.save(shop);
 
-            Customer customer = customerService.getCustomerByUsername(request.getUsername());
-            ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
-            shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+//            Customer customer = customerService.getCustomerByUsername(request.getUsername());
+//            ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
+//            shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+
+            ShopDTO shopDTO = ShopDTO.convertEntityToDTO(shop);
+
 
             ShopResponse shopResponse = new ShopResponse();
             shopResponse.setShopDTO(shopDTO);
@@ -140,9 +148,11 @@ public class ShopServiceImpl implements IShopService {
         try {
             shopRepository.save(shop);
 
-            Customer customer = customerService.getCustomerByUsername(username);
-            ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
-            shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+            //Customer customer = customerService.getCustomerByUsername(username);
+//            ShopDTO shopDTO = modelMapper.map(shop, ShopDTO.class);
+//            shopDTO.setCustomerDTO(modelMapper.map(customer, CustomerDTO.class));
+
+            ShopDTO shopDTO = ShopDTO.convertEntityToDTO(shop);
 
             ShopResponse shopResponse = new ShopResponse();
             shopResponse.setShopDTO(shopDTO);

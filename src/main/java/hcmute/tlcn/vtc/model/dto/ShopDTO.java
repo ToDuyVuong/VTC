@@ -4,6 +4,9 @@ import hcmute.tlcn.vtc.model.entity.vtc.Shop;
 import hcmute.tlcn.vtc.model.extra.Status;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @ToString
 @AllArgsConstructor
@@ -36,7 +39,9 @@ public class ShopDTO {
 
     private Status status;
 
-    private CustomerDTO customerDTO;
+    private Long customerId;
+
+    //  private CustomerDTO customerDTO;
 
 
     public static ShopDTO convertEntityToDTO(Shop shop) {
@@ -54,7 +59,17 @@ public class ShopDTO {
         shopDTO.setOpenTime(shop.getOpenTime());
         shopDTO.setCloseTime(shop.getCloseTime());
         shopDTO.setStatus(shop.getStatus());
-        shopDTO.setCustomerDTO(CustomerDTO.convertEntityToDTO(shop.getCustomer()));
+        shopDTO.setCustomerId(shop.getCustomer().getCustomerId());
+        // shopDTO.setCustomerDTO(CustomerDTO.convertEntityToDTO(shop.getCustomer()));
         return shopDTO;
+    }
+
+    public static List<ShopDTO> convertEntitiesToDTOs(List<Shop> shops) {
+        List<ShopDTO> shopDTOs = new ArrayList<>();
+        for (Shop shop : shops) {
+            shopDTOs.add(convertEntityToDTO(shop));
+        }
+        //shopDTOs.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+        return shopDTOs;
     }
 }
