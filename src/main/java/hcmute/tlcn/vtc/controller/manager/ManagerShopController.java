@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.controller.manager;
 
 import hcmute.tlcn.vtc.model.data.manager.response.ListShopManagerResponse;
+import hcmute.tlcn.vtc.model.data.manager.response.ManagerShopResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.service.manager.IManagerShopService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,12 @@ public class ManagerShopController {
 
     @Autowired
     private IManagerShopService managerShopService;
+
+
+    @GetMapping("/id/{shopId}")
+    public ResponseEntity<ManagerShopResponse> getShopById(@PathVariable Long shopId) {
+        return ResponseEntity.ok(managerShopService.getShopById(shopId));
+    }
 
 
     @GetMapping("/list/status/{status}")

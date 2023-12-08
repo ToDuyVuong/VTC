@@ -30,6 +30,9 @@ public class ManagerCustomerServiceImpl implements IManagerCustomerService {
     private ManagerShopRepository managerShopRepository;
 
 
+
+
+
     @Override
     public ListCustomerManagerResponse getListCustomerByStatus(int size, int page, Status status) {
         int totalCustomer = customerRepository.countAllByStatus(status);

@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.service.manager.impl;
 
 import hcmute.tlcn.vtc.model.data.manager.response.ListShopManagerResponse;
+import hcmute.tlcn.vtc.model.data.manager.response.ManagerShopResponse;
 import hcmute.tlcn.vtc.model.dto.ShopDTO;
 import hcmute.tlcn.vtc.model.entity.vtc.Shop;
 import hcmute.tlcn.vtc.model.extra.Status;
@@ -22,6 +23,20 @@ public class ManagerShopServiceImpl implements IManagerShopService {
 
     @Autowired
     private ShopRepository shopRepository;
+
+
+    @Override
+    public ManagerShopResponse getShopById(Long id) {
+        Shop shop = shopRepository.findById(id).
+                orElseThrow(() -> new NotFoundException("Không tìm thấy cửa hàng!"));
+
+        ManagerShopResponse response = new ManagerShopResponse();
+        response.setShopDTO(ShopDTO.convertEntityToDTO(shop));
+        response.setMessage("Lấy thông tin cửa hàng thành công!");
+        response.setCode(200);
+        response.setStatus("OK");
+        return response;
+    }
 
 
     @Override

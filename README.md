@@ -229,6 +229,8 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
   - Xem danh sách khách hàng theo trạng thái và sắp xếp theo tên, thời gian.
   - Tìm kiếm khách hàng theo tên, trạng thái.
   
+
+
   - //Xem chi tiết khách hàng.
   - //Xóa khách hàng.
   -// Xem danh sách khách hàng theo thời gian.
@@ -240,3 +242,11 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
   - //Xem danh sách khách hàng theo tên, thời gian và trạng thái.
   - //Xem danh sách khách hàng theo tên và thời gian.
   - // danh sách khách hàng theo tên, thời gian và trạng thái.
+
+
+
+- Quản lý nhân viên:
+  - Thêm nhân viên.
+  - Xem danh sách nhân viên.
+  - Tìm kiếm nhân viên theo tên.
+  - Xóa nhân viên.
