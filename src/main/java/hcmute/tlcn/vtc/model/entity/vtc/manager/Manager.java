@@ -24,7 +24,10 @@ public class Manager {
 
     private LocalDateTime updateAt;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer manager;

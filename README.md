@@ -250,3 +250,10 @@ _~~- Đồ án sử dụng mô hình 3 lớp: Controller, Service, Repository.~~
   - Xem danh sách nhân viên.
   - Tìm kiếm nhân viên theo tên.
   - Xóa nhân viên.
+
+
+- Quản lý sản phẩm từ quyền nhân viên:
+  - Khóa sản phẩm.
+  - Mở khóa sản phẩm.
+  - Lấy danh sách sản phẩm bị khóa.
+  - Tìm kiếm sản phẩm bị khóa theo tên sản phẩm.
