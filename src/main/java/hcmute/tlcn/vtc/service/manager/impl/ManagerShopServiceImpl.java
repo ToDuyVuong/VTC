@@ -3,10 +3,16 @@ package hcmute.tlcn.vtc.service.manager.impl;
 import hcmute.tlcn.vtc.model.data.manager.response.ListShopManagerResponse;
 import hcmute.tlcn.vtc.model.data.manager.response.ManagerShopResponse;
 import hcmute.tlcn.vtc.model.dto.ShopDTO;
+import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 import hcmute.tlcn.vtc.model.entity.vtc.Shop;
+import hcmute.tlcn.vtc.model.entity.vtc.manager.ManagerShop;
 import hcmute.tlcn.vtc.model.extra.Status;
+import hcmute.tlcn.vtc.repository.CategoryRepository;
 import hcmute.tlcn.vtc.repository.ShopRepository;
+import hcmute.tlcn.vtc.repository.manager.ManagerShopRepository;
+import hcmute.tlcn.vtc.service.manager.IManagerProductService;
 import hcmute.tlcn.vtc.service.manager.IManagerShopService;
+import hcmute.tlcn.vtc.service.user.ICustomerService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +29,15 @@ public class ManagerShopServiceImpl implements IManagerShopService {
 
     @Autowired
     private ShopRepository shopRepository;
+    @Autowired
+    private ICustomerService customerService;
+    @Autowired
+    private ManagerShopRepository managerShopRepository;
+    @Autowired
+    private IManagerProductService managerProductService;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public ManagerShopResponse getShopById(Long id) {
@@ -36,6 +50,57 @@ public class ManagerShopServiceImpl implements IManagerShopService {
         response.setCode(200);
         response.setStatus("OK");
         return response;
+    }
+
+
+    public ManagerShopResponse lockShopById(Long shopId, String username, String note){
+//        Customer customer = customerService.getCustomerByUsername(username);
+//        Shop shop = checkShopLock(shopId);
+//        ManagerShop managerShop = new ManagerShop();
+//         if(managerShopRepository.existsByShop_ShopId(shopId)){
+//             managerShop = managerShopRepository.findByShop_ShopId(shopId).
+//                     orElseThrow(() -> new NotFoundException("Không tìm thấy cửa hàng!"));
+//             if (managerShop.isLock()) {
+//                 throw new NotFoundException("Cửa hàng đã bị khóa!");
+//             }
+//         }else {
+//             managerShop.setShop(shop);
+//             managerShop.setManager(customer);
+//           }
+//        managerShop.setLock(true);
+//        managerShop.setDelete(false);
+//        managerShop.setNote(note);
+//
+//
+//
+//
+//        try {
+//            ///managerShopRepository.save(managerShop);
+//        }
+//        catch (Exception e){
+//            throw new NotFoundException("Khóa cửa hàng thất bại!");
+//        }
+
+
+        return null;
+    }
+
+    private Shop checkShopLock(Long shopId){
+        Shop shop = shopRepository.findById(shopId).
+                orElseThrow(() -> new NotFoundException("Không tìm thấy cửa hàng!"));
+        if(shop.getStatus().equals(Status.DELETED)){
+            throw new NotFoundException("Cửa hàng đã bị xóa!");
+        }
+
+        return shop;
+    }
+
+
+    public ManagerShopResponse unLockShopById(Long shopId, String username){
+
+
+
+        return null;
     }
 
 

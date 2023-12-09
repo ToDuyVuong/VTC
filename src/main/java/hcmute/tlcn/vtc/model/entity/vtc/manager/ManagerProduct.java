@@ -27,7 +27,8 @@ public class ManagerProduct {
     @Column(name = "is_lock")
     private boolean lock;
 
-    private boolean isDelete;
+    @Column(name = "is_delete")
+    private boolean delete;
 
     private LocalDateTime createAt;
 

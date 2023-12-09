@@ -5,6 +5,7 @@ import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
 import hcmute.tlcn.vtc.service.guest.IFavoriteProductGuestService;
 import hcmute.tlcn.vtc.service.guest.IProductService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class ProductController {
     }
 
 
+    @Hidden
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ListProductResponse> getListProductByCategoryParentId(@PathVariable Long categoryId,
                                                                                 @RequestParam boolean isParent) {

@@ -2,6 +2,7 @@ package hcmute.tlcn.vtc.model.entity.vtc;
 
 import hcmute.tlcn.vtc.model.extra.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,8 +25,10 @@ public class Product {
 
     private String image;
 
+    @Column(length = 15000)
     private String description;
 
+    @Column(length = 15000)
     private String information;
 
     private Long sold;

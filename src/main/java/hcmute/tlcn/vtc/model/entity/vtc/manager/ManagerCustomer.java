@@ -25,9 +25,11 @@ public class ManagerCustomer {
 
     private String note;
 
-    private boolean isLock;
+    @Column(name = "is_lock")
+    private boolean lock;
 
-    private boolean isDelete;
+    @Column(name = "is_delete")
+    private boolean delete;
 
     private LocalDateTime createAt;
 

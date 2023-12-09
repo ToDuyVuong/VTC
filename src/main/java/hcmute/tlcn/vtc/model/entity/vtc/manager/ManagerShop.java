@@ -3,14 +3,12 @@ package hcmute.tlcn.vtc.model.entity.vtc.manager;
 import hcmute.tlcn.vtc.model.entity.vtc.Customer;
 import hcmute.tlcn.vtc.model.entity.vtc.Shop;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Setter
+@Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,9 +22,11 @@ public class ManagerShop {
 
     private String note;
 
-    private boolean isLock;
+    @Column(name = "is_lock")
+    private boolean lock;
 
-    private boolean isDelete;
+    @Column(name = "is_delete")
+    private boolean delete;
 
     private LocalDateTime createAt;
 
