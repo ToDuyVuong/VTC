@@ -1,10 +1,28 @@
-FROM openjdk:11-jre-slim
+#FROM openjdk:17-jre-slim
+#
+## Set the working directory in the container
+#WORKDIR /app
+#
+## Copy the application JAR file into the container
+#COPY target/VTC-0.0.1-SNAPSHOT.jar .
+#
+## Command to run the application when the container starts
+#CMD ["java", "-jar", "VTC-0.0.1-SNAPSHOT.jar"]
 
-# Set the working directory in the container
+
+#
+# Build stage
+#
+FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
+COPY . /app/
+RUN mvn clean package
 
-# Copy the application JAR file into the container
-COPY your-application.jar /app/your-application.jar
-
-# Command to run the application when the container starts
-CMD ["java", "-jar", "/app/your-application.jar"]
+#
+# Package stage
+#
+FROM openjdk:17-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar /app/app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]
