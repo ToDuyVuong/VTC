@@ -98,6 +98,11 @@ public class VoucherShopServiceImpl implements IVoucherShopService {
         if (!voucher.getCode().equals(request.getCode()) && existVoucherCodeOnShop(request.getCode(), voucher.getShop().getShopId())) {
             throw new IllegalArgumentException("Mã giảm giá đã tồn tại trên cửa hàng này!");
         }
+        if (voucher.getQuantityUsed() > 0){
+            throw new IllegalArgumentException("Mã giảm giá đã được sử dụng!");
+        }
+
+
         VoucherShopRequest.convertUpdateToVoucher(request, voucher);
 
         try {

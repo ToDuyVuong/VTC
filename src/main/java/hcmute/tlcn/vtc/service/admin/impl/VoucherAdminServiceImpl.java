@@ -101,6 +101,10 @@ public class VoucherAdminServiceImpl implements IVoucherAdminService {
             throw new IllegalArgumentException("Mã giảm giá đã bị xóa!");
         }
 
+        if (voucher.getQuantityUsed() > 0){
+            throw new IllegalArgumentException("Mã giảm giá đã được sử dụng!");
+        }
+
         VoucherAdminRequest.convertUpdateToVoucher(request, voucher);
 
         try {
