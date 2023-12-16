@@ -28,10 +28,20 @@ public class AttributeDTO {
     public static List<AttributeDTO> convertToListDTO(List<Attribute> attributes){
         List<AttributeDTO> attributeDTOS = new ArrayList<>();
         for (Attribute attribute : attributes){
-            ModelMapper modelMapper = new ModelMapper();
-            AttributeDTO attributeDTO = modelMapper.map(attribute, AttributeDTO.class);
+            AttributeDTO attributeDTO = convertEntityToDTO(attribute);
             attributeDTOS.add(attributeDTO);
         }
         return attributeDTOS;
+    }
+
+    public static AttributeDTO convertEntityToDTO(Attribute attribute){
+        AttributeDTO attributeDTO = new AttributeDTO();
+        attributeDTO.setAttributeId(attribute.getAttributeId());
+        attributeDTO.setName(attribute.getName());
+        attributeDTO.setValue(attribute.getValue());
+        attributeDTO.setActive(attribute.isActive());
+        attributeDTO.setShopId(attribute.getShop().getShopId());
+
+        return attributeDTO;
     }
 }

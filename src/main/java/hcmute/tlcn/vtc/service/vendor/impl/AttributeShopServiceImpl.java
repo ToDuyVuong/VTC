@@ -44,7 +44,23 @@ public class AttributeShopServiceImpl implements IAttributeShopService {
     public AttributeResponse addNewAttribute(AttributeRequest attributeRequest) {
 
         Shop shop = shopService.getShopByUsername(attributeRequest.getUsername());
-        existsAttribute(attributeRequest.getName(), attributeRequest.getValue(), shop.getShopId());
+        boolean checkExist = existsAttribute(attributeRequest.getName(), attributeRequest.getValue(), shop.getShopId());
+
+        if (checkExist) {
+            Attribute attribute = attributeRepository.findByNameAndValueAndShop_ShopId(
+                            attributeRequest.getName(),
+                            attributeRequest.getValue(),
+                            shop.getShopId())
+                    .orElseThrow(() -> new IllegalArgumentException("Thuộc tính không tồn tại!"));
+
+            AttributeResponse attributeResponse = new AttributeResponse();
+            attributeResponse.setStatus("error");
+            attributeResponse.setMessage("Thuộc tính đã tồn tại trong cửa hàng!");
+            attributeResponse.setCode(400);
+            attributeResponse.setAttributeDTO(AttributeDTO.convertEntityToDTO(attribute));
+
+            return attributeResponse;
+        }
 
         Attribute attribute = new Attribute();
         attribute.setName(attributeRequest.getName());
@@ -112,7 +128,7 @@ public class AttributeShopServiceImpl implements IAttributeShopService {
     public AttributeResponse updateAttribute(AttributeRequest attributeRequest) {
         Shop shop = shopService.getShopByUsername(attributeRequest.getUsername());
         Attribute attribute = checkAttributeInShop(attributeRequest.getAttributeId(), shop.getShopId());
-        existsAttribute(attributeRequest.getName(), attributeRequest.getValue(), shop.getShopId());
+        //existsAttribute(attributeRequest.getName(), attributeRequest.getValue(), shop.getShopId());
 
         attribute.setName(attributeRequest.getName());
         attribute.setValue(attributeRequest.getValue());
@@ -222,14 +238,12 @@ public class AttributeShopServiceImpl implements IAttributeShopService {
     }
 
 
-    public void existsAttribute(String name, String value, Long shopId) {
+    public boolean existsAttribute(String name, String value, Long shopId) {
         boolean existsAttribute = attributeRepository.existsByNameAndValueAndShop_ShopId(
                 name,
                 value,
                 shopId);
-        if (existsAttribute) {
-            throw new IllegalArgumentException("Thuộc tính đã tồn tại trong cửa hàng!");
-        }
+        return existsAttribute;
     }
 
 }
