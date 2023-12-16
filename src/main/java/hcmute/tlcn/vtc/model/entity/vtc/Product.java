@@ -25,10 +25,8 @@ public class Product {
 
     private String image;
 
-    @Column(length = 15000)
     private String description;
 
-    @Column(length = 15000)
     private String information;
 
     private Long sold;
