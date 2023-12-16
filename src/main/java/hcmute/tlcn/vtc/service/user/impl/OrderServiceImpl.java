@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -82,21 +83,26 @@ public class OrderServiceImpl implements IOrderService {
                 save.setVoucherOrders(List.of(voucherOrder));
             }
 
+
             if (request.getVoucherSystemId() != null) {
                 VoucherOrder voucherOrder = voucherOrderService.saveVoucherOrder(request.getVoucherSystemId(), save, false);
                 if (save.getVoucherOrders() != null) {
-                    save.getVoucherOrders().add(voucherOrder);
+                    List<VoucherOrder> voucherOrders = new ArrayList<>(save.getVoucherOrders());
+                    voucherOrders.add(voucherOrder);
+
+                    save.setVoucherOrders(voucherOrders);
                 } else {
                     save.setVoucherOrders(List.of(voucherOrder));
                 }
             }
+
 
             List<OrderItem> orderItems = orderItemService.saveOrderItem(save);
             save.setOrderItems(orderItems);
 
             return orderResponse(request.getUsername(), save, "Đặt hàng thành công.", false);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Đặt hàng thất bại!");
+            throw new IllegalArgumentException("Đặt hàng thất bại! " + e.getMessage() + " " + e.getCause());
         }
     }
 
@@ -191,7 +197,6 @@ public class OrderServiceImpl implements IOrderService {
     }
 
 
-
     private Order createTemporaryOrderUpdate(CreateOrderUpdateRequest request) {
         Order order = createTemporaryOrder(request.getUsername(), request.getCartIds());
 
@@ -226,8 +231,6 @@ public class OrderServiceImpl implements IOrderService {
 
         return order;
     }
-
-
 
 
     private Long calculateShippingFee(String shippingMethod, Long totalPrice) {
