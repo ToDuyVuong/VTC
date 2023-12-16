@@ -80,6 +80,7 @@ public class OrderServiceImpl implements IOrderService {
 
             if (request.getVoucherShopId() != null) {
                 VoucherOrder voucherOrder = voucherOrderService.saveVoucherOrder(request.getVoucherShopId(), save, true);
+//                voucherOrder.setOrder(save);
                 save.setVoucherOrders(List.of(voucherOrder));
             }
 

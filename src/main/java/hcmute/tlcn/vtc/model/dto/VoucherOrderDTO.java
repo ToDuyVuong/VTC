@@ -21,6 +21,9 @@ public class VoucherOrderDTO {
 
     private String voucherName;
 
+    private boolean type; // true: voucher system, false: voucher shop
+
+
     private Long orderId;
 
     public static VoucherOrderDTO convertEntityToDTO(VoucherOrder voucherOrder) {
@@ -31,6 +34,7 @@ public class VoucherOrderDTO {
         }
         voucherOrderDTO.setVoucherId(voucherOrder.getVoucher().getVoucherId());
         voucherOrderDTO.setVoucherName(voucherOrder.getVoucher().getName());
+        voucherOrderDTO.setType(voucherOrder.isType());
         return voucherOrderDTO;
 
     }

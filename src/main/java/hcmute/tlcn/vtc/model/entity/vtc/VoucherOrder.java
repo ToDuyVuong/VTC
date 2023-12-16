@@ -16,6 +16,9 @@ public class VoucherOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long voucherOrderId;
 
+
+    private boolean type; // true: voucher system, false: voucher shop
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;  // Trường tham chiếu đến Order

@@ -39,6 +39,7 @@ public class VoucherOrderServiceImpl implements IVoucherOrderService {
             voucher = voucherSystemService.checkVoucherSystem(voucherId);
         }
         VoucherOrder voucherOrder = new VoucherOrder();
+        voucherOrder.setType(!isShop);
         voucherOrder.setVoucher(voucher);
         voucherOrder.setOrder(order);
         try {
