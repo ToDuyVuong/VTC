@@ -103,7 +103,7 @@ public class AddressServiceImpl implements IAddressService {
         request.validate();
 
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
-        AddressDTO addressDTO = AddressRequest.convertRequestToDTO(request);
+        AddressDTO addressDTO = AddressRequest.convertUpdateRequestToDTO(request);
 
         Address address = checkAddress(addressDTO.getAddressId(), request.getUsername());
         address.setProvince(addressDTO.getProvince());

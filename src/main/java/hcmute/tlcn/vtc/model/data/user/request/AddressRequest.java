@@ -18,6 +18,8 @@ public class AddressRequest {
 
 //    private AddressDTO addressDTO;
 
+    private Long addressId;
+
     private String province;
 
     private String district;
@@ -30,6 +32,7 @@ public class AddressRequest {
 
     private String phone;
 
+    private Status status;
 
 
     public void validate() {
@@ -122,6 +125,19 @@ public class AddressRequest {
 
     }
 
+
+    public static AddressDTO convertUpdateRequestToDTO(AddressRequest addressRequest) {
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setAddressId(addressRequest.getAddressId());
+        addressDTO.setProvince(addressRequest.getProvince());
+        addressDTO.setDistrict(addressRequest.getDistrict());
+        addressDTO.setWard(addressRequest.getWard());
+        addressDTO.setFullAddress(addressRequest.getFullAddress());
+        addressDTO.setFullName(addressRequest.getFullName());
+        addressDTO.setPhone(addressRequest.getPhone());
+        addressDTO.setStatus(addressRequest.getStatus());
+        return addressDTO;
+    }
 
     public static AddressDTO convertRequestToDTO(AddressRequest addressRequest) {
         AddressDTO addressDTO = new AddressDTO();
