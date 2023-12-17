@@ -36,6 +36,7 @@ public class SecurityConfig {
 
 
             "/api/payment/**",
+            "/api/vendor/shop/category/all-parent",
 
 
             "/v2/api-docs",
