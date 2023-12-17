@@ -41,12 +41,12 @@ public class AddressServiceImpl implements IAddressService {
         // request.validate();
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
 
-        AddressDTO addressDTO = request.getAddressDTO();
+        AddressDTO addressDTO = AddressRequest.convertRequestToDTO(request);
         Address address = AddressDTO.convertDTOToEntity(addressDTO);
         address.setCustomer(customer);
         address.setCreateAt(LocalDateTime.now());
         address.setUpdateAt(LocalDateTime.now());
-        address.setStatus(request.getAddressDTO().getStatus());
+        address.setStatus(Status.ACTIVE);
 
         try {
             Address addressSave = addressRepository.save(address);
@@ -54,8 +54,8 @@ public class AddressServiceImpl implements IAddressService {
             updateStatusInActiveWithAddress(customer, addressSave.getAddressId(), addressSave.getUpdateAt());
 
 
-            AddressDTO addressDTOSave = modelMapper.map(addressSave, AddressDTO.class);
-            CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+            AddressDTO addressDTOSave = AddressDTO.convertEntityToDTO(addressSave);
+            CustomerDTO customerDTO = CustomerDTO.convertEntityToDTO(customer);
 
             AddressResponse response = new AddressResponse();
             response.setAddressDTO(addressDTOSave);
@@ -103,7 +103,7 @@ public class AddressServiceImpl implements IAddressService {
         request.validate();
 
         Customer customer = customerService.getCustomerByUsername(request.getUsername());
-        AddressDTO addressDTO = request.getAddressDTO();
+        AddressDTO addressDTO = AddressRequest.convertRequestToDTO(request);
 
         Address address = checkAddress(addressDTO.getAddressId(), request.getUsername());
         address.setProvince(addressDTO.getProvince());
