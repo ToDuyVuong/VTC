@@ -58,9 +58,10 @@ public class RevenueServiceImpl implements IRevenueService {
     }
 
     private List<StatisticsDTO> listStatisticsDTO(List<Order> orders, Date startDate, Date endDate) {
-        if (orders == null || orders.isEmpty()) {
-            return new ArrayList<>();
-        }
+
+//        if (orders == null || orders.isEmpty()) {
+//            return new ArrayList<>();
+//        }
 
         Map<Date, List<Order>> ordersByDate = getOrdersByDate(orders, startDate, endDate);
         List<StatisticsDTO> statisticsDTOs = new ArrayList<>();
@@ -77,13 +78,10 @@ public class RevenueServiceImpl implements IRevenueService {
     }
 
 
+
     private Map<Date, List<Order>> getOrdersByDate(List<Order> orders, Date startDate, Date endDate) {
         Map<Date, List<Order>> ordersByDate = new HashMap<>();
         List<Date> datesBetween = getDatesBetween(startDate, endDate);
-
-        if (datesBetween.isEmpty()) {
-            return ordersByDate;
-        }
 
         for (Date date : datesBetween) {
             List<Order> ordersSameDate = new ArrayList<>();
@@ -91,18 +89,49 @@ public class RevenueServiceImpl implements IRevenueService {
             Date end = endOfDay(date);
             Date ofDay = ofDay(date);
 
-            for (Order checkOrder : orders) {
-                if (checkOrder.getOrderDate().after(start) &&
-                        checkOrder.getOrderDate().before(end)) {
-                    ordersSameDate.add(checkOrder);
+            if (!orders.isEmpty()) {
+                for (Order checkOrder : orders) {
+                    if (checkOrder.getOrderDate().after(start) && checkOrder.getOrderDate().before(end)) {
+                        ordersSameDate.add(checkOrder);
+                    }
                 }
                 ordersSameDate.sort(Comparator.comparing(Order::getOrderDate));
-                ordersByDate.put(ofDay, ordersSameDate);
             }
-        }
-        return ordersByDate;
 
+            ordersByDate.put(ofDay, ordersSameDate);
+        }
+
+        return ordersByDate;
     }
+
+
+
+//    private Map<Date, List<Order>> getOrdersByDate(List<Order> orders, Date startDate, Date endDate) {
+//        Map<Date, List<Order>> ordersByDate = new HashMap<>();
+//        List<Date> datesBetween = getDatesBetween(startDate, endDate);
+//
+//        if (datesBetween.isEmpty()) {
+//            return ordersByDate;
+//        }
+//
+//        for (Date date : datesBetween) {
+//            List<Order> ordersSameDate = new ArrayList<>();
+//            Date start = startOfDay(date);
+//            Date end = endOfDay(date);
+//            Date ofDay = ofDay(date);
+//
+//            for (Order checkOrder : orders) {
+//                if (checkOrder.getOrderDate().after(start) &&
+//                        checkOrder.getOrderDate().before(end)) {
+//                    ordersSameDate.add(checkOrder);
+//                }
+//                ordersSameDate.sort(Comparator.comparing(Order::getOrderDate));
+//                ordersByDate.put(ofDay, ordersSameDate);
+//            }
+//        }
+//        return ordersByDate;
+//
+//    }
 
 
         public static List<Date> getDatesBetween (Date startDate, Date endDate){

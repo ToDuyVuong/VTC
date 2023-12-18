@@ -213,11 +213,10 @@ public class ManagerProductServiceImpl implements IManagerProductService {
 
         List<ProductVariant> productVariants = product.getProductVariants();
         for (ProductVariant productVariant : productVariants) {
-            if (productVariant.getStatus().equals(Status.DELETED)) {
-                continue;
+            if (productVariant.getStatus().equals(Status.ACTIVE)) {
+                productVariant.setStatus(Status.LOCKED);
+                productVariant.setUpdateAt(product.getUpdateAt());
             }
-            productVariant.setStatus(Status.LOCKED);
-            productVariant.setUpdateAt(product.getUpdateAt());
             try {
                 productVariantRepository.save(productVariant);
             } catch (Exception e) {
