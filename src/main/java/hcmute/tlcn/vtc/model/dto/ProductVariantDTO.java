@@ -30,6 +30,10 @@ public class ProductVariantDTO {
 
     private Long productId;
 
+    private String productName;
+
+    private String productImage;
+
     private List<AttributeDTO> attributeDTOs;
 
 
@@ -44,6 +48,8 @@ public class ProductVariantDTO {
         productVariantDTO.setStatus(productVariant.getStatus());
         productVariantDTO.setAttributeDTOs(AttributeDTO.convertToListDTO(productVariant.getAttributes()));
         productVariantDTO.setProductId(productVariant.getProduct().getProductId());
+        productVariantDTO.setProductName(productVariant.getProduct().getName());
+        productVariantDTO.setProductImage(productVariant.getProduct().getImage());
 
         return productVariantDTO;
     }
@@ -54,15 +60,16 @@ public class ProductVariantDTO {
 
         for (ProductVariant productVariant : productVariants) {
 
-            ProductVariantDTO productVariantDTO = new ProductVariantDTO();
-            productVariantDTO.setProductVariantId(productVariant.getProductVariantId());
-            productVariantDTO.setSku(productVariant.getSku());
-            productVariantDTO.setImage(productVariant.getImage());
-            productVariantDTO.setPrice(productVariant.getPrice());
-            productVariantDTO.setQuantity(productVariant.getQuantity());
-            productVariantDTO.setStatus(productVariant.getStatus());
-            productVariantDTO.setAttributeDTOs(AttributeDTO.convertToListDTO(productVariant.getAttributes()));
-            productVariantDTO.setProductId(productVariant.getProduct().getProductId());
+            ProductVariantDTO productVariantDTO = convertEntityToDTO(productVariant);
+//            ProductVariantDTO productVariantDTO = new ProductVariantDTO();
+//            productVariantDTO.setProductVariantId(productVariant.getProductVariantId());
+//            productVariantDTO.setSku(productVariant.getSku());
+//            productVariantDTO.setImage(productVariant.getImage());
+//            productVariantDTO.setPrice(productVariant.getPrice());
+//            productVariantDTO.setQuantity(productVariant.getQuantity());
+//            productVariantDTO.setStatus(productVariant.getStatus());
+//            productVariantDTO.setAttributeDTOs(AttributeDTO.convertToListDTO(productVariant.getAttributes()));
+//            productVariantDTO.setProductId(productVariant.getProduct().getProductId());
 
             productVariantDTOs.add(productVariantDTO);
         }
