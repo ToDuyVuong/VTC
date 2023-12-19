@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
+import hcmute.tlcn.vtc.model.data.paging.response.PageOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
@@ -31,6 +32,25 @@ public class OrderShopController {
     public ResponseEntity<ListOrderResponse> getOrders(HttpServletRequest httpServletRequest) {
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(orderShopService.getOrders(username));
+    }
+
+    @GetMapping("/list/page")
+    public ResponseEntity<PageOrderResponse> getPageOrder(HttpServletRequest httpServletRequest,
+                                                          @RequestParam int page,
+                                                          @RequestParam int size) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        orderShopService.checkRequestPageParams(page, size);
+        return ResponseEntity.ok(orderShopService.getPageOrder(username, page, size));
+    }
+
+    @GetMapping("/list/page/status/{status}")
+    public ResponseEntity<PageOrderResponse> getPageOrderByStatus(HttpServletRequest httpServletRequest,
+                                                                  @PathVariable Status status,
+                                                                  @RequestParam int page,
+                                                                  @RequestParam int size) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        orderShopService.checkRequestPageParams(page, size);
+        return ResponseEntity.ok(orderShopService.getPageOrderByStatus(username, status, page, size));
     }
 
 
@@ -132,7 +152,6 @@ public class OrderShopController {
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(orderShopService.getOrderById(username, orderId));
     }
-
 
 
     @PatchMapping("/update/status/{orderId}")

@@ -2,6 +2,8 @@ package hcmute.tlcn.vtc.repository;
 
 import hcmute.tlcn.vtc.model.entity.vtc.Order;
 import hcmute.tlcn.vtc.model.extra.Status;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
@@ -29,6 +31,16 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 
     Optional<List<Order>> findAllByShopIdAndStatusAndOrderDateBetween(Long shopId, Status status, Date startDate, Date endDate);
+
+
+    Optional<Page<Order>> findAllByShopIdOrderByCreateAtDesc(Long shopId, PageRequest pageRequest);
+
+    Optional<Page<Order>> findAllByShopIdAndStatusOrderByCreateAtDesc(Long shopId, Status status, PageRequest pageRequest);
+
+
+    int countAllByShopIdAndStatus(Long shopId, Status status);
+
+    int countAllByShopId(Long shopId);
 
 
 }

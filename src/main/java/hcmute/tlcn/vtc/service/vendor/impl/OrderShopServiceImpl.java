@@ -1,8 +1,10 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
+import hcmute.tlcn.vtc.model.data.paging.response.PageOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.model.dto.OrderDTO;
+import hcmute.tlcn.vtc.model.dto.ShopDTO;
 import hcmute.tlcn.vtc.model.entity.vtc.Order;
 import hcmute.tlcn.vtc.model.entity.vtc.OrderItem;
 import hcmute.tlcn.vtc.model.entity.vtc.Shop;
@@ -20,6 +22,8 @@ import hcmute.tlcn.vtc.service.vendor.IVoucherShopService;
 import hcmute.tlcn.vtc.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -57,6 +61,59 @@ public class OrderShopServiceImpl implements IOrderShopService {
     private final IOrderService orderService;
     @Autowired
     private final IOrderItemShopService orderItemShopService;
+
+
+
+    @Override
+    public PageOrderResponse getPageOrder(String username, int page, int size) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        int totalOrder = orderRepository.countAllByShopId(shop.getShopId());
+        int totalPage = (int) Math.ceil((double) totalOrder / size);
+
+        Page<Order> pageOrder = orderRepository.findAllByShopIdOrderByCreateAtDesc(shop.getShopId(),
+                PageRequest.of(page - 1, size))
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+
+
+        return getPageOrderResponse(pageOrder.getContent(), shop, page, size, totalPage, "Lấy danh sách đơn hàng thành công!");
+
+    }
+
+
+    @Override
+    public PageOrderResponse getPageOrderByStatus(String username, Status status, int page, int size) {
+        Shop shop = shopService.getShopByUsername(username);
+
+        int totalOrder = orderRepository.countAllByShopIdAndStatus(shop.getShopId(), status);
+        int totalPage = (int) Math.ceil((double) totalOrder / size);
+
+        Page<Order> pageOrder = orderRepository.findAllByShopIdAndStatusOrderByCreateAtDesc(shop.getShopId(), status,
+                PageRequest.of(page - 1, size))
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng nào!"));
+
+
+        return getPageOrderResponse(pageOrder.getContent(), shop, page, size, totalPage, "Lấy danh sách đơn hàng theo trạng thái thành công!");
+
+    }
+
+
+
+    public PageOrderResponse getPageOrderResponse(List<Order> orders, Shop shop, int page,
+                                                  int size, int totalPage, String message) {
+
+        PageOrderResponse response = new PageOrderResponse();
+        response.setPage(page);
+        response.setSize(size);
+        response.setTotalPage(totalPage);
+        response.setCount(orders.size());
+        response.setOrderDTOs(OrderDTO.convertListEntityToDTOs(orders));
+        response.setShopDTO(ShopDTO.convertEntityToDTO(shop));
+        response.setMessage(message);
+        response.setStatus("ok");
+        response.setCode(200);
+        return response;
+    }
 
 
     @Override
@@ -290,5 +347,19 @@ private void checkStatus(Order order,Status status){
         return response;
     }
 
+
+
+    @Override
+    public void checkRequestPageParams(int page, int size) {
+        if (page < 0) {
+            throw new NotFoundException("Trang không được nhỏ hơn 0!");
+        }
+        if (size < 0) {
+            throw new NotFoundException("Kích thước trang không được nhỏ hơn 0!");
+        }
+        if (size > 200) {
+            throw new NotFoundException("Kích thước trang không được lớn hơn 200!");
+        }
+    }
 
 }

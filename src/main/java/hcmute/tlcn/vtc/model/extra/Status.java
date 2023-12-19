@@ -24,6 +24,7 @@ public enum Status {
     REFUNDED("Refunded"),
     PAID("Paid"),
     UNPAID("Unpaid"),
+    FAIL("Fail"),
     LOCKED("Locked");
 
 

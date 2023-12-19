@@ -68,6 +68,10 @@ public class ProductDTO {
         productDTO.setCategoryId(product.getCategory().getCategoryId());
         productDTO.setBrandId(product.getBrand() != null ? product.getBrand().getBrandId() : null);
         productDTO.setProductVariantDTOs(ProductVariantDTO.convertToListDTO(product.getProductVariants()));
+
+
+//        System.out.println("productDTO: " + productDTO.toString());
+
         return productDTO;
     }
 

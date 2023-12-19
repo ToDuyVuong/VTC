@@ -30,6 +30,21 @@ public class ProductPageServiceImpl implements IProductPageService {
     @Autowired
     private IProductShopService productShopService;
 
+
+    @Override
+    public ListProductPageResponse getListProductPage(int page, int size){
+        int totalProduct = productRepository.countByStatus(Status.ACTIVE);
+        int totalPage = (int) Math.ceil((double) totalProduct / size);
+
+        Page<Product> productPage = productRepository.findAllByStatusOrderByName(Status.ACTIVE,
+                        PageRequest.of(page - 1, size))
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy sản phẩm nào!"));
+
+        String message = "Lấy danh sách sản phẩm thành công!";
+
+        return listProductPageResponse(productPage.getContent(), page, size, totalPage, message);
+    }
+
     @Override
     public ListProductPageResponse getListProductPageByCategoryId(Long categoryId, int page, int size) {
         if (isAdminOnlyInCategory(categoryId)) {

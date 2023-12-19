@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.model.dto.manager;
 
 
+import hcmute.tlcn.vtc.model.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.entity.vtc.manager.ManagerProduct;
 
 import lombok.*;
@@ -24,6 +25,8 @@ public class ManagerProductDTO {
     private String usernameManager;
     private Long productId;
     private String productName;
+    private ProductDTO productDTO;
+
 
     public static ManagerProductDTO convertEntityToDTO(ManagerProduct managerProduct){
         ManagerProductDTO managerProductDTO = new ManagerProductDTO();
@@ -34,6 +37,7 @@ public class ManagerProductDTO {
         managerProductDTO.setUsernameManager(managerProduct.getManager().getUsername());
         managerProductDTO.setProductId(managerProduct.getProduct().getProductId());
         managerProductDTO.setProductName(managerProduct.getProduct().getName());
+        managerProductDTO.setProductDTO(ProductDTO.convertEntityToDTO(managerProduct.getProduct()));
         return managerProductDTO;
     }
 

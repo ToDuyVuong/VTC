@@ -19,6 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     int countByCategoryCategoryId(Long shopId);
 
+    int countByStatus(Status status);
+
     boolean existsByBrandBrandId(Long brandId);
 
     boolean existsByNameAndCategoryShopShopIdAndStatus(String name, Long shopId, Status status);
@@ -162,6 +164,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Page<Product>> findAllByNameContainsAndProductVariantsPriceBetweenAndStatusOrderByProductVariantsPriceDesc(
             String name, Long minPrice, Long maxPrice, Status status, Pageable pageable);
 
+
+    Optional<Page<Product> >findAllByStatusOrderByName(Status status, Pageable pageable);
 
     int countByNameContainsAndProductVariantsPriceBetweenAndStatus(String name, Long minPrice, Long maxPrice, Status status);
 

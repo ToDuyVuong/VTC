@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.service.vendor;
 
+import hcmute.tlcn.vtc.model.data.paging.response.PageOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.ListOrderResponse;
 import hcmute.tlcn.vtc.model.data.user.response.OrderResponse;
 import hcmute.tlcn.vtc.model.extra.Status;
@@ -7,6 +8,10 @@ import hcmute.tlcn.vtc.model.extra.Status;
 import java.util.Date;
 
 public interface IOrderShopService {
+    PageOrderResponse getPageOrder(String username, int page, int size);
+
+    PageOrderResponse getPageOrderByStatus(String username, Status status, int page, int size);
+
     ListOrderResponse getOrders(String username);
 
     ListOrderResponse getOrdersByStatus(String username, Status status);
@@ -22,4 +27,6 @@ public interface IOrderShopService {
     OrderResponse getOrderById(String username, Long orderId);
 
     OrderResponse updateStatusOrder(String username, Long orderId, Status status);
+
+    void checkRequestPageParams(int page, int size);
 }

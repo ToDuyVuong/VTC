@@ -18,6 +18,16 @@ public class ProductPageController {
     @Autowired
     private IProductPageService productPageService;
 
+
+    @GetMapping("/list")
+    public ResponseEntity<ListProductPageResponse> getListProductPage(@RequestParam int page,
+                                                                      @RequestParam int size) {
+        productPageService.checkRequestPageParams(page, size);
+
+        return ResponseEntity.ok(productPageService.getListProductPage(page, size));
+    }
+
+
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ListProductPageResponse> getListProductPageByCategoryId(@RequestParam int page,
                                                                                   @RequestParam int size,
