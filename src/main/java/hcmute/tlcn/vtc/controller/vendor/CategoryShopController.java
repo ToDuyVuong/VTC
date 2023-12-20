@@ -63,7 +63,7 @@ public class CategoryShopController {
 
 
     @PutMapping("/update")
-    public ResponseEntity<CategoryShopResponse> updateCategoryShop(CategoryShopRequest request,
+    public ResponseEntity<CategoryShopResponse> updateCategoryShop(@RequestBody CategoryShopRequest request,
                                                                    HttpServletRequest httpServletRequest) {
         String username = (String) httpServletRequest.getAttribute("username");
         request.setUsername(username);
