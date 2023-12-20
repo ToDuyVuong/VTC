@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.service.vendor.impl;
 
+import hcmute.tlcn.vtc.model.data.paging.response.ListProductPageResponse;
 import hcmute.tlcn.vtc.model.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.dto.ProductVariantDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductRequest;
@@ -18,6 +19,8 @@ import hcmute.tlcn.vtc.util.exception.SaveFailedException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -127,6 +130,60 @@ public class ProductShopServiceImpl implements IProductShopService {
                 "Lấy danh sách sản phẩm đang bán trong cửa hàng thành công.",
                 true);
     }
+
+    @Override
+    public ListProductPageResponse getListProductByUsernamePage(String username, int page, int size) {
+
+        Page<Product> pageProduct = productRepository
+                .findAllByCategoryShopCustomerUsernameAndStatus(username, Status.ACTIVE, PageRequest.of(page - 1, size))
+                .orElseThrow(() -> new NotFoundException("Cửa hàng không có sản phẩm đang bán!"));
+
+        int totalProduct = productRepository.countAllByCategoryShopCustomerUsername(username);
+        int totalPage = (int) Math.ceil((double) totalProduct / size);
+
+        String message = "Lấy danh sách sản phẩm đang bán trong cửa hàng thành công.";
+        return listProductPageResponse(pageProduct.getContent(), page, size, totalPage, message);
+
+
+
+    }
+
+
+    public ListProductPageResponse listProductPageResponse(List<Product> products, int page,
+                                                           int size, int totalPage, String message) {
+        ListProductPageResponse response = new ListProductPageResponse();
+        response.setProductDTOs(ProductDTO.convertToListDTO(products));
+        response.setCount(products.size());
+        response.setSize(size);
+        response.setPage(page);
+        response.setTotalPage(totalPage);
+        response.setMessage(message);
+        response.setStatus("ok");
+        response.setCode(200);
+        return response;
+    }
+
+
+
+
+    @Override
+    public void checkRequestPageParams(int page, int size) {
+        if (page < 0) {
+            throw new NotFoundException("Trang không được nhỏ hơn 0!");
+        }
+        if (size < 0) {
+            throw new NotFoundException("Kích thước trang không được nhỏ hơn 0!");
+        }
+        if (size > 200) {
+            throw new NotFoundException("Kích thước trang không được lớn hơn 200!");
+        }
+    }
+
+
+
+
+
+
 
 
     @Override

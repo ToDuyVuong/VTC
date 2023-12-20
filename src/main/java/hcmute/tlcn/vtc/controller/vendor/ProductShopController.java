@@ -1,6 +1,7 @@
 package hcmute.tlcn.vtc.controller.vendor;
 
 
+import hcmute.tlcn.vtc.model.data.paging.response.ListProductPageResponse;
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
 import hcmute.tlcn.vtc.model.data.vendor.response.ProductResponse;
@@ -40,6 +41,15 @@ public class ProductShopController {
         }
         String username = (String) httpServletRequest.getAttribute("username");
         return ResponseEntity.ok(productService.getProductDetail(productId, username));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<ListProductPageResponse> getPageProductByUsername(@RequestParam int page,
+                                                                      @RequestParam int size,
+                                                                      HttpServletRequest httpServletRequest) {
+        productService.checkRequestPageParams(page, size);
+        String username = (String) httpServletRequest.getAttribute("username");
+        return ResponseEntity.ok(productService.getListProductByUsernamePage(username, page, size));
     }
 
 

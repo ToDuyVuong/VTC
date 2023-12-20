@@ -19,6 +19,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     int countByCategoryCategoryId(Long shopId);
 
+    int countAllByCategoryShopCustomerUsername(String username);
+
+    Optional<Page<Product>> findAllByCategoryShopCustomerUsernameAndStatus(String username, Status status, Pageable pageable);
+
     int countByStatus(Status status);
 
     boolean existsByBrandBrandId(Long brandId);

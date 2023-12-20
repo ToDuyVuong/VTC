@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.service.vendor;
 
+import hcmute.tlcn.vtc.model.data.paging.response.ListProductPageResponse;
 import hcmute.tlcn.vtc.model.dto.ProductDTO;
 import hcmute.tlcn.vtc.model.data.vendor.request.ProductRequest;
 import hcmute.tlcn.vtc.model.data.vendor.response.ListProductResponse;
@@ -16,6 +17,10 @@ public interface IProductShopService {
     ProductResponse getProductDetail(Long productId, String username);
 
     ListProductResponse getListProductByUsername(String username);
+
+    ListProductPageResponse getListProductByUsernamePage(String username, int page, int size);
+
+    void checkRequestPageParams(int page, int size);
 
     ListProductResponse getListProductShopByCategoryId(Long categoryId, String username);
 
