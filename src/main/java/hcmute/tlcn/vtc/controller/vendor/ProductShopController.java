@@ -32,6 +32,15 @@ public class ProductShopController {
         return ResponseEntity.ok(productService.addNewProduct(request));
     }
 
+    @PostMapping("/add2")
+    public ResponseEntity<ProductResponse> addNewProduct2(@RequestBody ProductRequest request,
+                                                         HttpServletRequest httpServletRequest) {
+        String username = (String) httpServletRequest.getAttribute("username");
+        request.setUsername(username);
+        request.validate();
+        return ResponseEntity.ok(productService.addNewProduct(request));
+    }
+
 
     @GetMapping("/detail/{productId}")
     public ResponseEntity<ProductResponse> getProductDetail(@PathVariable Long productId,

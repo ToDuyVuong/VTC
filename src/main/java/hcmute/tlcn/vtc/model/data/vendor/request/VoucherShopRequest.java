@@ -67,9 +67,9 @@ public class VoucherShopRequest {
         if (this.maxPrice == null) {
             throw new IllegalArgumentException("Giá trị đơn hàng tối đa không được để trống");
         }
-        if (this.maxDiscount == null) {
-            throw new IllegalArgumentException("Giá trị giảm giá tối đa không được để trống");
-        }
+//        if (this.maxDiscount == null) {
+//            throw new IllegalArgumentException("Giá trị giảm giá tối đa không được để trống");
+//        }
         if (this.quantity == null) {
             throw new IllegalArgumentException("Số lượng giảm giá không được để trống");
         }
@@ -109,7 +109,7 @@ public class VoucherShopRequest {
         if(this.type.equals("percent") && this.discount >= 100){
             throw new IllegalArgumentException("Giá trị giảm giá không được lớn hơn hoặc bằng 100%");
         }
-        if(this.type.equals("money") && this.discount > this.maxDiscount){
+        if(this.type.equals("percent") && this.discount > this.maxDiscount){
             throw new IllegalArgumentException("Giá trị giảm giá không được lớn hơn giá trị giảm giá tối đa");
         }
 
