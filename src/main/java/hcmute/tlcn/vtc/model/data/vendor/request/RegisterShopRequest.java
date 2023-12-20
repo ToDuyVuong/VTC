@@ -32,8 +32,6 @@ public class RegisterShopRequest {
 
     private String closeTime;
 
-    private Status status;
-
     private String username;
 
     public void validate() {
@@ -89,9 +87,9 @@ public class RegisterShopRequest {
             throw new IllegalArgumentException("Ảnh đại diện không được để trống!");
         }
 
-        if (this.status == null || Status.isValidStatus(String.valueOf(this.status))) {
-            throw new IllegalArgumentException("Trạng thái không hợp lệ!");
-        }
+//        if (this.status == null || Status.isValidStatus(String.valueOf(this.status))) {
+//            throw new IllegalArgumentException("Trạng thái không hợp lệ!");
+//        }
 
         if (!Pattern.matches("[0-9]+", this.getPhone())) {
             throw new IllegalArgumentException("Số điện thoại chỉ được chứa ký tự số.");

@@ -24,7 +24,7 @@ public class ShopController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<ShopResponse> registerShop(RegisterShopRequest request,
+    public ResponseEntity<ShopResponse> registerShop(@RequestBody RegisterShopRequest request,
                                                      HttpServletRequest httpServletRequest) {
 
         String username = (String) httpServletRequest.getAttribute("username");
@@ -43,7 +43,7 @@ public class ShopController {
     }
 
     @PutMapping("/shop/update")
-    public ResponseEntity<ShopResponse> updateShop(UpdateShopRequest request,
+    public ResponseEntity<ShopResponse> updateShop(@RequestBody UpdateShopRequest request,
                                                    HttpServletRequest httpServletRequest) {
         String username = (String) httpServletRequest.getAttribute("username");
         request.setUsername(username);

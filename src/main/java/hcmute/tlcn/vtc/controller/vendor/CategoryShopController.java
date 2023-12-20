@@ -31,7 +31,7 @@ public class CategoryShopController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<CategoryShopResponse> addNewCategoryShop(CategoryShopRequest request,
+    public ResponseEntity<CategoryShopResponse> addNewCategoryShop(@RequestBody  CategoryShopRequest request,
                                                                    HttpServletRequest httpServletRequest) {
         String username = (String) httpServletRequest.getAttribute("username");
         request.setUsername(username);

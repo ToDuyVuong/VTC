@@ -31,8 +31,8 @@ public class ShopServiceImpl implements IShopService {
     private CustomerRepository customerRepository;
     @Autowired
     private CustomerServiceImpl customerService;
-    @Autowired
-    ModelMapper modelMapper;
+//    @Autowired
+//    ModelMapper modelMapper;
 
 
 
@@ -47,7 +47,20 @@ public class ShopServiceImpl implements IShopService {
             throw new IllegalArgumentException("Tên cửa hàng đã được sử dụng!");
         }
 
-        Shop shop = modelMapper.map(request, Shop.class);
+//        Shop shop = modelMapper.map(request, Shop.class);
+        Shop shop = new Shop();
+        shop.setName(request.getName());
+        shop.setAvatar(request.getAvatar());
+        shop.setAddress(request.getAddress());
+        shop.setProvince(request.getProvince());
+        shop.setDistrict(request.getDistrict());
+        shop.setWard(request.getWard());
+        shop.setPhone(request.getPhone());
+        shop.setEmail(request.getEmail());
+        shop.setOpenTime(request.getOpenTime());
+        shop.setCloseTime(request.getCloseTime());
+        shop.setDescription(request.getDescription());
+
         shop.setCustomer(customer);
         shop.setStatus(Status.ACTIVE);
         shop.setCreateAt(LocalDateTime.now());
@@ -65,6 +78,7 @@ public class ShopServiceImpl implements IShopService {
             addRoleVendor(customer);
             ShopResponse shopResponse = new ShopResponse();
             shopResponse.setShopDTO(shopDTO);
+            shopResponse.setCustomerDTO(CustomerDTO.convertEntityToDTO(customer));
             shopResponse.setCode(200);
             shopResponse.setMessage("Đăng ký cửa hàng thành công.");
             shopResponse.setStatus("success");

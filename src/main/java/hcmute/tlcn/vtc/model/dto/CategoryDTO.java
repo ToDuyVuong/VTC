@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
+    @AllArgsConstructor
 public class CategoryDTO {
 
     private Long categoryId;
