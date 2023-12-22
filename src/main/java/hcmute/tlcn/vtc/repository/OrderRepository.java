@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    Long sumPaymentTotalByShopIdAndStatusAndOrderDateBetween(Long shopId, Status status, Date startDate, Date endDate);
+
     Optional<List<Order>> findAllByCustomerUsername(String username);
 
     Optional<List<Order>> findAllByCustomerUsernameAndStatus(String username, Status status);

@@ -31,22 +31,24 @@ public class RevenueServiceImpl implements IRevenueService {
         Shop shop = shopService.getShopByUsername(request.getUsername());
         Date startDate = startOfDay(request.getStartDate());
         Date endDate = endOfDay(request.getEndDate());
+        Long totalMoney = orderRepository.sumPaymentTotalByShopIdAndStatusAndOrderDateBetween(shop.getShopId(), Status.COMPLETED, startDate, endDate);
 
         int totalOrder = orderRepository.countAllByShopIdAndStatusAndOrderDateBetween(shop.getShopId(), Status.COMPLETED, startDate, endDate);
         List<Order> orders = orderRepository.findAllByShopIdAndStatusAndOrderDateBetween(shop.getShopId(), Status.COMPLETED, startDate, endDate)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đơn hàng nào."));
         List<StatisticsDTO> statisticsDTOs = listStatisticsDTO(orders, request.getStartDate(), request.getEndDate());
 
-        return statisticsResponse(statisticsDTOs, request.getUsername(), totalOrder, startDate, endDate);
+        return statisticsResponse(statisticsDTOs, request.getUsername(), totalOrder, startDate, endDate, totalMoney);
     }
 
     private StatisticsResponse statisticsResponse(List<StatisticsDTO> statisticsDTOs, String username,
-                                                  int totalOrder, Date startDate, Date endDate) {
+                                                  int totalOrder, Date startDate, Date endDate, Long totalMoney) {
 
         StatisticsResponse statisticsResponse = new StatisticsResponse();
         statisticsResponse.setUsername(username);
         statisticsResponse.setCount(statisticsDTOs.size());
         statisticsResponse.setTotalOrder(totalOrder);
+        statisticsResponse.setTotalMoney(totalMoney);
         statisticsResponse.setDateStart(ofDay(startDate));
         statisticsResponse.setDateEnd(ofDay(endDate));
         statisticsResponse.setStatisticsDTOs(statisticsDTOs);
@@ -59,9 +61,7 @@ public class RevenueServiceImpl implements IRevenueService {
 
     private List<StatisticsDTO> listStatisticsDTO(List<Order> orders, Date startDate, Date endDate) {
 
-//        if (orders == null || orders.isEmpty()) {
-//            return new ArrayList<>();
-//        }
+//
 
         Map<Date, List<Order>> ordersByDate = getOrdersByDate(orders, startDate, endDate);
         List<StatisticsDTO> statisticsDTOs = new ArrayList<>();
@@ -97,41 +97,11 @@ public class RevenueServiceImpl implements IRevenueService {
                 }
                 ordersSameDate.sort(Comparator.comparing(Order::getOrderDate));
             }
-
             ordersByDate.put(ofDay, ordersSameDate);
         }
 
         return ordersByDate;
     }
-
-
-
-//    private Map<Date, List<Order>> getOrdersByDate(List<Order> orders, Date startDate, Date endDate) {
-//        Map<Date, List<Order>> ordersByDate = new HashMap<>();
-//        List<Date> datesBetween = getDatesBetween(startDate, endDate);
-//
-//        if (datesBetween.isEmpty()) {
-//            return ordersByDate;
-//        }
-//
-//        for (Date date : datesBetween) {
-//            List<Order> ordersSameDate = new ArrayList<>();
-//            Date start = startOfDay(date);
-//            Date end = endOfDay(date);
-//            Date ofDay = ofDay(date);
-//
-//            for (Order checkOrder : orders) {
-//                if (checkOrder.getOrderDate().after(start) &&
-//                        checkOrder.getOrderDate().before(end)) {
-//                    ordersSameDate.add(checkOrder);
-//                }
-//                ordersSameDate.sort(Comparator.comparing(Order::getOrderDate));
-//                ordersByDate.put(ofDay, ordersSameDate);
-//            }
-//        }
-//        return ordersByDate;
-//
-//    }
 
 
         public static List<Date> getDatesBetween (Date startDate, Date endDate){
@@ -159,7 +129,7 @@ public class RevenueServiceImpl implements IRevenueService {
         int totalProduct = 0;
 
         for (Order order : ordersOnDate) {
-            totalMoney += order.getTotalPrice();
+            totalMoney += order.getPaymentTotal();
             totalProduct += order.getOrderItems().size();
         }
 
