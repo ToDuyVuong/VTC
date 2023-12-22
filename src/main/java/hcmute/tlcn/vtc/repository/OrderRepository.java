@@ -5,6 +5,8 @@ import hcmute.tlcn.vtc.model.extra.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +14,15 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    Long sumPaymentTotalByShopIdAndStatusAndOrderDateBetween(Long shopId, Status status, Date startDate, Date endDate);
+
+//    @Query("SELECT SUM(o.totalMoney) FROM Order o WHERE o.shopId = :shopId AND o.status = :status AND o.orderDate BETWEEN :startDate AND :endDate")
+//    Long sumPaymentTotalByShopIdAndStatusAndOrderDateBetween(
+//            @Param("shopId") Long shopId,
+//            @Param("status") Status status,
+//            @Param("startDate") Date startDate,
+//            @Param("endDate") Date endDate
+//    );
+
 
     Optional<List<Order>> findAllByCustomerUsername(String username);
 

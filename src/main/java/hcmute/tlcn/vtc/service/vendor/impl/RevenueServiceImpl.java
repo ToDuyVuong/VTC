@@ -31,18 +31,25 @@ public class RevenueServiceImpl implements IRevenueService {
         Shop shop = shopService.getShopByUsername(request.getUsername());
         Date startDate = startOfDay(request.getStartDate());
         Date endDate = endOfDay(request.getEndDate());
-        Long totalMoney = orderRepository.sumPaymentTotalByShopIdAndStatusAndOrderDateBetween(shop.getShopId(), Status.COMPLETED, startDate, endDate);
+        long totalMoney = 0;
 
         int totalOrder = orderRepository.countAllByShopIdAndStatusAndOrderDateBetween(shop.getShopId(), Status.COMPLETED, startDate, endDate);
         List<Order> orders = orderRepository.findAllByShopIdAndStatusAndOrderDateBetween(shop.getShopId(), Status.COMPLETED, startDate, endDate)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đơn hàng nào."));
         List<StatisticsDTO> statisticsDTOs = listStatisticsDTO(orders, request.getStartDate(), request.getEndDate());
 
+        if(!orders.isEmpty()){
+            for (Order order : orders) {
+                totalMoney += order.getPaymentTotal();
+            }
+        }
+
+
         return statisticsResponse(statisticsDTOs, request.getUsername(), totalOrder, startDate, endDate, totalMoney);
     }
 
     private StatisticsResponse statisticsResponse(List<StatisticsDTO> statisticsDTOs, String username,
-                                                  int totalOrder, Date startDate, Date endDate, Long totalMoney) {
+                                                  int totalOrder, Date startDate, Date endDate, long totalMoney) {
 
         StatisticsResponse statisticsResponse = new StatisticsResponse();
         statisticsResponse.setUsername(username);
