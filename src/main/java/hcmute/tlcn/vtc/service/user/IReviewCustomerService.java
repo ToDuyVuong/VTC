@@ -7,6 +7,8 @@ import hcmute.tlcn.vtc.model.entity.vtc.Review;
 public interface IReviewCustomerService {
     ReviewResponse addNewReview(ReviewRequest request, String username);
 
+    ReviewResponse getReviewByOrderItemId(Long orderItemId);
+
     ReviewResponse deleteReview(Long reviewId, String username);
 
 

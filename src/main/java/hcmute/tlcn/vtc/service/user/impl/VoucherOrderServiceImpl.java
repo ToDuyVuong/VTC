@@ -68,26 +68,6 @@ public class VoucherOrderServiceImpl implements IVoucherOrderService {
         }
     }
 
-/*    @Transactional
-    @Override
-    public VoucherOrder cancelVoucherOrder(Long voucherOrderId, boolean isShop) {
-        VoucherOrder voucherOrder = voucherOrderRepository.findById(voucherOrderId)
-                .orElseThrow(() -> new IllegalArgumentException("Mã giảm giá không tồn tại!"));
-
-        Voucher voucher;
-        if (isShop) {
-            voucher = voucherShopService.checkVoucherShop(voucherOrder.getVoucher().getVoucherId(), voucherOrder.getOrder().getShopId());
-        }else {
-            voucher = voucherSystemService.checkVoucherSystem(voucherOrder.getVoucher().getVoucherId());
-        }
-        voucher.setQuantityUsed(voucher.getQuantityUsed() - 1);
-        try {
-            voucherRepository.save(voucher);
-            return voucherOrder;
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Cập nhật mã giảm giá thất bại!");
-        }
-    }*/
 
 
     @Override

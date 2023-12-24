@@ -51,10 +51,10 @@ public class ReviewDTO {
         reviewDTO.setUsername(review.getCustomer().getUsername());
         reviewDTO.setOrderItemId(review.getOrderItem().getOrderItemId());
         reviewDTO.setCreatedAt(Date.from(review.getCreateAt().atZone(ZoneId.systemDefault()).toInstant()));
-        if (review.getComments() != null) {
-            reviewDTO.setCommentDTOs(CommentDTO.convertEntitiesToDTOs(review.getComments()));
-        }
-        reviewDTO.setCountComment(reviewDTO.getCommentDTOs().size());
+//        if (review.getComments() != null) {
+//            reviewDTO.setCommentDTOs(CommentDTO.convertEntitiesToDTOs(review.getComments()));
+//        }
+//        reviewDTO.setCountComment(reviewDTO.getCommentDTOs().size());
 
         return reviewDTO;
     }

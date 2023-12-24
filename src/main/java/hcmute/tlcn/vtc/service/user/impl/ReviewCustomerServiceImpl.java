@@ -7,13 +7,9 @@ import hcmute.tlcn.vtc.model.entity.vtc.OrderItem;
 import hcmute.tlcn.vtc.model.entity.vtc.Product;
 import hcmute.tlcn.vtc.model.entity.vtc.Review;
 import hcmute.tlcn.vtc.model.extra.Status;
-import hcmute.tlcn.vtc.repository.CartRepository;
 import hcmute.tlcn.vtc.repository.OrderItemRepository;
-import hcmute.tlcn.vtc.repository.OrderRepository;
 import hcmute.tlcn.vtc.repository.ReviewRepository;
-import hcmute.tlcn.vtc.service.admin.IVoucherAdminService;
 import hcmute.tlcn.vtc.service.user.*;
-import hcmute.tlcn.vtc.service.vendor.IVoucherShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +44,7 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
         review.setOrderItem(orderItem);
         review.setRating(request.getRating());
         review.setContent(request.getContent());
+        review.setImage(request.getImage());
         review.setStatus(Status.ACTIVE);
         review.setCustomer(customerService.getCustomerByUsername(username));
         review.setProduct(product);
@@ -57,9 +54,18 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
             reviewRepository.save(review);
             return reviewResponse(review, username, "Thêm mới đánh giá thành công!", false);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Thêm mới đánh giá thất bại!");
+            throw new IllegalArgumentException("Thêm mới đánh giá thất bại!"+ e.getMessage());
         }
     }
+
+
+    @Override
+    public ReviewResponse getReviewByOrderItemId(Long orderItemId) {
+        Review review = reviewRepository.findByOrderItemOrderItemId(orderItemId)
+                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại!"));
+        return reviewResponse(review, review.getCustomer().getUsername(), "Lấy đánh giá thành công!", false);
+    }
+
 
 
     @Override
@@ -139,6 +145,9 @@ public class ReviewCustomerServiceImpl implements IReviewCustomerService {
 
         OrderItem orderItem = orderItemRepository.findById(orderItemId)
                 .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không tồn tại!"));
+
+        System.out.println("aaaaaaa"+orderItem.getCart().getStatus());
+
         if (orderItem.getCart().getStatus() == Status.DELIVERED ||
                 orderItem.getCart().getStatus() == Status.COMPLETED) {
             return;

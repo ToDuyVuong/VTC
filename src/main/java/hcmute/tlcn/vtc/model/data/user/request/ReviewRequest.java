@@ -25,7 +25,7 @@ public class ReviewRequest {
         }
 
         if (rating < 1 || rating > 5) {
-            throw new IllegalArgumentException("Đánh giá không hợp lệ.");
+            throw new IllegalArgumentException("Đánh giá không hợp lệ. Đánh giá từ 1 đến 5 sao.");
         }
 
         if (orderItemId == null) {
@@ -33,7 +33,7 @@ public class ReviewRequest {
         }
 
         this.content = this.content.trim();
-        this.image = this.image.trim();
+
 
     }
 

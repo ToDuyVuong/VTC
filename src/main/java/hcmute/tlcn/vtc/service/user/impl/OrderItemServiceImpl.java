@@ -1,5 +1,6 @@
 package hcmute.tlcn.vtc.service.user.impl;
 
+import hcmute.tlcn.vtc.model.data.user.response.OrderItemResponse;
 import hcmute.tlcn.vtc.model.entity.vtc.*;
 import hcmute.tlcn.vtc.model.extra.Status;
 import hcmute.tlcn.vtc.repository.CartRepository;
@@ -30,6 +31,32 @@ public class OrderItemServiceImpl implements IOrderItemService {
     private final CartRepository cartRepository;
     @Autowired
     private final ProductRepository productRepository;
+
+    @Override
+    public OrderItemResponse getOrderItemByOrderItemId(Long orderItemId) {
+        OrderItem orderItem = orderItemRepository.findById(orderItemId)
+                .orElseThrow(() -> new IllegalArgumentException("Mã đơn hàng không tồn tại!"));
+
+        OrderItemResponse response = new OrderItemResponse();
+        response.setOrderItemId(orderItem.getOrderItemId());
+        response.setOrderId(orderItem.getOrder().getOrderId());
+        response.setCartId(orderItem.getCart().getCartId());
+        response.setProductVariantId(orderItem.getCart().getProductVariant().getProductVariantId());
+        response.setSku(orderItem.getCart().getProductVariant().getSku());
+        response.setProductVariantImage(orderItem.getCart().getProductVariant().getImage());
+        response.setQuantity(orderItem.getCart().getQuantity());
+        response.setPrice(orderItem.getCart().getProductVariant().getPrice());
+        response.setProductId(orderItem.getCart().getProductVariant().getProduct().getProductId());
+        response.setProductName(orderItem.getCart().getProductVariant().getProduct().getName());
+        response.setProductImage(orderItem.getCart().getProductVariant().getProduct().getImage());
+        response.setShopId(orderItem.getCart().getProductVariant().getProduct().getCategory().getShop().getShopId());
+        response.setShopName(orderItem.getCart().getProductVariant().getProduct().getCategory().getShop().getName());
+        response.setCode(200);
+        response.setMessage("Lấy thông tin chi tiết về sản phẩm trong đơn hàng thành công!");
+        response.setStatus("OK");
+
+        return response;
+    }
 
 
     public OrderItem createOrderItem(Long cartId, String username) {

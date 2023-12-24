@@ -33,7 +33,7 @@ public class Review {
 
     private LocalDateTime updateAt;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -44,8 +44,9 @@ public class Review {
     @OneToMany(mappedBy = "review" , fetch = FetchType.EAGER)
     private List<Comment> comments;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_item_id")
     private OrderItem orderItem;
+
 
 }
