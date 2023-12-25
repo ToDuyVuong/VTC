@@ -6,7 +6,7 @@ public class GiaoHangHoaTocShipping implements IShipping{
         if (total >= 500000) {
             return 0;
         }
-        return 40000;
+        return 0;
     }
 }
 

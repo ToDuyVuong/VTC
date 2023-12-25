@@ -189,8 +189,10 @@ public class ProductPageServiceImpl implements IProductPageService {
             case "newest":
                 productPage = productRepository.findAllByNameContainsAndStatusOrderByCreateAtDesc(search, Status.ACTIVE, PageRequest.of(page - 1, size))
                         .orElseThrow(() -> new NotFoundException("Không tìm thấy sản phẩm nào!"));
-                message = "Lọc sản phẩm tìm kiếm theo thứ tự mới nhất thành công!";
+//                message = "Lọc sản phẩm tìm kiếm theo thứ tự mới nhất thành công!";
+                message = "Lọc sản phẩm tìm kiếm theo thứ tự mới nhất thành công! " + search;
                 break;
+
             case "best-selling":
                 productPage = productRepository.findAllByNameContainsAndStatusOrderBySoldDescNameAsc(search, Status.ACTIVE, PageRequest.of(page - 1, size))
                         .orElseThrow(() -> new NotFoundException("Không tìm thấy sản phẩm nào!"));

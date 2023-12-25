@@ -6,7 +6,7 @@ public class GiaoHangTietKiemShipping implements IShipping{
         if (total >= 300000) {
             return 0;
         }
-        return 20000;
+        return 0;
     }
 
 }
