@@ -15,7 +15,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     boolean existsByProductVariantProductVariantIdAndCustomerUsernameAndStatus(Long productVariantId, String username, Status status);
 
-    Optional<Cart> findByProductVariantProductVariantIdAndCustomerUsername(Long productVariantId, String username);
+    Optional<Cart> findByProductVariantProductVariantIdAndCustomerUsernameAndStatus(Long productVariantId, String username, Status status);
 
     Optional<Cart> findByCustomerUsernameAndCartId(String username, Long cartId);
 

@@ -79,8 +79,8 @@ public class CartServiceImpl implements ICartService {
     @Transactional
     public CartResponse updateCart(CartRequest request) {
 
-        Cart cart = cartRepository.findByProductVariantProductVariantIdAndCustomerUsername(
-                        request.getProductVariantId(), request.getUsername())
+        Cart cart = cartRepository.findByProductVariantProductVariantIdAndCustomerUsernameAndStatus(
+                        request.getProductVariantId(), request.getUsername(), Status.CART)
                 .orElseThrow(() -> new NotFoundException("Không tìm thấy sản phẩm trong giỏ hàng."));
 
         if (request.getQuantity() <= 0) {
