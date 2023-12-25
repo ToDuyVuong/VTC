@@ -44,7 +44,7 @@ public class Review {
     @OneToMany(mappedBy = "review" , fetch = FetchType.EAGER)
     private List<Comment> comments;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_item_id")
     private OrderItem orderItem;
 

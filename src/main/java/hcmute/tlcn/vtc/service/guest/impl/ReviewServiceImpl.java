@@ -79,7 +79,12 @@ public class ReviewServiceImpl implements IReviewService {
 
     @Override
     public float countAverageRatingByProductId(Long productId) {
-        return reviewRepository.countAverageRatingByProductProductId(productId);
+
+        List<Review> reviews = reviewRepository.findAllByProductProductIdAndImageNotNull(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đánh giá nào!"));
+
+
+        return averageRating(reviews);
     }
 
 
