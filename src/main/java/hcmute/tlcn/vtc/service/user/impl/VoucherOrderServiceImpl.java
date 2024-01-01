@@ -83,9 +83,12 @@ public class VoucherOrderServiceImpl implements IVoucherOrderService {
             return voucher.getDiscount();
         }
 
-        if (voucher.getType().equals(VoucherType.PERCENTAGE_SHOP)) {
+        if (voucher.getType().equals(VoucherType.PERCENTAGE_SHOP) || voucher.getType().equals(VoucherType.PERCENTAGE_SYSTEM)){
             return voucher.getDiscount() * totalPrice / 100;
         }
+
+
+
         return voucher.getDiscount();
     }
 
